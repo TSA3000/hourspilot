@@ -4,7 +4,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 | | |
 |---|---|
-| **Version** | 0.4.0 |
+| **Version** | 0.5.0 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
@@ -21,7 +21,9 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Two styles: clean (default) and **card**, with a coloured header band, today's date, an OPEN/CLOSED badge, custom open/closed messages and a header image
 - Lunch and other breaks with labels ("Lunch"), shown in the hours but counted as closed
 - Map below the location details (OpenStreetMap or Google Maps), loaded only after a click
-- Appearance box per location: style, colours, font, header image and map, without CSS
+- Everything set per location in wp-admin, in tabs: General, Hours, Holidays, Messages, Display, Appearance, Location; a bare `[hourspilot id="…"]` is enough
+- Shared holidays for all locations (e.g. public holidays), with opt-out per location
+- Import / export of locations as JSON
 - Day names in the site language automatically, week start from *Settings → General*
 - Live "Open now / Closed now" badge, computed in the browser by a small Rust/WebAssembly engine, so page caches never show a stale status
 - schema.org `OpeningHoursSpecification` + `specialOpeningHoursSpecification` JSON-LD
@@ -37,6 +39,14 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 | <img src="docs/screenshots/card-week.png" alt="Card style: green header band with date and OPEN badge, lunch break chip, location image beside the details, Show map button" width="280"> | <img src="docs/screenshots/card-ar.png" alt="Card style in Arabic, right-to-left" width="280"> | <img src="docs/screenshots/card-mono-sv.png" alt="Card style with monospace font in Swedish" width="280"> |
 
 <img src="docs/screenshots/card-today.png" alt="Card style, today only" width="420"> <img src="docs/screenshots/card-image.png" alt="Card style with a header image, close countdown and holidays before the regular hours" width="420">
+
+### Admin
+
+<img src="docs/screenshots/admin-hours.png" alt="Hours tab: Open, Closed, Open 24 hours per day, time slots with label and break" width="430"> <img src="docs/screenshots/admin-display.png" alt="Display tab with sections" width="430">
+
+<img src="docs/screenshots/admin-messages.png" alt="Messages tab" width="430"> <img src="docs/screenshots/admin-appearance.png" alt="Appearance tab" width="430">
+
+<img src="docs/screenshots/admin-hours-ar.png" alt="Hours tab in Arabic, right-to-left" width="430"> <img src="docs/screenshots/admin-menu.png" alt="Admin menu: Business hours with Locations, Add location, Shared holidays, Import / Export" width="150">
 
 ### Clean style (default)
 
@@ -58,6 +68,23 @@ Tuesday 16:35, 25 minutes before closing, with short holiday hours later in the 
 
 Download `hourspilot-X.Y.Z.zip` from [Releases](https://github.com/TSA3000/hourspilot/releases) (not the "Source code" archives),
 then *WordPress → Plugins → Add New → Upload Plugin*. Add locations under *Locations* in the admin menu.
+
+## Usage
+
+*Business hours* in the admin menu:
+
+- **Locations / Add location**: one location per shop, office or branch, each with its settings in tabs:
+  - **General**: time zone, business type (for search engines)
+  - **Hours**: Open / Closed / Open 24 hours per day, several time slots per day, labels and breaks ("Lunch")
+  - **Holidays**: holidays and special hours, every year or once; whether to also use the shared holidays
+  - **Messages**: every text visitors see (status, badges, open/closed messages, "Closed All Day", countdowns)
+  - **Display**: what to show (week or today, layout, header, local time, grouping, hidden days, holidays, countdowns, formats, digits, details, structured data)
+  - **Appearance**: style (clean or card), font, colours, header band and image, map
+  - **Location**: address, phones, email, website, map link and map position
+- **Shared holidays**: holidays every location uses
+- **Import / Export**: all locations as one JSON file, or one location via *Export* in the list; imports become drafts
+
+Then paste the shortcode from the location's sidebar into a page.
 
 ## Shortcode
 
@@ -110,7 +137,8 @@ Omit `id` to use the first location.
 | `close_countdown_text` | `Closing in [time]` | |
 | `open_text`, `closed_text`, `closed_label`, `open24_label`, `holiday_title` | *(translated)* | Labels, e.g. `closed_label="Closed All Day"` |
 
-¹ Default comes from the location's **Appearance** box (*Locations → edit*); the attribute overrides it.
+Every attribute can also be set on the location (tabs Messages, Display, Appearance); the shortcode attribute overrides it.
+¹ Usually set in the Appearance tab.
 
 **Breaks:** in the weekly hours, give a time slot a label (e.g. "Lunch") and tick *Break*: it is shown with the label but counts as closed.
 
@@ -190,6 +218,16 @@ The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scr
 and **Tags** rows above exist for it.
 
 ## Changelog
+
+### 0.5.0
+
+- Location editor with tabs (General, Hours, Holidays, Messages, Display, Appearance, Location) and HoursPilot's own icons; new admin menu icon
+- Every shortcode option can be set per location; the shortcode only needs the id
+- Hours: Open / Closed / Open 24 hours as buttons
+- Shared holidays (Business hours → Shared holidays), opt-out per location
+- Import / Export of locations as JSON (all, or one from the list)
+- The 0.4.0 Appearance box settings carry over automatically
+- All new texts in Swedish and Arabic
 
 ### 0.4.0
 

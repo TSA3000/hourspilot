@@ -39,159 +39,152 @@ msgstr "Arthur Sam Mahdi"
 msgid "https://github.com/TSA3000"
 msgstr "https://github.com/TSA3000"
 
-#: includes/class-hp-admin.php:34
-msgid "Weekly hours"
-msgstr "ساعات العمل الأسبوعية"
-
-#: includes/class-hp-admin.php:35
-#: includes/class-hp-shortcode.php:94
+#: includes/class-hp-settings.php:70
 msgid "Holidays and special hours"
 msgstr "العطلات والساعات الخاصة"
 
-#: includes/class-hp-admin.php:36
+#: includes/class-hp-settings.php:157
 msgid "Location details"
 msgstr "تفاصيل الموقع"
 
-#: includes/class-hp-admin.php:38
-#: includes/class-hp-admin.php:430
+#: includes/class-hp-admin.php:52
+#: includes/class-hp-admin.php:633
 msgid "Shortcode"
 msgstr "الرمز القصير"
 
-#: includes/class-hp-admin.php:47
-#: includes/class-hp-shortcode.php:87
+#: includes/class-hp-admin.php:150
+#: includes/class-hp-settings.php:63
 msgid "Open"
 msgstr "مفتوح"
 
-#: includes/class-hp-admin.php:48
-#: includes/class-hp-admin.php:156
-#: includes/class-hp-shortcode.php:88
-#: includes/class-hp-shortcode.php:92
+#: includes/class-hp-admin.php:151
+#: includes/class-hp-admin.php:280
+#: includes/class-hp-settings.php:64
+#: includes/class-hp-settings.php:68
 msgid "Closed"
 msgstr "مغلق"
 
-#: includes/class-hp-admin.php:49
-#: includes/class-hp-shortcode.php:93
+#: includes/class-hp-admin.php:152
+#: includes/class-hp-settings.php:69
+#: includes/class-hp-settings.php:87
 msgid "Open 24 hours"
 msgstr "مفتوح على مدار الساعة"
 
-#: includes/class-hp-admin.php:75
+#: includes/class-hp-admin.php:178
 msgid "Add hours"
 msgstr "إضافة ساعات"
 
-#: includes/class-hp-admin.php:81
+#: includes/class-hp-admin.php:184
 msgid "Copy Monday to Tuesday–Friday"
 msgstr "نسخ الإثنين إلى الثلاثاء–الجمعة"
 
-#: includes/class-hp-admin.php:83
+#: includes/class-hp-admin.php:186
 msgid "Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00)."
 msgstr "أضف عدة فترات في اليوم لاستراحة الغداء. وقت الإغلاق الأسبق من وقت الفتح يمتد إلى ما بعد منتصف الليل (مثل 22:00–02:00)."
 
-#: includes/class-hp-admin.php:99
+#: includes/class-hp-admin.php:202
 msgid "Opens"
 msgstr "يفتح"
 
-#: includes/class-hp-admin.php:100
+#: includes/class-hp-admin.php:203
 msgid "Closes"
 msgstr "يغلق"
 
-#: includes/class-hp-admin.php:101
+#: includes/class-hp-admin.php:204
 msgid "Remove hours"
 msgstr "إزالة الساعات"
 
-#: includes/class-hp-admin.php:118
+#: includes/class-hp-admin.php:242
 msgid "From"
 msgstr "من"
 
-#: includes/class-hp-admin.php:119
+#: includes/class-hp-admin.php:243
 msgid "To (optional)"
 msgstr "إلى (اختياري)"
 
-#: includes/class-hp-admin.php:120
+#: includes/class-hp-admin.php:244
 msgid "Name"
 msgstr "الاسم"
 
-#: includes/class-hp-admin.php:121
+#: includes/class-hp-admin.php:245
 msgid "Hours (empty = closed)"
 msgstr "الساعات (فارغ = مغلق)"
 
-#: includes/class-hp-admin.php:122
-#: includes/class-hp-admin.php:158
+#: includes/class-hp-admin.php:246
+#: includes/class-hp-admin.php:282
 msgid "Every year"
 msgstr "كل سنة"
 
-#: includes/class-hp-admin.php:123
+#: includes/class-hp-admin.php:247
 msgid "Remove"
 msgstr "إزالة"
 
-#: includes/class-hp-admin.php:134
+#: includes/class-hp-admin.php:258
 msgid "Add holiday or special day"
 msgstr "إضافة عطلة أو يوم خاص"
 
-#: includes/class-hp-admin.php:135
+#: includes/class-hp-admin.php:259
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr "صيغة الساعات الخاصة: 10:00-14:00. افصل بين عدة فترات بفواصل. تُخفى العطلات الماضية تلقائيًا على الموقع. كل سنة: تتكرر التواريخ نفسها كل سنة (يتم تجاهل السنة التي تدخلها)."
 
-#: includes/class-hp-admin.php:155
+#: includes/class-hp-admin.php:279
 msgid "e.g. Christmas Eve"
 msgstr "مثلًا: عيد الفطر"
 
-#: includes/class-hp-admin.php:157
+#: includes/class-hp-admin.php:281
 msgid "Remove row"
 msgstr "إزالة الصف"
 
-#: includes/class-hp-admin.php:172
+#: includes/class-hp-admin.php:117
 msgid "Time zone"
 msgstr "المنطقة الزمنية"
 
-#: includes/class-hp-admin.php:180
+#: includes/class-hp-admin.php:125
 msgid "Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year."
 msgstr "يستخدم موقعك فارق توقيت UTC ثابتًا لا يراعي التوقيت الصيفي. اختر مدينة هنا لتبقى حالة مفتوح/مغلق صحيحة طوال السنة."
 
-#: includes/class-hp-admin.php:184
+#: includes/class-hp-admin.php:129
 msgid "Business type"
 msgstr "نوع النشاط التجاري"
 
-#: includes/class-hp-admin.php:191
+#: includes/class-hp-admin.php:136
 msgid "Used in the structured data search engines read."
 msgstr "يُستخدم في البيانات المنظمة التي تقرؤها محركات البحث."
 
-#: includes/class-hp-admin.php:194
+#: includes/class-hp-admin.php:319
 msgid "Phone"
 msgstr "الهاتف"
 
-#: includes/class-hp-admin.php:200
+#: includes/class-hp-admin.php:325
 msgid "Email"
 msgstr "البريد الإلكتروني"
 
-#: includes/class-hp-admin.php:203
+#: includes/class-hp-admin.php:328
 msgid "Website"
 msgstr "الموقع الإلكتروني"
 
-#: includes/class-hp-admin.php:206
+#: includes/class-hp-admin.php:316
 msgid "Address"
 msgstr "العنوان"
 
-#: includes/class-hp-admin.php:209
+#: includes/class-hp-admin.php:331
 msgid "Map link"
 msgstr "رابط الخريطة"
 
-#: includes/class-hp-admin.php:212
+#: includes/class-hp-admin.php:334
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr "عيّن صورة الموقع من «صورة الموقع» في الشريط الجانبي."
 
-#: includes/class-hp-admin.php:311
+#: includes/class-hp-admin.php:363
 msgid "Save the location to get its shortcode."
 msgstr "احفظ الموقع للحصول على الرمز القصير الخاص به."
-
-#: includes/class-hp-admin.php:317
-msgid "Paste into any page, widget or page-builder shortcode block. Common options:"
-msgstr "الصقه في أي صفحة أو ودجت أو كتلة رمز قصير في منشئ الصفحات. خيارات شائعة:"
 
 #: includes/class-hp-post-type.php:27
 #: includes/class-hp-post-type.php:29
 msgid "Business hours"
 msgstr "ساعات العمل"
 
+#: includes/class-hp-admin.php:63
 #: includes/class-hp-post-type.php:28
 msgid "Location"
 msgstr "موقع"
@@ -218,6 +211,7 @@ msgid "No locations yet. Add one to start showing hours."
 msgstr "لا توجد مواقع بعد. أضف موقعًا لبدء عرض ساعات العمل."
 
 #: includes/class-hp-post-type.php:36
+#: includes/class-hp-settings.php:158
 msgid "Location image"
 msgstr "صورة الموقع"
 
@@ -225,19 +219,19 @@ msgstr "صورة الموقع"
 msgid "Set location image"
 msgstr "تعيين صورة الموقع"
 
-#: includes/class-hp-shortcode.php:83
+#: includes/class-hp-settings.php:59
 msgid "Opening in [time]"
 msgstr "يفتح بعد [time]"
 
-#: includes/class-hp-shortcode.php:84
+#: includes/class-hp-settings.php:60
 msgid "Closing in [time]"
 msgstr "يغلق بعد [time]"
 
-#: includes/class-hp-shortcode.php:85
+#: includes/class-hp-settings.php:61
 msgid "Open now"
 msgstr "مفتوح الآن"
 
-#: includes/class-hp-shortcode.php:86
+#: includes/class-hp-settings.php:62
 msgid "Closed now"
 msgstr "مغلق الآن"
 
@@ -246,178 +240,621 @@ msgid "HoursPilot: location not found or not published. Check the id in the shor
 msgstr "HoursPilot: لم يتم العثور على الموقع أو أنه غير منشور. تحقق من المعرّف (id) في الرمز القصير."
 
 #. translators: %s: closing time
-#: includes/class-hp-shortcode.php:198
+#: includes/class-hp-shortcode.php:144
 #, php-format
 msgid "closes %s"
 msgstr "يغلق %s"
 
 #. translators: %s: day and/or time, e.g. "Mon 09:00"
-#: includes/class-hp-shortcode.php:200
+#: includes/class-hp-shortcode.php:146
 #, php-format
 msgid "opens %s"
 msgstr "يفتح %s"
 
-#: includes/class-hp-shortcode.php:201
+#: includes/class-hp-shortcode.php:147
 msgid "Today"
 msgstr "اليوم"
 
-#: includes/class-hp-shortcode.php:202
+#: includes/class-hp-shortcode.php:148
 msgid "tomorrow"
 msgstr "غدًا"
 
-#: includes/class-hp-shortcode.php:207
+#: includes/class-hp-shortcode.php:153
 msgid "Previous month"
 msgstr "الشهر السابق"
 
-#: includes/class-hp-shortcode.php:208
+#: includes/class-hp-shortcode.php:154
 msgid "Next month"
 msgstr "الشهر التالي"
 
 #. translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، "
-#: includes/class-hp-shortcode.php:210
+#: includes/class-hp-shortcode.php:156
 msgctxt "list separator"
 msgid ", "
 msgstr "، "
 
-#: includes/class-hp-shortcode.php:348
+#: includes/class-hp-shortcode.php:294
 msgid "Get directions"
 msgstr "الحصول على الاتجاهات"
 
-#: includes/class-hp-admin.php:37
+#: includes/class-hp-admin.php:62
 msgid "Appearance"
 msgstr "المظهر"
 
-#: includes/class-hp-admin.php:84
+#: includes/class-hp-admin.php:187
 msgid "Label: optional text shown next to the hours, e.g. \"Lunch\". Break: the hours are shown but count as closed."
 msgstr "التسمية: نص اختياري يظهر بجانب الساعات، مثل «استراحة الغداء». استراحة: تظهر الساعات لكنها تُحسب مغلقة."
 
-#: includes/class-hp-admin.php:103
+#: includes/class-hp-admin.php:206
 msgid "Label (optional)"
 msgstr "تسمية (اختياري)"
 
-#: includes/class-hp-admin.php:104
+#: includes/class-hp-admin.php:207
 msgid "Label"
 msgstr "التسمية"
 
-#: includes/class-hp-admin.php:106
+#: includes/class-hp-admin.php:209
 msgid "Break"
 msgstr "استراحة"
 
-#: includes/class-hp-admin.php:197
+#: includes/class-hp-admin.php:322
 msgid "Second phone"
 msgstr "هاتف ثانٍ"
 
-#: includes/class-hp-admin.php:215
+#: includes/class-hp-admin.php:337
 msgid "Map position"
 msgstr "موقع الخريطة"
 
-#: includes/class-hp-admin.php:218
+#: includes/class-hp-admin.php:340
 msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
 msgstr "خط العرض، خط الطول للخريطة المضمّنة (مطلوب لـ OpenStreetMap؛ يمكن لخرائط Google استخدام العنوان بدلًا من ذلك)."
 
-#: includes/class-hp-admin.php:237
+#: includes/class-hp-settings.php:164
 msgid "Style"
 msgstr "النمط"
 
-#: includes/class-hp-admin.php:243
+#: includes/class-hp-settings.php:167
 msgid "Clean (default)"
 msgstr "بسيط (افتراضي)"
 
-#: includes/class-hp-admin.php:244
+#: includes/class-hp-settings.php:168
 msgid "Card with header band"
 msgstr "بطاقة بشريط علوي"
 
-#: includes/class-hp-admin.php:250
-#: includes/class-hp-admin.php:259
+#: includes/class-hp-settings.php:180
+#: includes/class-hp-settings.php:186
 msgid "Accent colour"
 msgstr "لون التمييز"
 
-#: includes/class-hp-admin.php:253
+#: includes/class-hp-settings.php:183
 msgid "Header band"
 msgstr "الشريط العلوي"
 
-#: includes/class-hp-admin.php:260
+#: includes/class-hp-settings.php:187
 msgid "Green when open, red when closed"
 msgstr "أخضر عند الفتح، أحمر عند الإغلاق"
 
-#: includes/class-hp-admin.php:261
+#: includes/class-hp-settings.php:188
 msgid "Own colour (below)"
 msgstr "لون مخصص (أدناه)"
 
-#: includes/class-hp-admin.php:265
+#: includes/class-hp-settings.php:191
 msgid "Header band colour"
 msgstr "لون الشريط العلوي"
 
-#: includes/class-hp-admin.php:266
+#: includes/class-hp-settings.php:184
 msgid "Card style only."
 msgstr "لنمط البطاقة فقط."
 
-#: includes/class-hp-admin.php:269
+#: includes/class-hp-settings.php:192
 msgid "Header image"
 msgstr "صورة الشريط العلوي"
 
-#: includes/class-hp-admin.php:272
-msgid "Card style: image behind the header band, darkened so the text stays readable. Copy the file URL from the Media Library."
-msgstr "نمط البطاقة: صورة خلف الشريط العلوي، معتّمة ليبقى النص مقروءًا. انسخ رابط الملف من مكتبة الوسائط."
-
-#: includes/class-hp-admin.php:275
+#: includes/class-hp-settings.php:173
 msgid "Font"
 msgstr "الخط"
 
-#: includes/class-hp-admin.php:281
+#: includes/class-hp-settings.php:176
 msgid "Theme font"
 msgstr "خط القالب"
 
-#: includes/class-hp-admin.php:282
+#: includes/class-hp-settings.php:177
 msgid "Monospace"
 msgstr "خط ثابت العرض"
 
-#: includes/class-hp-admin.php:288
+#: includes/class-hp-settings.php:195
 msgid "Map"
 msgstr "الخريطة"
 
-#: includes/class-hp-admin.php:294
+#: includes/class-hp-settings.php:198
 msgid "None"
 msgstr "بدون"
 
-#: includes/class-hp-admin.php:295
+#: includes/class-hp-settings.php:199
 msgid "OpenStreetMap"
 msgstr "OpenStreetMap"
 
-#: includes/class-hp-admin.php:296
+#: includes/class-hp-settings.php:200
 msgid "Google Maps"
 msgstr "خرائط Google"
 
-#: includes/class-hp-admin.php:300
-msgid "Shown below the location details. Visitors click to load it, so no data goes to the map service before that."
-msgstr "تظهر أسفل تفاصيل الموقع. ينقر الزوار لتحميلها، فلا تُرسل أي بيانات إلى خدمة الخرائط قبل ذلك."
-
-#: includes/class-hp-admin.php:303
-msgid "These are the defaults for this location; shortcode attributes override them."
-msgstr "هذه هي الإعدادات الافتراضية لهذا الموقع؛ وتتقدّم عليها خصائص الرمز القصير."
-
 #. translators: PHP date() format of the date in the card header, e.g. "Monday November 29th".
-#: includes/class-hp-shortcode.php:56
+#: includes/class-hp-settings.php:32
 msgctxt "header date format"
 msgid "l F jS"
 msgstr "l j F"
 
-#: includes/class-hp-shortcode.php:91
+#: includes/class-hp-settings.php:67
 msgid "Current local time is"
 msgstr "الوقت المحلي الآن"
 
 #. translators: %s: map service, e.g. "OpenStreetMap"
-#: includes/class-hp-shortcode.php:422
+#: includes/class-hp-shortcode.php:368
 #, php-format
 msgid "Map (%s)"
 msgstr "الخريطة (%s)"
 
-#: includes/class-hp-shortcode.php:430
+#: includes/class-hp-shortcode.php:376
 msgid "Show map"
 msgstr "عرض الخريطة"
 
 #. translators: %s: map service, e.g. "Google Maps"
-#: includes/class-hp-shortcode.php:432
+#: includes/class-hp-shortcode.php:378
 #, php-format
 msgid "Loads the map from %s."
 msgstr "يحمّل الخريطة من %s."
+
+#: includes/class-hp-admin.php:44
+#: includes/class-hp-admin.php:427
+msgid "Shared holidays"
+msgstr "العطلات المشتركة"
+
+#: includes/class-hp-admin.php:45
+#: includes/class-hp-admin.php:457
+msgid "Import / Export"
+msgstr "استيراد / تصدير"
+
+#: includes/class-hp-admin.php:51
+#: includes/class-hp-admin.php:72
+msgid "Location settings"
+msgstr "إعدادات الموقع"
+
+#: includes/class-hp-admin.php:57
+msgid "General"
+msgstr "عام"
+
+#: includes/class-hp-admin.php:58
+msgid "Hours"
+msgstr "الساعات"
+
+#: includes/class-hp-admin.php:59
+#: includes/class-hp-settings.php:124
+msgid "Holidays"
+msgstr "العطلات"
+
+#: includes/class-hp-admin.php:60
+msgid "Messages"
+msgstr "الرسائل"
+
+#: includes/class-hp-admin.php:61
+msgid "Display"
+msgstr "العرض"
+
+#: includes/class-hp-admin.php:99
+msgid "Empty fields use the default shown in grey. Shortcode attributes override these settings."
+msgstr "الحقول الفارغة تستخدم القيمة الافتراضية الظاهرة باللون الرمادي. خصائص الرمز القصير تتقدّم على هذه الإعدادات."
+
+#: includes/class-hp-admin.php:139
+msgid "Language"
+msgstr "اللغة"
+
+#: includes/class-hp-admin.php:140
+msgid "Day and month names follow the site language (Settings → General). With Polylang or WPML they follow the page language."
+msgstr "تتبع أسماء الأيام والأشهر لغة الموقع (الإعدادات ← عام). مع Polylang أو WPML تتبع لغة الصفحة."
+
+#. translators: %d: number of shared holidays
+#: includes/class-hp-admin.php:226
+#, php-format
+msgid "Also use the %d shared holiday"
+msgid_plural "Also use the %d shared holidays"
+msgstr[0] "استخدم أيضًا العطلات المشتركة (%d)"
+msgstr[1] "استخدم أيضًا العطلات المشتركة (%d)"
+msgstr[2] "استخدم أيضًا العطلات المشتركة (%d)"
+msgstr[3] "استخدم أيضًا العطلات المشتركة (%d)"
+msgstr[4] "استخدم أيضًا العطلات المشتركة (%d)"
+msgstr[5] "استخدم أيضًا العطلات المشتركة (%d)"
+
+#: includes/class-hp-admin.php:231
+msgid "Edit shared holidays"
+msgstr "تعديل العطلات المشتركة"
+
+#: includes/class-hp-admin.php:369
+msgid "Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:"
+msgstr "الصقه في أي صفحة أو ودجت أو كتلة رمز قصير. يستخدم إعدادات التبويبات، وتتقدّم عليها الخصائص، مثلًا:"
+
+#: includes/class-hp-admin.php:429
+msgid "Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own."
+msgstr "عطلات تستخدمها جميع المواقع، مثل العطلات الرسمية. يمكن للموقع إلغاء استخدامها من تبويب العطلات وإضافة عطلاته الخاصة."
+
+#: includes/class-hp-admin.php:434
+msgid "Save shared holidays"
+msgstr "حفظ العطلات المشتركة"
+
+#: includes/class-hp-admin.php:442
+#: includes/class-hp-admin.php:511
+#: includes/class-hp-admin.php:517
+#: includes/class-hp-admin.php:550
+msgid "Sorry, you are not allowed to do that."
+msgstr "عذرًا، غير مسموح لك بذلك."
+
+#: includes/class-hp-admin.php:461
+#: includes/class-hp-admin.php:485
+msgid "Export"
+msgstr "تصدير"
+
+#: includes/class-hp-admin.php:462
+msgid "Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included."
+msgstr "نزّل جميع المواقع (الساعات، العطلات، التفاصيل، الإعدادات) والعطلات المشتركة كملف JSON. الصور غير مضمّنة."
+
+#: includes/class-hp-admin.php:463
+msgid "To export one location, use \"Export\" below its name in the Locations list."
+msgstr "لتصدير موقع واحد، استخدم «تصدير» أسفل اسمه في قائمة المواقع."
+
+#: includes/class-hp-admin.php:464
+msgid "Export all locations"
+msgstr "تصدير جميع المواقع"
+
+#: includes/class-hp-admin.php:467
+#: includes/class-hp-admin.php:474
+msgid "Import"
+msgstr "استيراد"
+
+#: includes/class-hp-admin.php:468
+msgid "Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing."
+msgstr "استورد ملف JSON من HoursPilot. يُضاف كل موقع كمسودة جديدة لتتمكن من مراجعته قبل النشر."
+
+#: includes/class-hp-admin.php:473
+msgid "Also replace the shared holidays with the ones in the file"
+msgstr "استبدل أيضًا العطلات المشتركة بالعطلات الموجودة في الملف"
+
+#: includes/class-hp-admin.php:569
+msgid "Imported location"
+msgstr "موقع مستورد"
+
+#: includes/class-hp-admin.php:616
+msgid "Shared holidays saved."
+msgstr "تم حفظ العطلات المشتركة."
+
+#. translators: %d: number of imported locations
+#: includes/class-hp-admin.php:618
+#, php-format
+msgid "%d location imported as a draft."
+msgid_plural "%d locations imported as drafts."
+msgstr[0] "تم استيراد مواقع كمسودات: %d"
+msgstr[1] "تم استيراد مواقع كمسودات: %d"
+msgstr[2] "تم استيراد مواقع كمسودات: %d"
+msgstr[3] "تم استيراد مواقع كمسودات: %d"
+msgstr[4] "تم استيراد مواقع كمسودات: %d"
+msgstr[5] "تم استيراد مواقع كمسودات: %d"
+
+#: includes/class-hp-admin.php:619
+msgid "That file is not a HoursPilot export."
+msgstr "هذا الملف ليس تصديرًا من HoursPilot."
+
+#: includes/class-hp-settings.php:81
+msgid "Open message"
+msgstr "رسالة الفتح"
+
+#: includes/class-hp-settings.php:81
+msgid "Card style: line in the header while open, e.g. \"We are open! Come in.\""
+msgstr "نمط البطاقة: سطر في الشريط العلوي أثناء الفتح، مثل «نحن مفتوحون، تفضّلوا!»"
+
+#: includes/class-hp-settings.php:82
+msgid "Closed message"
+msgstr "رسالة الإغلاق"
+
+#: includes/class-hp-settings.php:82
+msgid "Card style: line in the header while closed."
+msgstr "نمط البطاقة: سطر في الشريط العلوي أثناء الإغلاق."
+
+#: includes/class-hp-settings.php:83
+msgid "Open badge"
+msgstr "شارة الفتح"
+
+#: includes/class-hp-settings.php:83
+msgid "Card style: the short status label."
+msgstr "نمط البطاقة: تسمية الحالة القصيرة."
+
+#: includes/class-hp-settings.php:84
+msgid "Closed badge"
+msgstr "شارة الإغلاق"
+
+#: includes/class-hp-settings.php:85
+msgid "Status while open"
+msgstr "الحالة أثناء الفتح"
+
+#: includes/class-hp-settings.php:85
+msgid "Followed by the closing time, e.g. \"Open now, closes 17:00\"."
+msgstr "يليها وقت الإغلاق، مثل «مفتوح الآن، يغلق 17:00»."
+
+#: includes/class-hp-settings.php:86
+msgid "Status while closed"
+msgstr "الحالة أثناء الإغلاق"
+
+#: includes/class-hp-settings.php:86
+msgid "Followed by the next opening."
+msgstr "يليها موعد الفتح التالي."
+
+#: includes/class-hp-settings.php:88
+msgid "Closed all day"
+msgstr "مغلق طوال اليوم"
+
+#: includes/class-hp-settings.php:88
+msgid "Shown for closed days, e.g. \"Closed All Day\"."
+msgstr "يظهر للأيام المغلقة، مثل «مغلق طوال اليوم»."
+
+#: includes/class-hp-settings.php:89
+msgid "Local time text"
+msgstr "نص الوقت المحلي"
+
+#: includes/class-hp-settings.php:89
+msgid "Card style: text before the local time."
+msgstr "نمط البطاقة: نص قبل الوقت المحلي."
+
+#: includes/class-hp-settings.php:90
+msgid "Holidays title"
+msgstr "عنوان العطلات"
+
+#: includes/class-hp-settings.php:91
+#: includes/class-hp-settings.php:139
+msgid "Opening countdown"
+msgstr "العد التنازلي للفتح"
+
+#: includes/class-hp-settings.php:91
+#: includes/class-hp-settings.php:92
+msgid "[time] is replaced by the countdown."
+msgstr "يُستبدل [time] بالعد التنازلي."
+
+#: includes/class-hp-settings.php:92
+#: includes/class-hp-settings.php:140
+msgid "Closing countdown"
+msgstr "العد التنازلي للإغلاق"
+
+#: includes/class-hp-settings.php:95
+#: includes/class-hp-settings.php:107
+msgid "Layout"
+msgstr "التخطيط"
+
+#: includes/class-hp-settings.php:98
+#: includes/class-hp-settings.php:119
+msgid "Days"
+msgstr "الأيام"
+
+#: includes/class-hp-settings.php:101
+msgid "Whole week"
+msgstr "الأسبوع كاملًا"
+
+#: includes/class-hp-settings.php:102
+msgid "Only today"
+msgstr "اليوم فقط"
+
+#: includes/class-hp-settings.php:110
+msgid "Vertical list"
+msgstr "قائمة عمودية"
+
+#: includes/class-hp-settings.php:111
+msgid "Horizontal: one card per day"
+msgstr "أفقي: بطاقة لكل يوم"
+
+#: includes/class-hp-settings.php:112
+msgid "Calendar month"
+msgstr "شهر في التقويم"
+
+#: includes/class-hp-settings.php:115
+#: includes/class-hp-settings.php:116
+msgid "Header"
+msgstr "الترويسة"
+
+#: includes/class-hp-settings.php:116
+msgid "Show the header (title or date, status, local time)"
+msgstr "إظهار الترويسة (العنوان أو التاريخ، الحالة، الوقت المحلي)"
+
+#: includes/class-hp-settings.php:117
+msgid "Status badge"
+msgstr "شارة الحالة"
+
+#: includes/class-hp-settings.php:117
+msgid "Show whether the location is open now"
+msgstr "إظهار ما إذا كان الموقع مفتوحًا الآن"
+
+#: includes/class-hp-settings.php:118
+msgid "Local time"
+msgstr "الوقت المحلي"
+
+#: includes/class-hp-settings.php:118
+msgid "Show the current time at the location in the header"
+msgstr "إظهار الوقت الحالي في الموقع داخل الترويسة"
+
+#: includes/class-hp-settings.php:120
+msgid "Short day names"
+msgstr "أسماء أيام مختصرة"
+
+#: includes/class-hp-settings.php:120
+msgid "Mon, Tue … instead of Monday, Tuesday …"
+msgstr "إث، ثلا … بدلًا من الإثنين، الثلاثاء …"
+
+#: includes/class-hp-settings.php:121
+msgid "Group days"
+msgstr "تجميع الأيام"
+
+#: includes/class-hp-settings.php:121
+msgid "Merge consecutive days with the same hours (Mon – Fri)"
+msgstr "دمج الأيام المتتالية ذات الساعات نفسها (الإثنين – الجمعة)"
+
+#: includes/class-hp-settings.php:122
+msgid "Hide closed days"
+msgstr "إخفاء الأيام المغلقة"
+
+#: includes/class-hp-settings.php:123
+msgid "Hide days"
+msgstr "إخفاء أيام"
+
+#: includes/class-hp-settings.php:123
+msgid "For example tick Saturday and Sunday to hide the weekend."
+msgstr "مثلًا حدّد السبت والأحد لإخفاء عطلة نهاية الأسبوع."
+
+#: includes/class-hp-settings.php:125
+msgid "Upcoming holidays"
+msgstr "العطلات القادمة"
+
+#: includes/class-hp-settings.php:125
+msgid "List holidays and special hours"
+msgstr "عرض العطلات والساعات الخاصة"
+
+#: includes/class-hp-settings.php:126
+msgid "Holidays ahead (days)"
+msgstr "العطلات المقبلة (أيام)"
+
+#: includes/class-hp-settings.php:126
+msgid "How far ahead to list holidays."
+msgstr "إلى أي مدى تُعرض العطلات القادمة."
+
+#: includes/class-hp-settings.php:129
+msgid "Holidays position"
+msgstr "موضع العطلات"
+
+#: includes/class-hp-settings.php:132
+msgid "After the regular hours"
+msgstr "بعد الساعات المعتادة"
+
+#: includes/class-hp-settings.php:133
+msgid "Before the regular hours"
+msgstr "قبل الساعات المعتادة"
+
+#: includes/class-hp-settings.php:136
+msgid "Holiday hours in the week"
+msgstr "ساعات العطلات في الأسبوع"
+
+#: includes/class-hp-settings.php:136
+msgid "Show holiday hours instead of this week's regular hours (turns off grouping)"
+msgstr "إظهار ساعات العطلات بدلًا من الساعات المعتادة لهذا الأسبوع (يوقف التجميع)"
+
+#: includes/class-hp-settings.php:137
+msgid "Hide regular hours on holidays"
+msgstr "إخفاء الساعات المعتادة في العطلات"
+
+#: includes/class-hp-settings.php:137
+msgid "Only the holiday notice while today is a holiday"
+msgstr "إشعار العطلة فقط عندما يكون اليوم عطلة"
+
+#: includes/class-hp-settings.php:138
+msgid "Countdowns"
+msgstr "العد التنازلي"
+
+#: includes/class-hp-settings.php:139
+msgid "Count down to the next opening while closed"
+msgstr "العد التنازلي حتى الفتح التالي أثناء الإغلاق"
+
+#: includes/class-hp-settings.php:140
+msgid "Count down to closing"
+msgstr "العد التنازلي حتى الإغلاق"
+
+#: includes/class-hp-settings.php:141
+msgid "Closing countdown starts"
+msgstr "بدء العد التنازلي للإغلاق"
+
+#: includes/class-hp-settings.php:141
+msgid "Minutes before closing."
+msgstr "دقائق قبل الإغلاق."
+
+#: includes/class-hp-settings.php:142
+msgid "Countdown format"
+msgstr "صيغة العد التنازلي"
+
+#: includes/class-hp-settings.php:142
+msgid "Tokens {d} {h} {hh} {m} {mm} {s} {ss}. Without {d} hours keep counting past 24."
+msgstr "الرموز {d} {h} {hh} {m} {mm} {s} {ss}. بدون {d} تستمر الساعات بعد 24."
+
+#: includes/class-hp-settings.php:143
+msgid "Formats"
+msgstr "الصيغ"
+
+#: includes/class-hp-settings.php:144
+msgid "Time format"
+msgstr "صيغة الوقت"
+
+#: includes/class-hp-settings.php:144
+msgid "Empty = Settings → General. H:i = 24 hours, g:i A = 12 hours."
+msgstr "فارغ = الإعدادات ← عام. ‎H:i = ‏24 ساعة، ‎g:i A = ‏12 ساعة."
+
+#: includes/class-hp-settings.php:145
+msgid "Holiday date format"
+msgstr "صيغة تاريخ العطلات"
+
+#: includes/class-hp-settings.php:145
+msgid "PHP date format, e.g. j M or d/m."
+msgstr "صيغة تاريخ PHP، مثل j M أو d/m."
+
+#: includes/class-hp-settings.php:146
+msgid "Header date format"
+msgstr "صيغة التاريخ في الترويسة"
+
+#: includes/class-hp-settings.php:146
+msgid "Card style. PHP date format, e.g. l F jS = Monday November 29th."
+msgstr "نمط البطاقة. صيغة تاريخ PHP، مثل l j F = الإثنين 29 نوفمبر."
+
+#: includes/class-hp-settings.php:149
+msgid "Digits"
+msgstr "الأرقام"
+
+#: includes/class-hp-settings.php:152
+msgid "Western (0–9)"
+msgstr "غربية (0–9)"
+
+#: includes/class-hp-settings.php:153
+msgid "Arabic-Indic (٠–٩)"
+msgstr "هندية عربية (٠–٩)"
+
+#: includes/class-hp-settings.php:156
+msgid "Location and search engines"
+msgstr "الموقع ومحركات البحث"
+
+#: includes/class-hp-settings.php:157
+msgid "Show address, phone, email, website"
+msgstr "إظهار العنوان والهاتف والبريد الإلكتروني والموقع"
+
+#: includes/class-hp-settings.php:158
+msgid "Show the location image"
+msgstr "إظهار صورة الموقع"
+
+#: includes/class-hp-settings.php:159
+msgid "Structured data"
+msgstr "البيانات المنظمة"
+
+#: includes/class-hp-settings.php:159
+msgid "Add schema.org opening hours for search engines"
+msgstr "إضافة ساعات العمل بصيغة schema.org لمحركات البحث"
+
+#: includes/class-hp-settings.php:180
+msgid "Links, today marker, header band. Empty = teal."
+msgstr "الروابط، علامة اليوم، الشريط العلوي. فارغ = أزرق مخضرّ."
+
+#: includes/class-hp-settings.php:192
+msgid "Card style: image behind the header band, darkened so the text stays readable."
+msgstr "نمط البطاقة: صورة خلف الشريط العلوي، معتّمة ليبقى النص مقروءًا."
+
+#: includes/class-hp-settings.php:196
+msgid "Shown below the location details. OpenStreetMap needs the map position (Location tab)."
+msgstr "تظهر أسفل تفاصيل الموقع. يتطلب OpenStreetMap موقع الخريطة (تبويب الموقع)."
+
+#: includes/class-hp-settings.php:203
+msgid "Map privacy"
+msgstr "خصوصية الخريطة"
+
+#: includes/class-hp-settings.php:203
+msgid "Load the map only after a click (nothing is sent to the map service before)"
+msgstr "تحميل الخريطة بعد النقر فقط (لا يُرسل شيء إلى خدمة الخرائط قبل ذلك)"
+
+#: includes/class-hp-settings.php:320
+msgid "Choose image"
+msgstr "اختيار صورة"

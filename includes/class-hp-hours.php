@@ -17,17 +17,6 @@ final class HP_Hours {
 
 	const INFO_FIELDS = array( 'phone', 'phone2', 'email', 'address', 'map_url', 'website', 'coords' );
 
-	/** Appearance defaults per location (Appearance box); shortcode attributes override them. */
-	const STYLE_DEFAULTS = array(
-		'style'        => 'default', // default | card.
-		'accent'       => '',
-		'band'         => 'accent',  // accent | status | color.
-		'band_color'   => '',
-		'header_image' => '',
-		'font'         => 'theme',   // theme | mono.
-		'map'          => '',        // '' | osm | google.
-	);
-
 	const SCHEMA_TYPES = array(
 		'LocalBusiness',
 		'Store',
@@ -120,12 +109,6 @@ final class HP_Hours {
 		return array_values( array_filter( (array) $slots, fn( $s ) => empty( $s['closed'] ) ) );
 	}
 
-	/** Appearance settings of a location, filled with defaults. */
-	public static function get_style( $id ) {
-		$raw = $id ? get_post_meta( $id, '_hp_style', true ) : array();
-		return array_merge( self::STYLE_DEFAULTS, is_array( $raw ) ? array_intersect_key( $raw, self::STYLE_DEFAULTS ) : array() );
-	}
-
 	public static function slots_to_string( $slots ) {
 		return implode( ', ', array_map( fn( $s ) => $s['open'] . '-' . $s['close'], (array) $slots ) );
 	}
@@ -153,10 +136,38 @@ final class HP_Hours {
 	}
 
 	/** Holidays sorted by start date. Empty slots = closed. */
-	public static function get_holidays( $id ) {
-		$raw = get_post_meta( $id, '_hp_holidays', true );
+	/** Option with the holidays every location can use (Locations → Shared holidays). */
+	const SHARED_OPTION = 'hourspilot_shared_holidays';
+
+	/**
+	 * Holidays of a location sorted by start date: its own plus, unless the location
+	 * opted out (_hp_use_shared = 0), the shared ones. Empty slots = closed.
+	 */
+	public static function get_holidays( $id, $with_shared = true ) {
+		$own = get_post_meta( $id, '_hp_holidays', true );
+		$out = self::normalize_holidays( is_array( $own ) ? $own : array() );
+		if ( $with_shared && self::uses_shared( $id ) ) {
+			foreach ( self::shared_holidays() as $h ) {
+				$out[] = $h + array( 'shared' => true );
+			}
+			usort( $out, fn( $a, $b ) => strcmp( $a['from'], $b['from'] ) );
+		}
+		return $out;
+	}
+
+	public static function uses_shared( $id ) {
+		return '0' !== (string) get_post_meta( $id, '_hp_use_shared', true );
+	}
+
+	public static function shared_holidays() {
+		$raw = get_option( self::SHARED_OPTION, array() );
+		return self::normalize_holidays( is_array( $raw ) ? $raw : array() );
+	}
+
+	/** Validate and sort a holiday list (stored or imported). */
+	public static function normalize_holidays( $list ) {
 		$out = array();
-		foreach ( is_array( $raw ) ? $raw : array() as $h ) {
+		foreach ( (array) $list as $h ) {
 			if ( ! is_array( $h ) || empty( $h['from'] ) || ! self::valid_date( $h['from'] ) ) {
 				continue;
 			}
@@ -164,7 +175,7 @@ final class HP_Hours {
 			$out[] = array(
 				'from'      => $h['from'],
 				'to'        => $to,
-				'label'     => isset( $h['label'] ) ? (string) $h['label'] : '',
+				'label'     => isset( $h['label'] ) ? sanitize_text_field( (string) $h['label'] ) : '',
 				'slots'     => self::clean_slots( $h['slots'] ?? array() ),
 				'recurring' => ! empty( $h['recurring'] ),
 			);

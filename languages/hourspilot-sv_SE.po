@@ -39,159 +39,152 @@ msgstr "Arthur Sam Mahdi"
 msgid "https://github.com/TSA3000"
 msgstr "https://github.com/TSA3000"
 
-#: includes/class-hp-admin.php:34
-msgid "Weekly hours"
-msgstr "Öppettider per vecka"
-
-#: includes/class-hp-admin.php:35
-#: includes/class-hp-shortcode.php:94
+#: includes/class-hp-settings.php:70
 msgid "Holidays and special hours"
 msgstr "Helgdagar och avvikande öppettider"
 
-#: includes/class-hp-admin.php:36
+#: includes/class-hp-settings.php:157
 msgid "Location details"
 msgstr "Platsinformation"
 
-#: includes/class-hp-admin.php:38
-#: includes/class-hp-admin.php:430
+#: includes/class-hp-admin.php:52
+#: includes/class-hp-admin.php:633
 msgid "Shortcode"
 msgstr "Kortkod"
 
-#: includes/class-hp-admin.php:47
-#: includes/class-hp-shortcode.php:87
+#: includes/class-hp-admin.php:150
+#: includes/class-hp-settings.php:63
 msgid "Open"
 msgstr "Öppet"
 
-#: includes/class-hp-admin.php:48
-#: includes/class-hp-admin.php:156
-#: includes/class-hp-shortcode.php:88
-#: includes/class-hp-shortcode.php:92
+#: includes/class-hp-admin.php:151
+#: includes/class-hp-admin.php:280
+#: includes/class-hp-settings.php:64
+#: includes/class-hp-settings.php:68
 msgid "Closed"
 msgstr "Stängt"
 
-#: includes/class-hp-admin.php:49
-#: includes/class-hp-shortcode.php:93
+#: includes/class-hp-admin.php:152
+#: includes/class-hp-settings.php:69
+#: includes/class-hp-settings.php:87
 msgid "Open 24 hours"
 msgstr "Öppet dygnet runt"
 
-#: includes/class-hp-admin.php:75
+#: includes/class-hp-admin.php:178
 msgid "Add hours"
 msgstr "Lägg till tider"
 
-#: includes/class-hp-admin.php:81
+#: includes/class-hp-admin.php:184
 msgid "Copy Monday to Tuesday–Friday"
 msgstr "Kopiera måndag till tisdag–fredag"
 
-#: includes/class-hp-admin.php:83
+#: includes/class-hp-admin.php:186
 msgid "Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00)."
 msgstr "Lägg till flera tider per dag för lunchstängt. En stängningstid som är tidigare än öppningstiden löper över midnatt (t.ex. 22:00–02:00)."
 
-#: includes/class-hp-admin.php:99
+#: includes/class-hp-admin.php:202
 msgid "Opens"
 msgstr "Öppnar"
 
-#: includes/class-hp-admin.php:100
+#: includes/class-hp-admin.php:203
 msgid "Closes"
 msgstr "Stänger"
 
-#: includes/class-hp-admin.php:101
+#: includes/class-hp-admin.php:204
 msgid "Remove hours"
 msgstr "Ta bort tider"
 
-#: includes/class-hp-admin.php:118
+#: includes/class-hp-admin.php:242
 msgid "From"
 msgstr "Från"
 
-#: includes/class-hp-admin.php:119
+#: includes/class-hp-admin.php:243
 msgid "To (optional)"
 msgstr "Till (valfritt)"
 
-#: includes/class-hp-admin.php:120
+#: includes/class-hp-admin.php:244
 msgid "Name"
 msgstr "Namn"
 
-#: includes/class-hp-admin.php:121
+#: includes/class-hp-admin.php:245
 msgid "Hours (empty = closed)"
 msgstr "Tider (tomt = stängt)"
 
-#: includes/class-hp-admin.php:122
-#: includes/class-hp-admin.php:158
+#: includes/class-hp-admin.php:246
+#: includes/class-hp-admin.php:282
 msgid "Every year"
 msgstr "Varje år"
 
-#: includes/class-hp-admin.php:123
+#: includes/class-hp-admin.php:247
 msgid "Remove"
 msgstr "Ta bort"
 
-#: includes/class-hp-admin.php:134
+#: includes/class-hp-admin.php:258
 msgid "Add holiday or special day"
 msgstr "Lägg till helgdag eller specialdag"
 
-#: includes/class-hp-admin.php:135
+#: includes/class-hp-admin.php:259
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr "Format för avvikande tider: 10:00-14:00. Separera flera med kommatecken. Passerade helgdagar döljs automatiskt på webbplatsen. Varje år: samma datum återkommer varje år (året du anger ignoreras)."
 
-#: includes/class-hp-admin.php:155
+#: includes/class-hp-admin.php:279
 msgid "e.g. Christmas Eve"
 msgstr "t.ex. julafton"
 
-#: includes/class-hp-admin.php:157
+#: includes/class-hp-admin.php:281
 msgid "Remove row"
 msgstr "Ta bort rad"
 
-#: includes/class-hp-admin.php:172
+#: includes/class-hp-admin.php:117
 msgid "Time zone"
 msgstr "Tidszon"
 
-#: includes/class-hp-admin.php:180
+#: includes/class-hp-admin.php:125
 msgid "Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year."
 msgstr "Din webbplats använder en fast UTC-förskjutning, som inte tar hänsyn till sommartid. Välj en stad här så att öppet/stängt-statusen stämmer hela året."
 
-#: includes/class-hp-admin.php:184
+#: includes/class-hp-admin.php:129
 msgid "Business type"
 msgstr "Verksamhetstyp"
 
-#: includes/class-hp-admin.php:191
+#: includes/class-hp-admin.php:136
 msgid "Used in the structured data search engines read."
 msgstr "Används i den strukturerade data som sökmotorer läser."
 
-#: includes/class-hp-admin.php:194
+#: includes/class-hp-admin.php:319
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/class-hp-admin.php:200
+#: includes/class-hp-admin.php:325
 msgid "Email"
 msgstr "E-post"
 
-#: includes/class-hp-admin.php:203
+#: includes/class-hp-admin.php:328
 msgid "Website"
 msgstr "Webbplats"
 
-#: includes/class-hp-admin.php:206
+#: includes/class-hp-admin.php:316
 msgid "Address"
 msgstr "Adress"
 
-#: includes/class-hp-admin.php:209
+#: includes/class-hp-admin.php:331
 msgid "Map link"
 msgstr "Kartlänk"
 
-#: includes/class-hp-admin.php:212
+#: includes/class-hp-admin.php:334
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr "Ange platsens bild med ”Platsbild” i sidofältet."
 
-#: includes/class-hp-admin.php:311
+#: includes/class-hp-admin.php:363
 msgid "Save the location to get its shortcode."
 msgstr "Spara platsen för att få dess kortkod."
-
-#: includes/class-hp-admin.php:317
-msgid "Paste into any page, widget or page-builder shortcode block. Common options:"
-msgstr "Klistra in på valfri sida, i en widget eller i ett kortkodsblock i en sidbyggare. Vanliga alternativ:"
 
 #: includes/class-hp-post-type.php:27
 #: includes/class-hp-post-type.php:29
 msgid "Business hours"
 msgstr "Öppettider"
 
+#: includes/class-hp-admin.php:63
 #: includes/class-hp-post-type.php:28
 msgid "Location"
 msgstr "Plats"
@@ -218,6 +211,7 @@ msgid "No locations yet. Add one to start showing hours."
 msgstr "Inga platser ännu. Lägg till en för att börja visa öppettider."
 
 #: includes/class-hp-post-type.php:36
+#: includes/class-hp-settings.php:158
 msgid "Location image"
 msgstr "Platsbild"
 
@@ -225,19 +219,19 @@ msgstr "Platsbild"
 msgid "Set location image"
 msgstr "Ange platsbild"
 
-#: includes/class-hp-shortcode.php:83
+#: includes/class-hp-settings.php:59
 msgid "Opening in [time]"
 msgstr "Öppnar om [time]"
 
-#: includes/class-hp-shortcode.php:84
+#: includes/class-hp-settings.php:60
 msgid "Closing in [time]"
 msgstr "Stänger om [time]"
 
-#: includes/class-hp-shortcode.php:85
+#: includes/class-hp-settings.php:61
 msgid "Open now"
 msgstr "Öppet nu"
 
-#: includes/class-hp-shortcode.php:86
+#: includes/class-hp-settings.php:62
 msgid "Closed now"
 msgstr "Stängt nu"
 
@@ -246,178 +240,613 @@ msgid "HoursPilot: location not found or not published. Check the id in the shor
 msgstr "HoursPilot: platsen hittades inte eller är inte publicerad. Kontrollera id i kortkoden."
 
 #. translators: %s: closing time
-#: includes/class-hp-shortcode.php:198
+#: includes/class-hp-shortcode.php:144
 #, php-format
 msgid "closes %s"
 msgstr "stänger %s"
 
 #. translators: %s: day and/or time, e.g. "Mon 09:00"
-#: includes/class-hp-shortcode.php:200
+#: includes/class-hp-shortcode.php:146
 #, php-format
 msgid "opens %s"
 msgstr "öppnar %s"
 
-#: includes/class-hp-shortcode.php:201
+#: includes/class-hp-shortcode.php:147
 msgid "Today"
 msgstr "Idag"
 
-#: includes/class-hp-shortcode.php:202
+#: includes/class-hp-shortcode.php:148
 msgid "tomorrow"
 msgstr "i morgon"
 
-#: includes/class-hp-shortcode.php:207
+#: includes/class-hp-shortcode.php:153
 msgid "Previous month"
 msgstr "Föregående månad"
 
-#: includes/class-hp-shortcode.php:208
+#: includes/class-hp-shortcode.php:154
 msgid "Next month"
 msgstr "Nästa månad"
 
 #. translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، "
-#: includes/class-hp-shortcode.php:210
+#: includes/class-hp-shortcode.php:156
 msgctxt "list separator"
 msgid ", "
 msgstr ", "
 
-#: includes/class-hp-shortcode.php:348
+#: includes/class-hp-shortcode.php:294
 msgid "Get directions"
 msgstr "Vägbeskrivning"
 
-#: includes/class-hp-admin.php:37
+#: includes/class-hp-admin.php:62
 msgid "Appearance"
 msgstr "Utseende"
 
-#: includes/class-hp-admin.php:84
+#: includes/class-hp-admin.php:187
 msgid "Label: optional text shown next to the hours, e.g. \"Lunch\". Break: the hours are shown but count as closed."
 msgstr "Etikett: valfri text som visas bredvid tiderna, t.ex. ”Lunch”. Paus: tiderna visas men räknas som stängt."
 
-#: includes/class-hp-admin.php:103
+#: includes/class-hp-admin.php:206
 msgid "Label (optional)"
 msgstr "Etikett (valfri)"
 
-#: includes/class-hp-admin.php:104
+#: includes/class-hp-admin.php:207
 msgid "Label"
 msgstr "Etikett"
 
-#: includes/class-hp-admin.php:106
+#: includes/class-hp-admin.php:209
 msgid "Break"
 msgstr "Paus"
 
-#: includes/class-hp-admin.php:197
+#: includes/class-hp-admin.php:322
 msgid "Second phone"
 msgstr "Telefon 2"
 
-#: includes/class-hp-admin.php:215
+#: includes/class-hp-admin.php:337
 msgid "Map position"
 msgstr "Kartposition"
 
-#: includes/class-hp-admin.php:218
+#: includes/class-hp-admin.php:340
 msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
 msgstr "Latitud, longitud för den inbäddade kartan (krävs för OpenStreetMap; Google Maps kan använda adressen i stället)."
 
-#: includes/class-hp-admin.php:237
+#: includes/class-hp-settings.php:164
 msgid "Style"
 msgstr "Stil"
 
-#: includes/class-hp-admin.php:243
+#: includes/class-hp-settings.php:167
 msgid "Clean (default)"
 msgstr "Enkel (standard)"
 
-#: includes/class-hp-admin.php:244
+#: includes/class-hp-settings.php:168
 msgid "Card with header band"
 msgstr "Kort med rubrikband"
 
-#: includes/class-hp-admin.php:250
-#: includes/class-hp-admin.php:259
+#: includes/class-hp-settings.php:180
+#: includes/class-hp-settings.php:186
 msgid "Accent colour"
 msgstr "Accentfärg"
 
-#: includes/class-hp-admin.php:253
+#: includes/class-hp-settings.php:183
 msgid "Header band"
 msgstr "Rubrikband"
 
-#: includes/class-hp-admin.php:260
+#: includes/class-hp-settings.php:187
 msgid "Green when open, red when closed"
 msgstr "Grönt när öppet, rött när stängt"
 
-#: includes/class-hp-admin.php:261
+#: includes/class-hp-settings.php:188
 msgid "Own colour (below)"
 msgstr "Egen färg (nedan)"
 
-#: includes/class-hp-admin.php:265
+#: includes/class-hp-settings.php:191
 msgid "Header band colour"
 msgstr "Rubrikbandets färg"
 
-#: includes/class-hp-admin.php:266
+#: includes/class-hp-settings.php:184
 msgid "Card style only."
 msgstr "Endast kortstil."
 
-#: includes/class-hp-admin.php:269
+#: includes/class-hp-settings.php:192
 msgid "Header image"
 msgstr "Rubrikbild"
 
-#: includes/class-hp-admin.php:272
-msgid "Card style: image behind the header band, darkened so the text stays readable. Copy the file URL from the Media Library."
-msgstr "Kortstil: bild bakom rubrikbandet, mörkad så att texten går att läsa. Kopiera filens URL från mediabiblioteket."
-
-#: includes/class-hp-admin.php:275
+#: includes/class-hp-settings.php:173
 msgid "Font"
 msgstr "Typsnitt"
 
-#: includes/class-hp-admin.php:281
+#: includes/class-hp-settings.php:176
 msgid "Theme font"
 msgstr "Temats typsnitt"
 
-#: includes/class-hp-admin.php:282
+#: includes/class-hp-settings.php:177
 msgid "Monospace"
 msgstr "Fast teckenbredd"
 
-#: includes/class-hp-admin.php:288
+#: includes/class-hp-settings.php:195
 msgid "Map"
 msgstr "Karta"
 
-#: includes/class-hp-admin.php:294
+#: includes/class-hp-settings.php:198
 msgid "None"
 msgstr "Ingen"
 
-#: includes/class-hp-admin.php:295
+#: includes/class-hp-settings.php:199
 msgid "OpenStreetMap"
 msgstr "OpenStreetMap"
 
-#: includes/class-hp-admin.php:296
+#: includes/class-hp-settings.php:200
 msgid "Google Maps"
 msgstr "Google Maps"
 
-#: includes/class-hp-admin.php:300
-msgid "Shown below the location details. Visitors click to load it, so no data goes to the map service before that."
-msgstr "Visas under platsinformationen. Besökare klickar för att ladda den, så ingen data skickas till karttjänsten innan dess."
-
-#: includes/class-hp-admin.php:303
-msgid "These are the defaults for this location; shortcode attributes override them."
-msgstr "Detta är standardvärden för platsen; kortkodens attribut går före."
-
 #. translators: PHP date() format of the date in the card header, e.g. "Monday November 29th".
-#: includes/class-hp-shortcode.php:56
+#: includes/class-hp-settings.php:32
 msgctxt "header date format"
 msgid "l F jS"
 msgstr "l j F"
 
-#: includes/class-hp-shortcode.php:91
+#: includes/class-hp-settings.php:67
 msgid "Current local time is"
 msgstr "Lokal tid just nu"
 
 #. translators: %s: map service, e.g. "OpenStreetMap"
-#: includes/class-hp-shortcode.php:422
+#: includes/class-hp-shortcode.php:368
 #, php-format
 msgid "Map (%s)"
 msgstr "Karta (%s)"
 
-#: includes/class-hp-shortcode.php:430
+#: includes/class-hp-shortcode.php:376
 msgid "Show map"
 msgstr "Visa karta"
 
 #. translators: %s: map service, e.g. "Google Maps"
-#: includes/class-hp-shortcode.php:432
+#: includes/class-hp-shortcode.php:378
 #, php-format
 msgid "Loads the map from %s."
 msgstr "Laddar kartan från %s."
+
+#: includes/class-hp-admin.php:44
+#: includes/class-hp-admin.php:427
+msgid "Shared holidays"
+msgstr "Gemensamma helgdagar"
+
+#: includes/class-hp-admin.php:45
+#: includes/class-hp-admin.php:457
+msgid "Import / Export"
+msgstr "Import / export"
+
+#: includes/class-hp-admin.php:51
+#: includes/class-hp-admin.php:72
+msgid "Location settings"
+msgstr "Platsinställningar"
+
+#: includes/class-hp-admin.php:57
+msgid "General"
+msgstr "Allmänt"
+
+#: includes/class-hp-admin.php:58
+msgid "Hours"
+msgstr "Öppettider"
+
+#: includes/class-hp-admin.php:59
+#: includes/class-hp-settings.php:124
+msgid "Holidays"
+msgstr "Helgdagar"
+
+#: includes/class-hp-admin.php:60
+msgid "Messages"
+msgstr "Meddelanden"
+
+#: includes/class-hp-admin.php:61
+msgid "Display"
+msgstr "Visning"
+
+#: includes/class-hp-admin.php:99
+msgid "Empty fields use the default shown in grey. Shortcode attributes override these settings."
+msgstr "Tomma fält använder standardvärdet som visas i grått. Kortkodens attribut går före dessa inställningar."
+
+#: includes/class-hp-admin.php:139
+msgid "Language"
+msgstr "Språk"
+
+#: includes/class-hp-admin.php:140
+msgid "Day and month names follow the site language (Settings → General). With Polylang or WPML they follow the page language."
+msgstr "Dag- och månadsnamn följer webbplatsens språk (Inställningar → Allmänt). Med Polylang eller WPML följer de sidans språk."
+
+#. translators: %d: number of shared holidays
+#: includes/class-hp-admin.php:226
+#, php-format
+msgid "Also use the %d shared holiday"
+msgid_plural "Also use the %d shared holidays"
+msgstr[0] "Använd även den %d gemensamma helgdagen"
+msgstr[1] "Använd även de %d gemensamma helgdagarna"
+
+#: includes/class-hp-admin.php:231
+msgid "Edit shared holidays"
+msgstr "Redigera gemensamma helgdagar"
+
+#: includes/class-hp-admin.php:369
+msgid "Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:"
+msgstr "Klistra in på valfri sida, i en widget eller i ett kortkodsblock. Den använder inställningarna i flikarna; attribut går före, t.ex.:"
+
+#: includes/class-hp-admin.php:429
+msgid "Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own."
+msgstr "Helgdagar som alla platser använder, t.ex. allmänna helgdagar. En plats kan välja bort dem under fliken Helgdagar och lägga till egna."
+
+#: includes/class-hp-admin.php:434
+msgid "Save shared holidays"
+msgstr "Spara gemensamma helgdagar"
+
+#: includes/class-hp-admin.php:442
+#: includes/class-hp-admin.php:511
+#: includes/class-hp-admin.php:517
+#: includes/class-hp-admin.php:550
+msgid "Sorry, you are not allowed to do that."
+msgstr "Du har tyvärr inte behörighet att göra det."
+
+#: includes/class-hp-admin.php:461
+#: includes/class-hp-admin.php:485
+msgid "Export"
+msgstr "Exportera"
+
+#: includes/class-hp-admin.php:462
+msgid "Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included."
+msgstr "Ladda ner alla platser (öppettider, helgdagar, uppgifter, inställningar) och de gemensamma helgdagarna som en JSON-fil. Bilder ingår inte."
+
+#: includes/class-hp-admin.php:463
+msgid "To export one location, use \"Export\" below its name in the Locations list."
+msgstr "Exportera en enskild plats med ”Exportera” under dess namn i listan Platser."
+
+#: includes/class-hp-admin.php:464
+msgid "Export all locations"
+msgstr "Exportera alla platser"
+
+#: includes/class-hp-admin.php:467
+#: includes/class-hp-admin.php:474
+msgid "Import"
+msgstr "Importera"
+
+#: includes/class-hp-admin.php:468
+msgid "Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing."
+msgstr "Importera en JSON-fil från HoursPilot. Varje plats läggs till som ett nytt utkast, så att du kan kontrollera den innan du publicerar."
+
+#: includes/class-hp-admin.php:473
+msgid "Also replace the shared holidays with the ones in the file"
+msgstr "Ersätt även de gemensamma helgdagarna med dem i filen"
+
+#: includes/class-hp-admin.php:569
+msgid "Imported location"
+msgstr "Importerad plats"
+
+#: includes/class-hp-admin.php:616
+msgid "Shared holidays saved."
+msgstr "De gemensamma helgdagarna har sparats."
+
+#. translators: %d: number of imported locations
+#: includes/class-hp-admin.php:618
+#, php-format
+msgid "%d location imported as a draft."
+msgid_plural "%d locations imported as drafts."
+msgstr[0] "%d plats importerades som utkast."
+msgstr[1] "%d platser importerades som utkast."
+
+#: includes/class-hp-admin.php:619
+msgid "That file is not a HoursPilot export."
+msgstr "Filen är ingen export från HoursPilot."
+
+#: includes/class-hp-settings.php:81
+msgid "Open message"
+msgstr "Meddelande när öppet"
+
+#: includes/class-hp-settings.php:81
+msgid "Card style: line in the header while open, e.g. \"We are open! Come in.\""
+msgstr "Kortstil: rad i rubriken när det är öppet, t.ex. ”Vi har öppet – välkommen in!”"
+
+#: includes/class-hp-settings.php:82
+msgid "Closed message"
+msgstr "Meddelande när stängt"
+
+#: includes/class-hp-settings.php:82
+msgid "Card style: line in the header while closed."
+msgstr "Kortstil: rad i rubriken när det är stängt."
+
+#: includes/class-hp-settings.php:83
+msgid "Open badge"
+msgstr "Märke när öppet"
+
+#: includes/class-hp-settings.php:83
+msgid "Card style: the short status label."
+msgstr "Kortstil: den korta statusetiketten."
+
+#: includes/class-hp-settings.php:84
+msgid "Closed badge"
+msgstr "Märke när stängt"
+
+#: includes/class-hp-settings.php:85
+msgid "Status while open"
+msgstr "Status när öppet"
+
+#: includes/class-hp-settings.php:85
+msgid "Followed by the closing time, e.g. \"Open now, closes 17:00\"."
+msgstr "Följs av stängningstiden, t.ex. ”Öppet nu, stänger 17:00”."
+
+#: includes/class-hp-settings.php:86
+msgid "Status while closed"
+msgstr "Status när stängt"
+
+#: includes/class-hp-settings.php:86
+msgid "Followed by the next opening."
+msgstr "Följs av nästa öppning."
+
+#: includes/class-hp-settings.php:88
+msgid "Closed all day"
+msgstr "Stängt hela dagen"
+
+#: includes/class-hp-settings.php:88
+msgid "Shown for closed days, e.g. \"Closed All Day\"."
+msgstr "Visas för stängda dagar, t.ex. ”Stängt hela dagen”."
+
+#: includes/class-hp-settings.php:89
+msgid "Local time text"
+msgstr "Text för lokal tid"
+
+#: includes/class-hp-settings.php:89
+msgid "Card style: text before the local time."
+msgstr "Kortstil: text före den lokala tiden."
+
+#: includes/class-hp-settings.php:90
+msgid "Holidays title"
+msgstr "Rubrik för helgdagar"
+
+#: includes/class-hp-settings.php:91
+#: includes/class-hp-settings.php:139
+msgid "Opening countdown"
+msgstr "Nedräkning till öppning"
+
+#: includes/class-hp-settings.php:91
+#: includes/class-hp-settings.php:92
+msgid "[time] is replaced by the countdown."
+msgstr "[time] ersätts med nedräkningen."
+
+#: includes/class-hp-settings.php:92
+#: includes/class-hp-settings.php:140
+msgid "Closing countdown"
+msgstr "Nedräkning till stängning"
+
+#: includes/class-hp-settings.php:95
+#: includes/class-hp-settings.php:107
+msgid "Layout"
+msgstr "Layout"
+
+#: includes/class-hp-settings.php:98
+#: includes/class-hp-settings.php:119
+msgid "Days"
+msgstr "Dagar"
+
+#: includes/class-hp-settings.php:101
+msgid "Whole week"
+msgstr "Hela veckan"
+
+#: includes/class-hp-settings.php:102
+msgid "Only today"
+msgstr "Bara i dag"
+
+#: includes/class-hp-settings.php:110
+msgid "Vertical list"
+msgstr "Lodrät lista"
+
+#: includes/class-hp-settings.php:111
+msgid "Horizontal: one card per day"
+msgstr "Vågrät: ett kort per dag"
+
+#: includes/class-hp-settings.php:112
+msgid "Calendar month"
+msgstr "Kalendermånad"
+
+#: includes/class-hp-settings.php:115
+#: includes/class-hp-settings.php:116
+msgid "Header"
+msgstr "Rubrik"
+
+#: includes/class-hp-settings.php:116
+msgid "Show the header (title or date, status, local time)"
+msgstr "Visa rubriken (titel eller datum, status, lokal tid)"
+
+#: includes/class-hp-settings.php:117
+msgid "Status badge"
+msgstr "Statusmärke"
+
+#: includes/class-hp-settings.php:117
+msgid "Show whether the location is open now"
+msgstr "Visa om platsen har öppet just nu"
+
+#: includes/class-hp-settings.php:118
+msgid "Local time"
+msgstr "Lokal tid"
+
+#: includes/class-hp-settings.php:118
+msgid "Show the current time at the location in the header"
+msgstr "Visa aktuell tid på platsen i rubriken"
+
+#: includes/class-hp-settings.php:120
+msgid "Short day names"
+msgstr "Korta dagnamn"
+
+#: includes/class-hp-settings.php:120
+msgid "Mon, Tue … instead of Monday, Tuesday …"
+msgstr "mån, tis … i stället för måndag, tisdag …"
+
+#: includes/class-hp-settings.php:121
+msgid "Group days"
+msgstr "Gruppera dagar"
+
+#: includes/class-hp-settings.php:121
+msgid "Merge consecutive days with the same hours (Mon – Fri)"
+msgstr "Slå ihop efterföljande dagar med samma tider (mån – fre)"
+
+#: includes/class-hp-settings.php:122
+msgid "Hide closed days"
+msgstr "Dölj stängda dagar"
+
+#: includes/class-hp-settings.php:123
+msgid "Hide days"
+msgstr "Dölj dagar"
+
+#: includes/class-hp-settings.php:123
+msgid "For example tick Saturday and Sunday to hide the weekend."
+msgstr "Kryssa till exempel i lördag och söndag för att dölja helgen."
+
+#: includes/class-hp-settings.php:125
+msgid "Upcoming holidays"
+msgstr "Kommande helgdagar"
+
+#: includes/class-hp-settings.php:125
+msgid "List holidays and special hours"
+msgstr "Lista helgdagar och avvikande öppettider"
+
+#: includes/class-hp-settings.php:126
+msgid "Holidays ahead (days)"
+msgstr "Helgdagar framåt (dagar)"
+
+#: includes/class-hp-settings.php:126
+msgid "How far ahead to list holidays."
+msgstr "Hur långt fram helgdagar listas."
+
+#: includes/class-hp-settings.php:129
+msgid "Holidays position"
+msgstr "Helgdagarnas placering"
+
+#: includes/class-hp-settings.php:132
+msgid "After the regular hours"
+msgstr "Efter de ordinarie tiderna"
+
+#: includes/class-hp-settings.php:133
+msgid "Before the regular hours"
+msgstr "Före de ordinarie tiderna"
+
+#: includes/class-hp-settings.php:136
+msgid "Holiday hours in the week"
+msgstr "Helgdagstider i veckan"
+
+#: includes/class-hp-settings.php:136
+msgid "Show holiday hours instead of this week's regular hours (turns off grouping)"
+msgstr "Visa helgdagstider i stället för veckans ordinarie tider (stänger av grupperingen)"
+
+#: includes/class-hp-settings.php:137
+msgid "Hide regular hours on holidays"
+msgstr "Dölj ordinarie tider på helgdagar"
+
+#: includes/class-hp-settings.php:137
+msgid "Only the holiday notice while today is a holiday"
+msgstr "Bara helgdagsmeddelandet när det är helgdag i dag"
+
+#: includes/class-hp-settings.php:138
+msgid "Countdowns"
+msgstr "Nedräkningar"
+
+#: includes/class-hp-settings.php:139
+msgid "Count down to the next opening while closed"
+msgstr "Räkna ner till nästa öppning när det är stängt"
+
+#: includes/class-hp-settings.php:140
+msgid "Count down to closing"
+msgstr "Räkna ner till stängning"
+
+#: includes/class-hp-settings.php:141
+msgid "Closing countdown starts"
+msgstr "Nedräkningen startar"
+
+#: includes/class-hp-settings.php:141
+msgid "Minutes before closing."
+msgstr "Minuter före stängning."
+
+#: includes/class-hp-settings.php:142
+msgid "Countdown format"
+msgstr "Format för nedräkning"
+
+#: includes/class-hp-settings.php:142
+msgid "Tokens {d} {h} {hh} {m} {mm} {s} {ss}. Without {d} hours keep counting past 24."
+msgstr "Koder {d} {h} {hh} {m} {mm} {s} {ss}. Utan {d} fortsätter timmarna förbi 24."
+
+#: includes/class-hp-settings.php:143
+msgid "Formats"
+msgstr "Format"
+
+#: includes/class-hp-settings.php:144
+msgid "Time format"
+msgstr "Tidsformat"
+
+#: includes/class-hp-settings.php:144
+msgid "Empty = Settings → General. H:i = 24 hours, g:i A = 12 hours."
+msgstr "Tomt = Inställningar → Allmänt. H:i = 24 timmar, g:i A = 12 timmar."
+
+#: includes/class-hp-settings.php:145
+msgid "Holiday date format"
+msgstr "Datumformat för helgdagar"
+
+#: includes/class-hp-settings.php:145
+msgid "PHP date format, e.g. j M or d/m."
+msgstr "PHP-datumformat, t.ex. j M eller d/m."
+
+#: includes/class-hp-settings.php:146
+msgid "Header date format"
+msgstr "Datumformat i rubriken"
+
+#: includes/class-hp-settings.php:146
+msgid "Card style. PHP date format, e.g. l F jS = Monday November 29th."
+msgstr "Kortstil. PHP-datumformat, t.ex. l j F = måndag 29 november."
+
+#: includes/class-hp-settings.php:149
+msgid "Digits"
+msgstr "Siffror"
+
+#: includes/class-hp-settings.php:152
+msgid "Western (0–9)"
+msgstr "Västerländska (0–9)"
+
+#: includes/class-hp-settings.php:153
+msgid "Arabic-Indic (٠–٩)"
+msgstr "Arabisk-indiska (٠–٩)"
+
+#: includes/class-hp-settings.php:156
+msgid "Location and search engines"
+msgstr "Plats och sökmotorer"
+
+#: includes/class-hp-settings.php:157
+msgid "Show address, phone, email, website"
+msgstr "Visa adress, telefon, e-post, webbplats"
+
+#: includes/class-hp-settings.php:158
+msgid "Show the location image"
+msgstr "Visa platsens bild"
+
+#: includes/class-hp-settings.php:159
+msgid "Structured data"
+msgstr "Strukturerad data"
+
+#: includes/class-hp-settings.php:159
+msgid "Add schema.org opening hours for search engines"
+msgstr "Lägg till öppettider enligt schema.org för sökmotorer"
+
+#: includes/class-hp-settings.php:180
+msgid "Links, today marker, header band. Empty = teal."
+msgstr "Länkar, markering för i dag, rubrikband. Tomt = blågrön."
+
+#: includes/class-hp-settings.php:192
+msgid "Card style: image behind the header band, darkened so the text stays readable."
+msgstr "Kortstil: bild bakom rubrikbandet, mörkad så att texten går att läsa."
+
+#: includes/class-hp-settings.php:196
+msgid "Shown below the location details. OpenStreetMap needs the map position (Location tab)."
+msgstr "Visas under platsinformationen. OpenStreetMap kräver kartposition (fliken Plats)."
+
+#: includes/class-hp-settings.php:203
+msgid "Map privacy"
+msgstr "Kartans integritet"
+
+#: includes/class-hp-settings.php:203
+msgid "Load the map only after a click (nothing is sent to the map service before)"
+msgstr "Ladda kartan först efter ett klick (inget skickas till karttjänsten innan dess)"
+
+#: includes/class-hp-settings.php:320
+msgid "Choose image"
+msgstr "Välj bild"

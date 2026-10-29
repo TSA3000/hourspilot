@@ -1,20 +1,27 @@
 <?php
 /**
- * Admin UI: meta boxes, saving, list-table column.
+ * Admin UI: tabbed location settings, shared holidays, import/export, list-table column.
  *
  * @package HoursPilot
  * @author  Arthur Sam Mahdi <tsa3000@gmail.com>
- * @version 0.1.0
+ * @version 0.5.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
 final class HP_Admin {
 
+	const EXPORT_FORMAT = 'hourspilot';
+
 	public static function init() {
 		add_action( 'add_meta_boxes_' . HP_Post_Type::TYPE, array( __CLASS__, 'meta_boxes' ) );
 		add_action( 'save_post_' . HP_Post_Type::TYPE, array( __CLASS__, 'save' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
+		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
+		add_action( 'admin_post_hp_shared_holidays', array( __CLASS__, 'save_shared' ) );
+		add_action( 'admin_post_hp_export', array( __CLASS__, 'export' ) );
+		add_action( 'admin_post_hp_import', array( __CLASS__, 'import' ) );
+		add_filter( 'post_row_actions', array( __CLASS__, 'row_actions' ), 10, 2 );
 		add_filter( 'manage_' . HP_Post_Type::TYPE . '_posts_columns', array( __CLASS__, 'columns' ) );
 		add_action( 'manage_' . HP_Post_Type::TYPE . '_posts_custom_column', array( __CLASS__, 'column' ), 10, 2 );
 	}
@@ -24,24 +31,120 @@ final class HP_Admin {
 		if ( ! $screen || HP_Post_Type::TYPE !== $screen->post_type ) {
 			return;
 		}
+		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'hourspilot-admin', HOURSPILOT_URL . 'assets/admin.css', array(), HOURSPILOT_VERSION );
+		wp_enqueue_script( 'hourspilot-admin', HOURSPILOT_URL . 'assets/admin.js', array( 'jquery', 'wp-color-picker' ), HOURSPILOT_VERSION, true );
 		if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
-			wp_enqueue_script( 'hourspilot-admin', HOURSPILOT_URL . 'assets/admin.js', array(), HOURSPILOT_VERSION, true );
+			wp_enqueue_media();
 		}
 	}
 
+	public static function menu() {
+		$parent = 'edit.php?post_type=' . HP_Post_Type::TYPE;
+		add_submenu_page( $parent, __( 'Shared holidays', 'hourspilot' ), __( 'Shared holidays', 'hourspilot' ), 'edit_others_posts', 'hp-shared-holidays', array( __CLASS__, 'page_shared' ) );
+		add_submenu_page( $parent, __( 'Import / Export', 'hourspilot' ), __( 'Import / Export', 'hourspilot' ), 'edit_others_posts', 'hp-transfer', array( __CLASS__, 'page_transfer' ) );
+	}
+
+	/* ---------- Location editor: one panel with tabs ---------- */
+
 	public static function meta_boxes() {
-		add_meta_box( 'hp_hours', __( 'Weekly hours', 'hourspilot' ), array( __CLASS__, 'box_hours' ), null, 'normal', 'high' );
-		add_meta_box( 'hp_holidays', __( 'Holidays and special hours', 'hourspilot' ), array( __CLASS__, 'box_holidays' ), null, 'normal' );
-		add_meta_box( 'hp_info', __( 'Location details', 'hourspilot' ), array( __CLASS__, 'box_info' ), null, 'normal' );
-		add_meta_box( 'hp_style', __( 'Appearance', 'hourspilot' ), array( __CLASS__, 'box_style' ), null, 'normal' );
+		add_meta_box( 'hp_panel', __( 'Location settings', 'hourspilot' ), array( __CLASS__, 'box_panel' ), null, 'normal', 'high' );
 		add_meta_box( 'hp_shortcode', __( 'Shortcode', 'hourspilot' ), array( __CLASS__, 'box_shortcode' ), null, 'side', 'high' );
+	}
+
+	private static function tabs() {
+		return array(
+			'general'    => __( 'General', 'hourspilot' ),
+			'hours'      => __( 'Hours', 'hourspilot' ),
+			'holidays'   => __( 'Holidays', 'hourspilot' ),
+			'messages'   => __( 'Messages', 'hourspilot' ),
+			'display'    => __( 'Display', 'hourspilot' ),
+			'appearance' => __( 'Appearance', 'hourspilot' ),
+			'location'   => __( 'Location', 'hourspilot' ),
+		);
+	}
+
+	public static function box_panel( $post ) {
+		wp_nonce_field( 'hp_save', 'hp_nonce' );
+		$tabs = self::tabs();
+		?>
+		<div class="hp-tabs">
+			<div class="hp-tablist" role="tablist" aria-label="<?php esc_attr_e( 'Location settings', 'hourspilot' ); ?>">
+				<?php foreach ( $tabs as $key => $label ) : ?>
+					<button type="button" role="tab" class="hp-tab" id="hp-tab-<?php echo esc_attr( $key ); ?>" aria-controls="hp-panel-<?php echo esc_attr( $key ); ?>" aria-selected="<?php echo 'general' === $key ? 'true' : 'false'; ?>" tabindex="<?php echo 'general' === $key ? '0' : '-1'; ?>" data-tab="<?php echo esc_attr( $key ); ?>">
+						<?php echo HP_Icons::svg( 'location' === $key ? 'location' : $key ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+						<span><?php echo esc_html( $label ); ?></span>
+					</button>
+				<?php endforeach; ?>
+			</div>
+			<?php foreach ( $tabs as $key => $label ) : ?>
+				<div class="hp-panel" role="tabpanel" id="hp-panel-<?php echo esc_attr( $key ); ?>" aria-labelledby="hp-tab-<?php echo esc_attr( $key ); ?>" <?php echo 'general' === $key ? '' : 'hidden'; ?>>
+					<?php
+					switch ( $key ) {
+						case 'general':
+							self::tab_general( $post );
+							break;
+						case 'hours':
+							self::tab_hours( $post );
+							break;
+						case 'holidays':
+							self::tab_holidays( $post );
+							break;
+						case 'location':
+							self::tab_location( $post );
+							break;
+						default:
+							HP_Settings::render_tab( $key, $post->ID );
+							if ( 'appearance' !== $key ) {
+								echo '<p class="description hp-defaults-note">' . esc_html__( 'Empty fields use the default shown in grey. Shortcode attributes override these settings.', 'hourspilot' ) . '</p>';
+							}
+					}
+					?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+		<?php
+	}
+
+	/* ---------- General ---------- */
+
+	private static function tab_general( $post ) {
+		$tz      = HP_Hours::timezone_string( $post->ID );
+		$type    = HP_Hours::schema_type( $post->ID );
+		$site_tz = wp_timezone_string();
+		?>
+		<div class="hp-info-grid">
+			<label for="hp_timezone"><?php esc_html_e( 'Time zone', 'hourspilot' ); ?></label>
+			<div>
+				<select id="hp_timezone" name="hp_timezone">
+					<?php foreach ( timezone_identifiers_list() as $zone ) : ?>
+						<option value="<?php echo esc_attr( $zone ); ?>" <?php selected( $tz, $zone ); ?>><?php echo esc_html( str_replace( '_', ' ', $zone ) ); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<?php if ( ! in_array( $site_tz, timezone_identifiers_list(), true ) ) : ?>
+					<p class="description"><?php esc_html_e( 'Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year.', 'hourspilot' ); ?></p>
+				<?php endif; ?>
+			</div>
+
+			<label for="hp_schema_type"><?php esc_html_e( 'Business type', 'hourspilot' ); ?></label>
+			<div>
+				<select id="hp_schema_type" name="hp_schema_type">
+					<?php foreach ( HP_Hours::SCHEMA_TYPES as $t ) : ?>
+						<option value="<?php echo esc_attr( $t ); ?>" <?php selected( $type, $t ); ?>><?php echo esc_html( trim( preg_replace( '/(?<!^)([A-Z])/', ' $1', $t ) ) ); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<p class="description"><?php esc_html_e( 'Used in the structured data search engines read.', 'hourspilot' ); ?></p>
+			</div>
+
+			<span class="hp-label"><?php esc_html_e( 'Language', 'hourspilot' ); ?></span>
+			<p class="description hp-plain"><?php esc_html_e( 'Day and month names follow the site language (Settings → General). With Polylang or WPML they follow the page language.', 'hourspilot' ); ?></p>
+		</div>
+		<?php
 	}
 
 	/* ---------- Weekly hours ---------- */
 
-	public static function box_hours( $post ) {
-		wp_nonce_field( 'hp_save', 'hp_nonce' );
+	private static function tab_hours( $post ) {
 		$hours = HP_Hours::get_hours( $post->ID );
 		$modes = array(
 			'open'   => __( 'Open', 'hourspilot' ),
@@ -58,11 +161,11 @@ final class HP_Admin {
 				<tr class="hp-day hp-mode-<?php echo esc_attr( $day['mode'] ); ?>" data-day="<?php echo (int) $d; ?>">
 					<th scope="row"><?php echo esc_html( HP_Hours::day_name( $d ) ); ?></th>
 					<td class="hp-mode-cell">
-						<select name="hp_hours[<?php echo (int) $d; ?>][mode]" class="hp-mode" aria-label="<?php echo esc_attr( HP_Hours::day_name( $d ) ); ?>">
+						<div class="hp-segmented" role="radiogroup" aria-label="<?php echo esc_attr( HP_Hours::day_name( $d ) ); ?>">
 							<?php foreach ( $modes as $val => $label ) : ?>
-								<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $day['mode'], $val ); ?>><?php echo esc_html( $label ); ?></option>
+								<label><input type="radio" class="hp-mode" name="hp_hours[<?php echo (int) $d; ?>][mode]" value="<?php echo esc_attr( $val ); ?>" <?php checked( $day['mode'], $val ); ?>><span><?php echo esc_html( $label ); ?></span></label>
 							<?php endforeach; ?>
-						</select>
+						</div>
 					</td>
 					<td class="hp-slots-cell">
 						<div class="hp-slots">
@@ -109,8 +212,29 @@ final class HP_Admin {
 
 	/* ---------- Holidays ---------- */
 
-	public static function box_holidays( $post ) {
-		$holidays = HP_Hours::get_holidays( $post->ID );
+	private static function tab_holidays( $post ) {
+		$shared = HP_Hours::shared_holidays();
+		self::holidays_table( HP_Hours::get_holidays( $post->ID, false ) );
+		?>
+		<p class="hp-shared-toggle">
+			<label class="hp-check">
+				<input type="hidden" name="hp_use_shared" value="0">
+				<input type="checkbox" name="hp_use_shared" value="1" <?php checked( HP_Hours::uses_shared( $post->ID ) ); ?>>
+				<?php
+				printf(
+					/* translators: %d: number of shared holidays */
+					esc_html( _n( 'Also use the %d shared holiday', 'Also use the %d shared holidays', count( $shared ), 'hourspilot' ) ),
+					count( $shared )
+				);
+				?>
+			</label>
+			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . HP_Post_Type::TYPE . '&page=hp-shared-holidays' ) ); ?>"><?php esc_html_e( 'Edit shared holidays', 'hourspilot' ); ?></a>
+		</p>
+		<?php
+	}
+
+	/** Holiday table + add button + row template (location tab and Shared holidays page). */
+	private static function holidays_table( $holidays ) {
 		?>
 		<table class="widefat striped hp-admin-holidays">
 			<thead>
@@ -160,36 +284,37 @@ final class HP_Admin {
 		);
 	}
 
+	/** Holidays from the form (hours as "10:00-14:00, …" text) in storage format. */
+	private static function parse_holidays( $in ) {
+		$out = array();
+		foreach ( (array) $in as $h ) {
+			if ( ! is_array( $h ) ) {
+				continue;
+			}
+			$from = sanitize_text_field( $h['from'] ?? '' );
+			if ( ! HP_Hours::valid_date( $from ) ) {
+				continue;
+			}
+			$to    = sanitize_text_field( $h['to'] ?? '' );
+			$out[] = array(
+				'from'      => $from,
+				'to'        => HP_Hours::valid_date( $to ) && $to >= $from ? $to : $from,
+				'label'     => sanitize_text_field( $h['label'] ?? '' ),
+				'slots'     => HP_Hours::parse_slots_string( sanitize_text_field( $h['hours'] ?? '' ) ),
+				'recurring' => ! empty( $h['recurring'] ),
+			);
+		}
+		return $out;
+	}
+
 	/* ---------- Location details ---------- */
 
-	public static function box_info( $post ) {
-		$info    = HP_Hours::get_info( $post->ID );
-		$tz      = HP_Hours::timezone_string( $post->ID );
-		$type    = HP_Hours::schema_type( $post->ID );
-		$site_tz = wp_timezone_string();
+	private static function tab_location( $post ) {
+		$info = HP_Hours::get_info( $post->ID );
 		?>
 		<div class="hp-info-grid">
-			<label for="hp_timezone"><?php esc_html_e( 'Time zone', 'hourspilot' ); ?></label>
-			<div>
-				<select id="hp_timezone" name="hp_timezone">
-					<?php foreach ( timezone_identifiers_list() as $zone ) : ?>
-						<option value="<?php echo esc_attr( $zone ); ?>" <?php selected( $tz, $zone ); ?>><?php echo esc_html( str_replace( '_', ' ', $zone ) ); ?></option>
-					<?php endforeach; ?>
-				</select>
-				<?php if ( ! in_array( $site_tz, timezone_identifiers_list(), true ) ) : ?>
-					<p class="description"><?php esc_html_e( 'Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year.', 'hourspilot' ); ?></p>
-				<?php endif; ?>
-			</div>
-
-			<label for="hp_schema_type"><?php esc_html_e( 'Business type', 'hourspilot' ); ?></label>
-			<div>
-				<select id="hp_schema_type" name="hp_schema_type">
-					<?php foreach ( HP_Hours::SCHEMA_TYPES as $t ) : ?>
-						<option value="<?php echo esc_attr( $t ); ?>" <?php selected( $type, $t ); ?>><?php echo esc_html( trim( preg_replace( '/(?<!^)([A-Z])/', ' $1', $t ) ) ); ?></option>
-					<?php endforeach; ?>
-				</select>
-				<p class="description"><?php esc_html_e( 'Used in the structured data search engines read.', 'hourspilot' ); ?></p>
-			</div>
+			<label for="hp_address"><?php esc_html_e( 'Address', 'hourspilot' ); ?></label>
+			<textarea id="hp_address" name="hp_info[address]" rows="3"><?php echo esc_textarea( $info['address'] ); ?></textarea>
 
 			<label for="hp_phone"><?php esc_html_e( 'Phone', 'hourspilot' ); ?></label>
 			<input type="tel" id="hp_phone" name="hp_info[phone]" value="<?php echo esc_attr( $info['phone'] ); ?>">
@@ -202,9 +327,6 @@ final class HP_Admin {
 
 			<label for="hp_website"><?php esc_html_e( 'Website', 'hourspilot' ); ?></label>
 			<input type="url" id="hp_website" name="hp_info[website]" value="<?php echo esc_attr( $info['website'] ); ?>" placeholder="https://">
-
-			<label for="hp_address"><?php esc_html_e( 'Address', 'hourspilot' ); ?></label>
-			<textarea id="hp_address" name="hp_info[address]" rows="3"><?php echo esc_textarea( $info['address'] ); ?></textarea>
 
 			<label for="hp_map_url"><?php esc_html_e( 'Map link', 'hourspilot' ); ?></label>
 			<div>
@@ -221,87 +343,17 @@ final class HP_Admin {
 		<?php
 	}
 
-	/* ---------- Appearance ---------- */
-
-	public static function box_style( $post ) {
-		$st = HP_Hours::get_style( $post->ID );
-		$sel = function ( $name, $options ) use ( $st ) {
-			echo '<select id="hp_style_' . esc_attr( $name ) . '" name="hp_style[' . esc_attr( $name ) . ']">';
-			foreach ( $options as $val => $label ) {
-				echo '<option value="' . esc_attr( $val ) . '"' . selected( $st[ $name ], $val, false ) . '>' . esc_html( $label ) . '</option>';
-			}
-			echo '</select>';
-		};
-		?>
-		<div class="hp-info-grid">
-			<label for="hp_style_style"><?php esc_html_e( 'Style', 'hourspilot' ); ?></label>
-			<div>
-				<?php
-				$sel(
-					'style',
-					array(
-						'default' => __( 'Clean (default)', 'hourspilot' ),
-						'card'    => __( 'Card with header band', 'hourspilot' ),
-					)
-				);
-				?>
-			</div>
-
-			<label for="hp_style_accent"><?php esc_html_e( 'Accent colour', 'hourspilot' ); ?></label>
-			<input type="color" id="hp_style_accent" name="hp_style[accent]" value="<?php echo esc_attr( $st['accent'] ? $st['accent'] : '#0f766e' ); ?>">
-
-			<label for="hp_style_band"><?php esc_html_e( 'Header band', 'hourspilot' ); ?></label>
-			<div>
-				<?php
-				$sel(
-					'band',
-					array(
-						'accent' => __( 'Accent colour', 'hourspilot' ),
-						'status' => __( 'Green when open, red when closed', 'hourspilot' ),
-						'color'  => __( 'Own colour (below)', 'hourspilot' ),
-					)
-				);
-				?>
-				<input type="color" name="hp_style[band_color]" value="<?php echo esc_attr( $st['band_color'] ? $st['band_color'] : '#3346b8' ); ?>" aria-label="<?php esc_attr_e( 'Header band colour', 'hourspilot' ); ?>">
-				<p class="description"><?php esc_html_e( 'Card style only.', 'hourspilot' ); ?></p>
-			</div>
-
-			<label for="hp_style_header_image"><?php esc_html_e( 'Header image', 'hourspilot' ); ?></label>
-			<div>
-				<input type="url" id="hp_style_header_image" name="hp_style[header_image]" value="<?php echo esc_attr( $st['header_image'] ); ?>" placeholder="https://…">
-				<p class="description"><?php esc_html_e( 'Card style: image behind the header band, darkened so the text stays readable. Copy the file URL from the Media Library.', 'hourspilot' ); ?></p>
-			</div>
-
-			<label for="hp_style_font"><?php esc_html_e( 'Font', 'hourspilot' ); ?></label>
-			<div>
-				<?php
-				$sel(
-					'font',
-					array(
-						'theme' => __( 'Theme font', 'hourspilot' ),
-						'mono'  => __( 'Monospace', 'hourspilot' ),
-					)
-				);
-				?>
-			</div>
-
-			<label for="hp_style_map"><?php esc_html_e( 'Map', 'hourspilot' ); ?></label>
-			<div>
-				<?php
-				$sel(
-					'map',
-					array(
-						''       => __( 'None', 'hourspilot' ),
-						'osm'    => __( 'OpenStreetMap', 'hourspilot' ),
-						'google' => __( 'Google Maps', 'hourspilot' ),
-					)
-				);
-				?>
-				<p class="description"><?php esc_html_e( 'Shown below the location details. Visitors click to load it, so no data goes to the map service before that.', 'hourspilot' ); ?></p>
-			</div>
-		</div>
-		<p class="description"><?php esc_html_e( 'These are the defaults for this location; shortcode attributes override them.', 'hourspilot' ); ?></p>
-		<?php
+	private static function sanitize_info( $in ) {
+		$in = is_array( $in ) ? $in : array();
+		return array(
+			'phone'   => sanitize_text_field( $in['phone'] ?? '' ),
+			'phone2'  => sanitize_text_field( $in['phone2'] ?? '' ),
+			'email'   => sanitize_email( $in['email'] ?? '' ),
+			'website' => esc_url_raw( $in['website'] ?? '' ),
+			'address' => sanitize_textarea_field( $in['address'] ?? '' ),
+			'map_url' => esc_url_raw( $in['map_url'] ?? '' ),
+			'coords'  => HP_Hours::valid_coords( $in['coords'] ?? '' ),
+		);
 	}
 
 	/* ---------- Shortcode helper ---------- */
@@ -314,19 +366,12 @@ final class HP_Admin {
 		$sc = sprintf( '[hourspilot id="%d"]', $post->ID );
 		?>
 		<input type="text" readonly class="widefat hp-copy" value="<?php echo esc_attr( $sc ); ?>" onclick="this.select()">
-		<p class="description"><?php esc_html_e( 'Paste into any page, widget or page-builder shortcode block. Common options:', 'hourspilot' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:', 'hourspilot' ); ?></p>
 		<ul class="hp-sc-help">
-			<li><code>style="card"</code></li>
-			<li><code>layout="horizontal"</code></li>
-			<li><code>layout="calendar"</code></li>
 			<li><code>view="today"</code></li>
-			<li><code>short_days="1"</code></li>
-			<li><code>group="0"</code></li>
-			<li><code>hide_closed="1"</code></li>
-			<li><code>hide_days="6,7"</code></li>
+			<li><code>style="card"</code></li>
+			<li><code>layout="calendar"</code></li>
 			<li><code>show_info="0"</code></li>
-			<li><code>show_local_time="1"</code></li>
-			<li><code>accent="#0f766e"</code></li>
 		</ul>
 		<?php
 	}
@@ -345,79 +390,237 @@ final class HP_Admin {
 		$hours_in    = isset( $_POST['hp_hours'] ) && is_array( $_POST['hp_hours'] ) ? wp_unslash( $_POST['hp_hours'] ) : array();
 		$holidays_in = isset( $_POST['hp_holidays'] ) && is_array( $_POST['hp_holidays'] ) ? wp_unslash( $_POST['hp_holidays'] ) : array();
 		$info_in     = isset( $_POST['hp_info'] ) && is_array( $_POST['hp_info'] ) ? wp_unslash( $_POST['hp_info'] ) : array();
+		$settings_in = isset( $_POST['hp_settings'] ) && is_array( $_POST['hp_settings'] ) ? wp_unslash( $_POST['hp_settings'] ) : array();
 		// phpcs:enable
 
-		// Weekly hours.
-		$hours = array();
-		foreach ( HP_Hours::DAYS as $d ) {
-			$day         = isset( $hours_in[ $d ] ) && is_array( $hours_in[ $d ] ) ? $hours_in[ $d ] : array();
-			$mode        = isset( $day['mode'] ) && in_array( $day['mode'], HP_Hours::MODES, true ) ? $day['mode'] : 'closed';
-			$hours[ $d ] = array(
-				'mode'  => $mode,
-				'slots' => HP_Hours::clean_slots( $day['slots'] ?? array() ),
-			);
-		}
-		update_post_meta( $post_id, '_hp_hours', $hours );
-
-		// Holidays.
-		$holidays = array();
-		foreach ( $holidays_in as $h ) {
-			if ( ! is_array( $h ) ) {
-				continue;
-			}
-			$from = sanitize_text_field( $h['from'] ?? '' );
-			if ( ! HP_Hours::valid_date( $from ) ) {
-				continue;
-			}
-			$to         = sanitize_text_field( $h['to'] ?? '' );
-			$holidays[] = array(
-				'from'      => $from,
-				'to'        => HP_Hours::valid_date( $to ) && $to >= $from ? $to : $from,
-				'label'     => sanitize_text_field( $h['label'] ?? '' ),
-				'slots'     => HP_Hours::parse_slots_string( sanitize_text_field( $h['hours'] ?? '' ) ),
-				'recurring' => ! empty( $h['recurring'] ),
-			);
-		}
-		update_post_meta( $post_id, '_hp_holidays', $holidays );
-
-		// Details.
-		update_post_meta(
-			$post_id,
-			'_hp_info',
-			array(
-				'phone'   => sanitize_text_field( $info_in['phone'] ?? '' ),
-				'phone2'  => sanitize_text_field( $info_in['phone2'] ?? '' ),
-				'email'   => sanitize_email( $info_in['email'] ?? '' ),
-				'website' => esc_url_raw( $info_in['website'] ?? '' ),
-				'address' => sanitize_textarea_field( $info_in['address'] ?? '' ),
-				'map_url' => esc_url_raw( $info_in['map_url'] ?? '' ),
-				'coords'  => HP_Hours::valid_coords( $info_in['coords'] ?? '' ),
-			)
-		);
-
-		// Appearance.
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitised field by field.
-		$style_in = isset( $_POST['hp_style'] ) && is_array( $_POST['hp_style'] ) ? wp_unslash( $_POST['hp_style'] ) : array();
-		$pick     = fn( $k, $allowed ) => in_array( $style_in[ $k ] ?? '', $allowed, true ) ? $style_in[ $k ] : HP_Hours::STYLE_DEFAULTS[ $k ];
-		update_post_meta(
-			$post_id,
-			'_hp_style',
-			array(
-				'style'        => $pick( 'style', array( 'default', 'card' ) ),
-				'accent'       => (string) sanitize_hex_color( $style_in['accent'] ?? '' ),
-				'band'         => $pick( 'band', array( 'accent', 'status', 'color' ) ),
-				'band_color'   => (string) sanitize_hex_color( $style_in['band_color'] ?? '' ),
-				'header_image' => esc_url_raw( $style_in['header_image'] ?? '' ),
-				'font'         => $pick( 'font', array( 'theme', 'mono' ) ),
-				'map'          => $pick( 'map', array( '', 'osm', 'google' ) ),
-			)
-		);
+		update_post_meta( $post_id, '_hp_hours', self::sanitize_hours( $hours_in ) );
+		update_post_meta( $post_id, '_hp_holidays', self::parse_holidays( $holidays_in ) );
+		update_post_meta( $post_id, '_hp_info', self::sanitize_info( $info_in ) );
+		update_post_meta( $post_id, HP_Settings::META, HP_Settings::sanitize( $settings_in ) );
+		delete_post_meta( $post_id, '_hp_style' ); // 0.4.0 Appearance box, now part of the settings.
+		update_post_meta( $post_id, '_hp_use_shared', empty( $_POST['hp_use_shared'] ) ? '0' : '1' );
 
 		$tz = isset( $_POST['hp_timezone'] ) ? sanitize_text_field( wp_unslash( $_POST['hp_timezone'] ) ) : '';
 		update_post_meta( $post_id, '_hp_timezone', in_array( $tz, timezone_identifiers_list(), true ) ? $tz : '' );
 
 		$type = isset( $_POST['hp_schema_type'] ) ? sanitize_text_field( wp_unslash( $_POST['hp_schema_type'] ) ) : '';
 		update_post_meta( $post_id, '_hp_schema_type', in_array( $type, HP_Hours::SCHEMA_TYPES, true ) ? $type : 'LocalBusiness' );
+	}
+
+	private static function sanitize_hours( $in ) {
+		$hours = array();
+		foreach ( HP_Hours::DAYS as $d ) {
+			$day         = isset( $in[ $d ] ) && is_array( $in[ $d ] ) ? $in[ $d ] : array();
+			$hours[ $d ] = array(
+				'mode'  => isset( $day['mode'] ) && in_array( $day['mode'], HP_Hours::MODES, true ) ? $day['mode'] : 'closed',
+				'slots' => HP_Hours::clean_slots( $day['slots'] ?? array() ),
+			);
+		}
+		return $hours;
+	}
+
+	/* ---------- Shared holidays page ---------- */
+
+	public static function page_shared() {
+		?>
+		<div class="wrap hp-page">
+			<h1><?php echo HP_Icons::svg( 'holidays', 26 ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?> <?php esc_html_e( 'Shared holidays', 'hourspilot' ); ?></h1>
+			<?php self::notice(); ?>
+			<p><?php esc_html_e( 'Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own.', 'hourspilot' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="hp_shared_holidays">
+				<?php wp_nonce_field( 'hp_shared_holidays' ); ?>
+				<?php self::holidays_table( HP_Hours::shared_holidays() ); ?>
+				<?php submit_button( __( 'Save shared holidays', 'hourspilot' ) ); ?>
+			</form>
+		</div>
+		<?php
+	}
+
+	public static function save_shared() {
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'hourspilot' ) );
+		}
+		check_admin_referer( 'hp_shared_holidays' );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- parse_holidays() sanitises.
+		$in = isset( $_POST['hp_holidays'] ) && is_array( $_POST['hp_holidays'] ) ? wp_unslash( $_POST['hp_holidays'] ) : array();
+		update_option( HP_Hours::SHARED_OPTION, self::parse_holidays( $in ), false );
+		self::back( 'hp-shared-holidays', 'saved' );
+	}
+
+	/* ---------- Import / Export ---------- */
+
+	public static function page_transfer() {
+		$count = (int) wp_count_posts( HP_Post_Type::TYPE )->publish + (int) wp_count_posts( HP_Post_Type::TYPE )->draft;
+		?>
+		<div class="wrap hp-page">
+			<h1><?php echo HP_Icons::svg( 'transfer', 26 ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?> <?php esc_html_e( 'Import / Export', 'hourspilot' ); ?></h1>
+			<?php self::notice(); ?>
+			<div class="hp-cards">
+				<div class="card">
+					<h2><?php esc_html_e( 'Export', 'hourspilot' ); ?></h2>
+					<p><?php esc_html_e( 'Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included.', 'hourspilot' ); ?></p>
+					<p><?php esc_html_e( 'To export one location, use "Export" below its name in the Locations list.', 'hourspilot' ); ?></p>
+					<p><a class="button button-primary<?php echo $count ? '' : ' disabled'; ?>" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=hp_export' ), 'hp_export' ) ); ?>"><?php esc_html_e( 'Export all locations', 'hourspilot' ); ?></a></p>
+				</div>
+				<div class="card">
+					<h2><?php esc_html_e( 'Import', 'hourspilot' ); ?></h2>
+					<p><?php esc_html_e( 'Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing.', 'hourspilot' ); ?></p>
+					<form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="hp_import">
+						<?php wp_nonce_field( 'hp_import' ); ?>
+						<p><input type="file" name="hp_file" accept=".json,application/json" required></p>
+						<p><label class="hp-check"><input type="checkbox" name="hp_shared" value="1"> <?php esc_html_e( 'Also replace the shared holidays with the ones in the file', 'hourspilot' ); ?></label></p>
+						<?php submit_button( __( 'Import', 'hourspilot' ), 'secondary', 'submit', false ); ?>
+					</form>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	public static function row_actions( $actions, $post ) {
+		if ( HP_Post_Type::TYPE === $post->post_type && current_user_can( 'edit_post', $post->ID ) ) {
+			$url               = wp_nonce_url( admin_url( 'admin-post.php?action=hp_export&id=' . $post->ID ), 'hp_export' );
+			$actions['hp_export'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Export', 'hourspilot' ) . '</a>';
+		}
+		return $actions;
+	}
+
+	/** One location as plain data (the export format). */
+	private static function export_location( $id ) {
+		return array(
+			'title'       => get_the_title( $id ),
+			'status'      => get_post_status( $id ),
+			'menu_order'  => (int) get_post_field( 'menu_order', $id ),
+			'timezone'    => (string) get_post_meta( $id, '_hp_timezone', true ),
+			'schema_type' => HP_Hours::schema_type( $id ),
+			'hours'       => HP_Hours::get_hours( $id ),
+			'holidays'    => HP_Hours::get_holidays( $id, false ),
+			'use_shared'  => HP_Hours::uses_shared( $id ),
+			'info'        => HP_Hours::get_info( $id ),
+			'settings'    => HP_Settings::get( $id ),
+		);
+	}
+
+	public static function export() {
+		check_admin_referer( 'hp_export' );
+		$id = isset( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
+		if ( $id ) {
+			if ( ! current_user_can( 'edit_post', $id ) || HP_Post_Type::TYPE !== get_post_type( $id ) ) {
+				wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'hourspilot' ) );
+			}
+			$ids  = array( $id );
+			$name = sanitize_title( get_the_title( $id ) );
+		} else {
+			if ( ! current_user_can( 'edit_others_posts' ) ) {
+				wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'hourspilot' ) );
+			}
+			$ids  = get_posts(
+				array(
+					'post_type'   => HP_Post_Type::TYPE,
+					'post_status' => array( 'publish', 'draft', 'private', 'pending' ),
+					'numberposts' => -1,
+					'orderby'     => 'menu_order title',
+					'order'       => 'ASC',
+					'fields'      => 'ids',
+				)
+			);
+			$name = 'all';
+		}
+		$data = array(
+			'format'    => self::EXPORT_FORMAT,
+			'version'   => HOURSPILOT_VERSION,
+			'site'      => home_url(),
+			'exported'  => gmdate( 'c' ),
+			'locations' => array_map( array( __CLASS__, 'export_location' ), $ids ),
+		);
+		if ( ! $id ) {
+			$data['shared_holidays'] = HP_Hours::shared_holidays();
+		}
+		nocache_headers();
+		header( 'Content-Type: application/json; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename="hourspilot-' . $name . '-' . gmdate( 'Y-m-d' ) . '.json"' );
+		echo wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+		exit;
+	}
+
+	public static function import() {
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
+			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'hourspilot' ) );
+		}
+		check_admin_referer( 'hp_import' );
+		$file = isset( $_FILES['hp_file']['tmp_name'] ) ? sanitize_text_field( wp_unslash( $_FILES['hp_file']['tmp_name'] ) ) : '';
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- uploaded temp file.
+		$data = $file && is_uploaded_file( $file ) ? json_decode( (string) file_get_contents( $file ), true ) : null;
+		if ( ! is_array( $data ) || self::EXPORT_FORMAT !== ( $data['format'] ?? '' ) || ! is_array( $data['locations'] ?? null ) ) {
+			self::back( 'hp-transfer', 'invalid' );
+		}
+
+		$n = 0;
+		foreach ( $data['locations'] as $loc ) {
+			if ( ! is_array( $loc ) ) {
+				continue;
+			}
+			$id = wp_insert_post(
+				array(
+					'post_type'   => HP_Post_Type::TYPE,
+					'post_status' => 'draft',
+					'post_title'  => sanitize_text_field( $loc['title'] ?? __( 'Imported location', 'hourspilot' ) ),
+					'menu_order'  => (int) ( $loc['menu_order'] ?? 0 ),
+				),
+				true
+			);
+			if ( is_wp_error( $id ) ) {
+				continue;
+			}
+			$tz   = (string) ( $loc['timezone'] ?? '' );
+			$type = (string) ( $loc['schema_type'] ?? '' );
+			update_post_meta( $id, '_hp_hours', self::sanitize_hours( $loc['hours'] ?? array() ) );
+			update_post_meta( $id, '_hp_holidays', HP_Hours::normalize_holidays( $loc['holidays'] ?? array() ) );
+			update_post_meta( $id, '_hp_info', self::sanitize_info( $loc['info'] ?? array() ) );
+			update_post_meta( $id, HP_Settings::META, HP_Settings::sanitize( $loc['settings'] ?? array(), false ) );
+			update_post_meta( $id, '_hp_use_shared', empty( $loc['use_shared'] ) ? '0' : '1' );
+			update_post_meta( $id, '_hp_timezone', in_array( $tz, timezone_identifiers_list(), true ) ? $tz : '' );
+			update_post_meta( $id, '_hp_schema_type', in_array( $type, HP_Hours::SCHEMA_TYPES, true ) ? $type : 'LocalBusiness' );
+			++$n;
+		}
+		if ( ! empty( $_POST['hp_shared'] ) && isset( $data['shared_holidays'] ) ) {
+			update_option( HP_Hours::SHARED_OPTION, HP_Hours::normalize_holidays( $data['shared_holidays'] ), false );
+		}
+		self::back( 'hp-transfer', 'imported', $n );
+	}
+
+	/** Redirect back to one of our pages with a result code. */
+	private static function back( $page, $result, $count = 0 ) {
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'post_type' => HP_Post_Type::TYPE,
+					'page'      => $page,
+					'hp_result' => $result,
+					'hp_count'  => $count,
+				),
+				admin_url( 'edit.php' )
+			)
+		);
+		exit;
+	}
+
+	private static function notice() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- display only.
+		$result = isset( $_GET['hp_result'] ) ? sanitize_key( $_GET['hp_result'] ) : '';
+		$count  = isset( $_GET['hp_count'] ) ? absint( $_GET['hp_count'] ) : 0;
+		// phpcs:enable
+		$messages = array(
+			'saved'    => array( 'success', __( 'Shared holidays saved.', 'hourspilot' ) ),
+			/* translators: %d: number of imported locations */
+			'imported' => array( 'success', sprintf( _n( '%d location imported as a draft.', '%d locations imported as drafts.', $count, 'hourspilot' ), $count ) ),
+			'invalid'  => array( 'error', __( 'That file is not a HoursPilot export.', 'hourspilot' ) ),
+		);
+		if ( isset( $messages[ $result ] ) ) {
+			printf( '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>', esc_attr( $messages[ $result ][0] ), esc_html( $messages[ $result ][1] ) );
+		}
 	}
 
 	/* ---------- List table ---------- */

@@ -40,7 +40,7 @@ final class HP_Post_Type {
 				'show_ui'         => true,
 				'show_in_menu'    => true,
 				'show_in_rest'    => false,
-				'menu_icon'       => 'dashicons-clock',
+				'menu_icon'       => HP_Icons::menu_icon(),
 				'menu_position'   => 25,
 				'supports'        => array( 'title', 'thumbnail', 'page-attributes' ),
 				'capability_type' => 'page',

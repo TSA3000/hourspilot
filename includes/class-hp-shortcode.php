@@ -8,7 +8,7 @@
  *
  * @package HoursPilot
  * @author  Arthur Sam Mahdi <tsa3000@gmail.com>
- * @version 0.4.0
+ * @version 0.5.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -40,62 +40,8 @@ final class HP_Shortcode {
 				: '';
 		}
 		$id = $post->ID;
-		$st = HP_Hours::get_style( $id ); // The location's Appearance box = defaults.
-
-		$a = shortcode_atts(
-			array(
-				'id'                    => 0,
-				'view'                  => 'week', // week | today.
-				'layout'                => 'vertical', // vertical | horizontal | calendar.
-				'style'                 => $st['style'], // default | card.
-				'font'                  => $st['font'], // theme | mono.
-				'band'                  => $st['band'], // Card header: accent | status | color.
-				'band_color'            => $st['band_color'],
-				'header_image'          => $st['header_image'],
-				/* translators: PHP date() format of the date in the card header, e.g. "Monday November 29th". */
-				'header_date_format'    => _x( 'l F jS', 'header date format', 'hourspilot' ),
-				'title'                 => '', // Empty = location name, "0" = no title.
-				'group'                 => '1', // Merge consecutive days with identical hours.
-				'short_days'            => '0',
-				'hide_closed'           => '0',
-				'hide_days'             => '', // ISO numbers, e.g. "6,7".
-				'show_header'           => '1',
-				'show_status'           => '1',
-				'show_local_time'       => '0',
-				'show_holidays'         => '1',
-				'holiday_days'          => '60', // How far ahead to list holidays.
-				'holidays_position'     => 'bottom', // top | bottom (before or after the regular hours).
-				'hide_hours_on_holiday' => '0', // Hide the regular hours while today is a holiday.
-				'show_info'             => '1',
-				'show_image'            => '1',
-				'map'                   => $st['map'], // '' | osm | google.
-				'map_consent'           => '1', // 1 = visitors click to load the map.
-				'schema'                => '1',
-				'accent'                => $st['accent'],
-				'time_format'           => '', // Empty = Settings → General, e.g. "H:i" or "g:i A".
-				'date_format'           => 'j M',
-				'digits'                => apply_filters( 'hourspilot_digits', 'latn' ), // latn (0-9) | arab (٠-٩).
-				'holiday_hours'         => '0', // Holiday hours replace this week's regular hours (turns off grouping).
-				'open_countdown'        => '0',
-				'close_countdown'       => '0',
-				'countdown_minutes'     => '60', // Show the close countdown this long before closing.
-				'countdown_format'      => '{h}:{mm}:{ss}', // Tokens: {d} {h} {hh} {m} {mm} {s} {ss}.
-				'open_countdown_text'   => __( 'Opening in [time]', 'hourspilot' ),
-				'close_countdown_text'  => __( 'Closing in [time]', 'hourspilot' ),
-				'open_text'             => __( 'Open now', 'hourspilot' ),
-				'closed_text'           => __( 'Closed now', 'hourspilot' ),
-				'badge_open'            => __( 'Open', 'hourspilot' ), // Card badge.
-				'badge_closed'          => __( 'Closed', 'hourspilot' ),
-				'open_message'          => '', // Card header line while open, e.g. "Come in!".
-				'closed_message'        => '',
-				'local_time_label'      => __( 'Current local time is', 'hourspilot' ),
-				'closed_label'          => __( 'Closed', 'hourspilot' ),
-				'open24_label'          => __( 'Open 24 hours', 'hourspilot' ),
-				'holiday_title'         => __( 'Holidays and special hours', 'hourspilot' ),
-			),
-			$atts,
-			'hourspilot'
-		);
+		// Built-in defaults < the location's settings (admin tabs) < shortcode attributes.
+		$a = shortcode_atts( array_merge( HP_Settings::defaults(), HP_Settings::get( $id ) ), $atts, 'hourspilot' );
 
 		$b     = fn( $k ) => filter_var( $a[ $k ], FILTER_VALIDATE_BOOLEAN );
 		$short = $b( 'short_days' );
