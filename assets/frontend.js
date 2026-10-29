@@ -121,7 +121,7 @@
 
 		var lt = el.querySelector('.hp-localtime');
 		if (lt) {
-			var opts = { timeZone: cfg.tz, hour: '2-digit', minute: '2-digit', numberingSystem: cfg.dg === 'arab' ? 'arab' : 'latn' };
+			var opts = { timeZone: cfg.tz, hour: 'numeric', minute: '2-digit', numberingSystem: cfg.dg === 'arab' ? 'arab' : 'latn' };
 			try { lt.textContent = new Intl.DateTimeFormat(document.documentElement.lang || undefined, opts).format(new Date()); }
 			catch (e) { lt.textContent = new Intl.DateTimeFormat(undefined, opts).format(new Date()); }
 		}

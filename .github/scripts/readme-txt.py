@@ -7,7 +7,7 @@ and ```mermaid diagrams dropped."""
 import re
 import sys
 
-DROP = {"Releases"}                       # ### subsections not shipped
+DROP = {"Releases", "Screenshots"}        # sections not shipped (wordpress.org screenshots live in its SVN assets/)
 RENAME = {"Features": "Description"}
 
 
@@ -78,14 +78,16 @@ def main(md_path, php_path):
             out.append("    " + l if l else "")
             continue
         if l.startswith("|"):
-            table.append(l)
+            if not skip:
+                table.append(l)
             continue
         if table:
             flush_table()
         if l.startswith("## "):
-            skip = False
             t = l[3:].strip()
-            out.append(f"== {RENAME.get(t, t)} ==")
+            skip = t in DROP
+            if not skip:
+                out.append(f"== {RENAME.get(t, t)} ==")
         elif l.startswith("### "):
             t = l[4:].strip()
             skip = t in DROP

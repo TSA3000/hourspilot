@@ -186,6 +186,7 @@
 	text-align: start;
 }
 .hourspilot.hp-layout-horizontal .hp-table th { margin-bottom: 0.25em; font-size: 0.875em; opacity: 0.75; }
+.hourspilot.hp-layout-horizontal .hp-slot { white-space: normal; } /* narrow cards: 12-hour times must wrap */
 .hourspilot.hp-layout-horizontal .hp-row.hp-is-today { border-color: var(--hp-accent); box-shadow: inset 0 3px 0 var(--hp-accent); }
 .hourspilot.hp-layout-horizontal .hp-row.hp-is-today th { padding-inline-start: 0; }
 .hourspilot.hp-layout-horizontal .hp-row.hp-is-today th::before { display: none; }
@@ -215,8 +216,7 @@
 }
 .hourspilot .hp-cal-nav:hover:not(:disabled) { border-color: var(--hp-accent); color: var(--hp-accent); }
 .hourspilot .hp-cal-nav:focus-visible { outline: 2px solid var(--hp-accent); outline-offset: 2px; }
-.hourspilot .hp-cal-nav:disabled { opacity: 0.35; cursor: default; }
-.hourspilot:dir(rtl) .hp-cal-nav { transform: scaleX(-1); } /* ‹ › point the reading direction */
+.hourspilot .hp-cal-nav:disabled { opacity: 0.35; cursor: default; }  /* ‹ › are bidi-mirrored by the browser in RTL */
 .hourspilot .hp-cal {
 	width: 100%;
 	margin: 0;

@@ -24,6 +24,22 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Works anywhere shortcodes do: block editor, Elementor, widgets
 - Translated into Swedish and Arabic (right-to-left layout, optional Arabic-Indic digits ٠١٢…)
 
+## Screenshots
+
+Tuesday 16:35, 25 minutes before closing, with short holiday hours later in the week:
+
+| English | Swedish | Arabic (`digits="arab"`) |
+|---|---|---|
+| <img src="docs/screenshots/week-en.png" alt="Weekly hours in English: open now, closing countdown, holiday hours" width="280"> | <img src="docs/screenshots/week-sv.png" alt="Weekly hours in Swedish" width="280"> | <img src="docs/screenshots/week-ar.png" alt="Weekly hours in Arabic, right-to-left with Arabic-Indic digits" width="280"> |
+
+`layout="horizontal" holiday_hours="1"`
+
+<img src="docs/screenshots/horizontal-en.png" alt="Horizontal layout: one card per day" width="860">
+
+`layout="calendar"` (English and Arabic)
+
+<img src="docs/screenshots/calendar-en.png" alt="Calendar month view with holidays and today marked" width="420"> <img src="docs/screenshots/calendar-ar.png" alt="Calendar month view in Arabic, right-to-left" width="420">
+
 ## Installation
 
 Download `hourspilot-X.Y.Z.zip` from [Releases](https://github.com/TSA3000/hourspilot/releases) (not the "Source code" archives),
@@ -145,7 +161,9 @@ and **Tags** rows above exist for it.
 ### 0.3.0
 
 - Swedish and Arabic translations; `.pot` template for more languages
-- Right-to-left layout (direction-neutral CSS, mirrored calendar arrows)
+- Right-to-left layout (direction-neutral CSS)
+- Horizontal layout: 12-hour times wrap inside the day cards; local time without a leading zero
+- README screenshots (English, Swedish, Arabic)
 - `digits="arab"`: Arabic-Indic digits in times, dates, countdowns and the calendar
 - Translatable list separator (Arabic "،")
 - Translations load on `init` (no "loaded too early" notice on WordPress 6.7+)

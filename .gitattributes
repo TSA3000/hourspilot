@@ -1,7 +1,9 @@
 # Left out of release zips (git archive, also in .github/workflows/release.yml): dev tooling only. rust/ stays in: it is the source of assets/hourspilot.wasm.
 .gitattributes   export-ignore
 .github          export-ignore
+docs             export-ignore
 .gitignore       export-ignore
 phpcs.xml.dist   export-ignore
 rust/.gitignore  export-ignore
 *.wasm           binary
+*.png            binary
