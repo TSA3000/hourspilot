@@ -1,4 +1,4 @@
-/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.1.0 | Arthur Sam Mahdi */
+/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.2.0 | Arthur Sam Mahdi */
 .hourspilot {
 	--hp-accent: #0f766e;
 	--hp-open: #15803d;
@@ -147,6 +147,110 @@
 .hourspilot .hp-h-label { opacity: 0.75; }
 .hourspilot .hp-h-hours { text-align: right; }
 
+/* Countdown */
+.hourspilot .hp-countdown {
+	margin: 0 0 1rem;
+	font-size: 0.875em;
+	font-weight: 600;
+	color: var(--hp-open);
+}
+.hourspilot .hp-countdown.hp-cd-close { color: var(--hp-soon); }
+
+/* Holiday hours shown in a weekday row */
+.hourspilot .hp-row.hp-has-holiday td { color: var(--hp-soon); }
+.hourspilot .hp-hol-label {
+	display: block;
+	font-size: 0.8125em;
+	opacity: 0.8;
+}
+
+/* Horizontal layout: one column per day (or group of days) */
+.hourspilot.hp-layout-horizontal { max-width: none; }
+.hourspilot.hp-layout-horizontal .hp-table { display: block; }
+.hourspilot.hp-layout-horizontal .hp-table tbody {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+	gap: 0.5rem;
+}
+.hourspilot.hp-layout-horizontal .hp-row {
+	display: flex;
+	flex-direction: column;
+	padding: 0.6em 0.7em;
+	border: 1px solid var(--hp-line);
+	border-radius: calc(var(--hp-radius) - 4px);
+}
+.hourspilot.hp-layout-horizontal .hp-table th,
+.hourspilot.hp-layout-horizontal .hp-table td {
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+.hourspilot.hp-layout-horizontal .hp-table th { margin-bottom: 0.25em; font-size: 0.875em; opacity: 0.75; }
+.hourspilot.hp-layout-horizontal .hp-row.hp-is-today { border-color: var(--hp-accent); box-shadow: inset 0 3px 0 var(--hp-accent); }
+.hourspilot.hp-layout-horizontal .hp-row.hp-is-today th { padding-left: 0; }
+.hourspilot.hp-layout-horizontal .hp-row.hp-is-today th::before { display: none; }
+
+/* Calendar layout (rendered by the engine) */
+.hourspilot.hp-layout-calendar { max-width: 40rem; }
+.hourspilot .hp-cal-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 0.5rem;
+}
+.hourspilot .hp-cal-title { font-weight: 650; text-transform: capitalize; }
+.hourspilot .hp-cal-title:focus { outline: none; }
+.hourspilot .hp-cal-nav {
+	min-width: 2.25rem;
+	min-height: 2.25rem;
+	padding: 0 0.6rem;
+	border: 1px solid var(--hp-line);
+	border-radius: 999px;
+	background: none;
+	color: inherit;
+	font: inherit;
+	font-size: 1.125em;
+	line-height: 1;
+	cursor: pointer;
+}
+.hourspilot .hp-cal-nav:hover:not(:disabled) { border-color: var(--hp-accent); color: var(--hp-accent); }
+.hourspilot .hp-cal-nav:focus-visible { outline: 2px solid var(--hp-accent); outline-offset: 2px; }
+.hourspilot .hp-cal-nav:disabled { opacity: 0.35; cursor: default; }
+.hourspilot .hp-cal {
+	width: 100%;
+	margin: 0;
+	border: 0;
+	border-collapse: separate;
+	border-spacing: 3px;
+	table-layout: fixed;
+	background: none;
+	font-size: 0.8125em;
+}
+.hourspilot .hp-cal th {
+	padding: 0.25em 0;
+	border: 0;
+	background: none;
+	font-weight: 600;
+	text-align: center;
+	opacity: 0.7;
+}
+.hourspilot .hp-cal td {
+	height: 3.6em;
+	padding: 0.3em;
+	border: 0;
+	border-radius: 6px;
+	vertical-align: top;
+	background: rgba(128, 128, 128, 0.06);
+}
+.hourspilot .hp-cal td.hp-cal-out { background: none; }
+.hourspilot .hp-cal-n { display: block; font-weight: 600; }
+.hourspilot .hp-cal-h { display: block; font-size: 0.85em; line-height: 1.25; opacity: 0.8; overflow-wrap: anywhere; }
+.hourspilot .hp-cal-closed .hp-cal-h { opacity: 0.5; }
+.hourspilot .hp-cal-hol { background: rgba(180, 83, 9, 0.1); }
+.hourspilot .hp-cal-hol .hp-cal-n { color: var(--hp-soon); }
+.hourspilot .hp-cal-past { opacity: 0.45; }
+.hourspilot .hp-cal-today { box-shadow: inset 0 0 0 2px var(--hp-accent); }
+
 /* Location */
 .hourspilot .hp-info {
 	margin-top: 1.25rem;
@@ -169,6 +273,8 @@
 
 @media (max-width: 380px) {
 	.hourspilot { --hp-pad: 1rem; }
+	.hourspilot .hp-cal-h { display: none; }
+	.hourspilot .hp-cal td { height: 2.4em; }
 	.hourspilot .hp-holidays li { grid-template-columns: 1fr auto; }
 	.hourspilot .hp-h-label { grid-column: 1 / -1; grid-row: 2; }
 }

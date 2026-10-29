@@ -109,30 +109,32 @@ final class HP_Admin {
 					<th><?php esc_html_e( 'To (optional)', 'hourspilot' ); ?></th>
 					<th><?php esc_html_e( 'Name', 'hourspilot' ); ?></th>
 					<th><?php esc_html_e( 'Hours (empty = closed)', 'hourspilot' ); ?></th>
+					<th><?php esc_html_e( 'Every year', 'hourspilot' ); ?></th>
 					<th><span class="screen-reader-text"><?php esc_html_e( 'Remove', 'hourspilot' ); ?></span></th>
 				</tr>
 			</thead>
 			<tbody class="hp-holiday-rows">
 				<?php
 				foreach ( $holidays as $i => $h ) {
-					self::holiday_row( $i, $h['from'], $h['to'] === $h['from'] ? '' : $h['to'], $h['label'], HP_Hours::slots_to_string( $h['slots'] ) );
+					self::holiday_row( $i, $h['from'], $h['to'] === $h['from'] ? '' : $h['to'], $h['label'], HP_Hours::slots_to_string( $h['slots'] ), $h['recurring'] );
 				}
 				?>
 			</tbody>
 		</table>
 		<p><button type="button" class="button hp-add-holiday"><?php esc_html_e( 'Add holiday or special day', 'hourspilot' ); ?></button></p>
-		<p class="description"><?php esc_html_e( 'Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site.', 'hourspilot' ); ?></p>
-		<script type="text/html" id="hp-tpl-holiday"><?php self::holiday_row( '__IDX__', '', '', '', '' ); ?></script>
+		<p class="description"><?php esc_html_e( 'Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored).', 'hourspilot' ); ?></p>
+		<script type="text/html" id="hp-tpl-holiday"><?php self::holiday_row( '__IDX__', '', '', '', '', false ); ?></script>
 		<?php
 	}
 
-	private static function holiday_row( $i, $from, $to, $label, $hours ) {
+	private static function holiday_row( $i, $from, $to, $label, $hours, $recurring ) {
 		printf(
 			'<tr class="hp-holiday">
 				<td><input type="date" name="hp_holidays[%1$s][from]" value="%2$s" required></td>
 				<td><input type="date" name="hp_holidays[%1$s][to]" value="%3$s"></td>
 				<td><input type="text" name="hp_holidays[%1$s][label]" value="%4$s" placeholder="%6$s"></td>
 				<td><input type="text" name="hp_holidays[%1$s][hours]" value="%5$s" placeholder="%7$s"></td>
+				<td><input type="checkbox" name="hp_holidays[%1$s][recurring]" value="1" aria-label="%9$s"%10$s></td>
 				<td><button type="button" class="button-link hp-remove" aria-label="%8$s">&times;</button></td>
 			</tr>',
 			esc_attr( $i ),
@@ -142,7 +144,9 @@ final class HP_Admin {
 			esc_attr( $hours ),
 			esc_attr__( 'e.g. Christmas Eve', 'hourspilot' ),
 			esc_attr__( 'Closed', 'hourspilot' ),
-			esc_attr__( 'Remove row', 'hourspilot' )
+			esc_attr__( 'Remove row', 'hourspilot' ),
+			esc_attr__( 'Every year', 'hourspilot' ),
+			checked( $recurring, true, false )
 		);
 	}
 
@@ -262,10 +266,11 @@ final class HP_Admin {
 			}
 			$to         = sanitize_text_field( $h['to'] ?? '' );
 			$holidays[] = array(
-				'from'  => $from,
-				'to'    => HP_Hours::valid_date( $to ) && $to >= $from ? $to : $from,
-				'label' => sanitize_text_field( $h['label'] ?? '' ),
-				'slots' => HP_Hours::parse_slots_string( sanitize_text_field( $h['hours'] ?? '' ) ),
+				'from'      => $from,
+				'to'        => HP_Hours::valid_date( $to ) && $to >= $from ? $to : $from,
+				'label'     => sanitize_text_field( $h['label'] ?? '' ),
+				'slots'     => HP_Hours::parse_slots_string( sanitize_text_field( $h['hours'] ?? '' ) ),
+				'recurring' => ! empty( $h['recurring'] ),
 			);
 		}
 		update_post_meta( $post_id, '_hp_holidays', $holidays );

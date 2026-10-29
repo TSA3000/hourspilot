@@ -23,33 +23,47 @@ final class HP_Shortcode {
 	public static function register_assets() {
 		wp_register_style( 'hourspilot', HOURSPILOT_URL . 'assets/frontend.css', array(), HOURSPILOT_VERSION );
 		wp_register_script( 'hourspilot', HOURSPILOT_URL . 'assets/frontend.js', array(), HOURSPILOT_VERSION, true );
+		// The time engine (Rust, source in rust/) that frontend.js runs.
+		wp_add_inline_script(
+			'hourspilot',
+			'window.hourspilot = ' . wp_json_encode( array( 'wasm' => add_query_arg( 'ver', HOURSPILOT_VERSION, HOURSPILOT_URL . 'assets/hourspilot.wasm' ) ) ) . ';',
+			'before'
+		);
 	}
 
 	public static function render( $atts ) {
 		$a = shortcode_atts(
 			array(
-				'id'              => 0,
-				'view'            => 'week',   // week | today.
-				'title'           => '',       // Empty = location name, "0" = no title.
-				'group'           => '1',      // Merge consecutive days with identical hours.
-				'short_days'      => '0',
-				'hide_closed'     => '0',
-				'hide_days'       => '',       // ISO numbers, e.g. "6,7".
-				'show_header'     => '1',
-				'show_status'     => '1',
-				'show_local_time' => '0',
-				'show_holidays'   => '1',
-				'holiday_days'    => '60',     // How far ahead to list holidays.
-				'show_info'       => '1',
-				'show_image'      => '1',
-				'schema'          => '1',
-				'accent'          => '',
-				'date_format'     => 'j M',
-				'open_text'       => __( 'Open now', 'hourspilot' ),
-				'closed_text'     => __( 'Closed now', 'hourspilot' ),
-				'closed_label'    => __( 'Closed', 'hourspilot' ),
-				'open24_label'    => __( 'Open 24 hours', 'hourspilot' ),
-				'holiday_title'   => __( 'Holidays and special hours', 'hourspilot' ),
+				'id'                   => 0,
+				'view'                 => 'week', // week | today.
+				'layout'               => 'vertical', // vertical | horizontal | calendar.
+				'title'                => '', // Empty = location name, "0" = no title.
+				'group'                => '1', // Merge consecutive days with identical hours.
+				'short_days'           => '0',
+				'hide_closed'          => '0',
+				'hide_days'            => '', // ISO numbers, e.g. "6,7".
+				'show_header'          => '1',
+				'show_status'          => '1',
+				'show_local_time'      => '0',
+				'show_holidays'        => '1',
+				'holiday_days'         => '60', // How far ahead to list holidays.
+				'show_info'            => '1',
+				'show_image'           => '1',
+				'schema'               => '1',
+				'accent'               => '',
+				'date_format'          => 'j M',
+				'holiday_hours'        => '0', // Holiday hours replace this week's regular hours (turns off grouping).
+				'open_countdown'       => '0',
+				'close_countdown'      => '0',
+				'countdown_minutes'    => '60', // Show the close countdown this long before closing.
+				'countdown_format'     => '{h}:{mm}:{ss}', // Tokens: {d} {h} {hh} {m} {mm} {s} {ss}.
+				'open_countdown_text'  => __( 'Opening in [time]', 'hourspilot' ),
+				'close_countdown_text' => __( 'Closing in [time]', 'hourspilot' ),
+				'open_text'            => __( 'Open now', 'hourspilot' ),
+				'closed_text'          => __( 'Closed now', 'hourspilot' ),
+				'closed_label'         => __( 'Closed', 'hourspilot' ),
+				'open24_label'         => __( 'Open 24 hours', 'hourspilot' ),
+				'holiday_title'        => __( 'Holidays and special hours', 'hourspilot' ),
 			),
 			$atts,
 			'hourspilot'
@@ -66,6 +80,8 @@ final class HP_Shortcode {
 		$b     = fn( $k ) => filter_var( $a[ $k ], FILTER_VALIDATE_BOOLEAN );
 		$short = $b( 'short_days' );
 		$view  = 'today' === $a['view'] ? 'today' : 'week';
+		$hh    = $b( 'holiday_hours' );
+		$lay   = in_array( $a['layout'], array( 'horizontal', 'calendar' ), true ) ? $a['layout'] : 'vertical';
 		$hours = HP_Hours::get_hours( $id );
 		$tz    = HP_Hours::timezone_string( $id );
 		$today = (int) ( new DateTimeImmutable( 'now', new DateTimeZone( $tz ) ) )->format( 'N' );
@@ -82,7 +98,7 @@ final class HP_Shortcode {
 				)
 			);
 		}
-		$rows = self::build_rows( $days, $hours, 'week' === $view && $b( 'group' ) );
+		$rows = self::build_rows( $days, $hours, 'week' === $view && $b( 'group' ) && ! $hh );
 
 		// Data for the browser.
 		$fmt_slots = fn( $slots ) => array_map(
@@ -103,21 +119,46 @@ final class HP_Shortcode {
 			);
 			$day_names[ $d ] = HP_Hours::day_name( $d, true );
 		}
+		$months       = array();
+		$months_short = array();
+		for ( $m = 1; $m <= 12; $m++ ) {
+			$ts             = gmmktime( 12, 0, 0, $m, 1, 2024 );
+			$months[]       = wp_date( 'F', $ts, new DateTimeZone( 'UTC' ) );
+			$months_short[] = wp_date( 'M', $ts, new DateTimeZone( 'UTC' ) );
+		}
+		// Upcoming one-off holidays (a year ahead, so a cached page still knows them) + every recurring one.
+		$hol = array_merge(
+			array_filter( HP_Hours::upcoming_holidays( $id, 400 ), fn( $h ) => ! $h['recurring'] ),
+			array_filter( HP_Hours::get_holidays( $id ), fn( $h ) => $h['recurring'] )
+		);
 		$data = array(
-			'tz'   => $tz,
-			'view' => $view,
-			'week' => $week,
-			// A year ahead, so a cached page still knows about upcoming holidays.
-			'hol'  => array_map(
-				fn( $h ) => array(
-					'f' => $h['from'],
-					't' => $h['to'],
-					'l' => $h['label'],
-					's' => $fmt_slots( $h['slots'] ),
-				),
-				HP_Hours::upcoming_holidays( $id, 400 )
+			'tz'     => $tz,
+			'view'   => $view,
+			'layout' => $lay,
+			'ws'     => HP_Hours::ordered_days()[0],
+			'hh'     => $hh,
+			'week'   => $week,
+			'hol'    => array_values(
+				array_map(
+					fn( $h ) => array(
+						'f' => $h['from'],
+						't' => $h['to'],
+						'l' => $h['label'],
+						's' => $fmt_slots( $h['slots'] ),
+						'r' => $h['recurring'],
+					),
+					$hol
+				)
 			),
-			'i18n' => array(
+			'cd'     => array(
+				'open'      => $b( 'open_countdown' ),
+				'close'     => $b( 'close_countdown' ),
+				'mins'      => absint( $a['countdown_minutes'] ),
+				'format'    => $a['countdown_format'],
+				'openText'  => $a['open_countdown_text'],
+				'closeText' => $a['close_countdown_text'],
+			),
+			'i18n'   => array(
 				'open'        => $a['open_text'],
 				'closed'      => $a['closed_text'],
 				'closedLabel' => $a['closed_label'],
@@ -129,6 +170,10 @@ final class HP_Shortcode {
 				'today'       => __( 'Today', 'hourspilot' ),
 				'tomorrow'    => __( 'tomorrow', 'hourspilot' ),
 				'days'        => $day_names,
+				'months'      => $months,
+				'monthsShort' => $months_short,
+				'prevMonth'   => __( 'Previous month', 'hourspilot' ),
+				'nextMonth'   => __( 'Next month', 'hourspilot' ),
 			),
 		);
 
@@ -150,7 +195,7 @@ final class HP_Shortcode {
 
 		ob_start();
 		?>
-		<div class="hourspilot hp-view-<?php echo esc_attr( $view ); ?>" data-hp="<?php echo esc_attr( wp_json_encode( $data ) ); ?>"<?php echo $accent ? ' style="--hp-accent:' . esc_attr( $accent ) . '"' : ''; ?>>
+		<div class="hourspilot hp-view-<?php echo esc_attr( $view ); ?> hp-layout-<?php echo esc_attr( $lay ); ?>" data-hp="<?php echo esc_attr( wp_json_encode( $data ) ); ?>"<?php echo $accent ? ' style="--hp-accent:' . esc_attr( $accent ) . '"' : ''; ?>>
 
 			<?php if ( $b( 'show_header' ) && ( $title || $b( 'show_status' ) || $b( 'show_local_time' ) ) ) : ?>
 				<div class="hp-header">
@@ -166,7 +211,13 @@ final class HP_Shortcode {
 				</div>
 			<?php endif; ?>
 
+			<p class="hp-countdown" role="timer" hidden></p>
+
 			<p class="hp-notice" hidden></p>
+
+			<?php if ( 'calendar' === $lay ) : ?>
+				<div class="hp-calendar" hidden></div>
+			<?php endif; ?>
 
 			<table class="hp-table">
 				<tbody>
