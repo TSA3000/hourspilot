@@ -1,0 +1,74 @@
+# Push a tag vX.Y.Z -> checks, fresh WebAssembly build from rust/, installable plugin zip, GitHub release.
+# Before tagging: bump Version + HOURSPILOT_VERSION in hourspilot.php, the version row + a "### X.Y.Z" changelog entry in README.md.
+# Tags with a hyphen (v1.0.0-beta.1) become pre-releases.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Versions match the tag
+        run: |
+          v=${GITHUB_REF_NAME#v}
+          header=$(sed -n 's/^ \* Version: *//p' hourspilot.php)
+          const=$(sed -n "s/^define( 'HOURSPILOT_VERSION', '\(.*\)' );/\1/p" hourspilot.php)
+          readme=$(sed -n 's/^| \*\*Version\*\* | *\([^ |]*\).*/\1/p' README.md)
+          echo "tag $v | header $header | constant $const | README $readme"
+          [ "$v" = "$header" ] && [ "$v" = "$const" ] && [ "$v" = "$readme" ] ||
+            { echo "::error::version mismatch: bump hourspilot.php and README.md to $v"; exit 1; }
+          grep -qx "### $v" README.md || { echo "::error::README.md has no changelog entry '### $v'"; exit 1; }
+
+      - name: PHP syntax (7.4 + 8.3)
+        run: |
+          for php in 7.4 8.3; do
+            docker run --rm -v "$PWD:/p:ro" -w /p php:$php-cli-alpine sh -ec \
+              'find . -name "*.php" -not -path "./rust/*" -print0 | xargs -0 -n1 php -l >/dev/null; echo "PHP $(php -r "echo PHP_VERSION;") ok"'
+          done
+
+      - name: Rust tests + WebAssembly build
+        working-directory: rust
+        run: |
+          rustup toolchain install
+          cargo test --release --locked
+          cargo build --release --locked --target wasm32-unknown-unknown
+          cp target/wasm32-unknown-unknown/release/hourspilot_core.wasm ../assets/hourspilot.wasm
+          git diff --quiet -- ../assets/hourspilot.wasm ||
+            echo "::warning::assets/hourspilot.wasm in the repo differs from a fresh build of rust/; the zip uses the fresh build. Rebuild and commit it."
+
+      - name: Plugin zip
+        run: |
+          v=${GITHUB_REF_NAME#v}
+          git archive --format=tar --prefix=hourspilot/ HEAD | tar -x -C "$RUNNER_TEMP"   # honours export-ignore
+          cp assets/hourspilot.wasm "$RUNNER_TEMP/hourspilot/assets/hourspilot.wasm"
+          (cd "$RUNNER_TEMP" && zip -qrX "hourspilot-$v.zip" hourspilot && unzip -l "hourspilot-$v.zip")
+          echo "ZIP=$RUNNER_TEMP/hourspilot-$v.zip" >> "$GITHUB_ENV"
+
+      - name: Release notes from the readme changelog
+        run: |
+          v=${GITHUB_REF_NAME#v}
+          {
+            echo "## Install"
+            echo "Download **hourspilot-$v.zip** below → WordPress → Plugins → Add New → Upload Plugin."
+            echo "(Not the \"Source code\" archives: those are GitHub's raw repo snapshots.)"
+            echo
+            echo "## Changes"
+            awk -v h="### $v" '$0 == h { f = 1; next } /^##/ { f = 0 } f' README.md
+          } > "$RUNNER_TEMP/notes.md"
+          cat "$RUNNER_TEMP/notes.md"
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pre=; case "$GITHUB_REF_NAME" in *-*) pre=--prerelease ;; esac
+          gh release create "$GITHUB_REF_NAME" "$ZIP" --verify-tag $pre \
+            --title "HoursPilot ${GITHUB_REF_NAME#v}" --notes-file "$RUNNER_TEMP/notes.md"
