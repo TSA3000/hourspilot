@@ -49,6 +49,7 @@ jobs:
           v=${GITHUB_REF_NAME#v}
           git archive --format=tar --prefix=hourspilot/ HEAD | tar -x -C "$RUNNER_TEMP"   # honours export-ignore
           cp assets/hourspilot.wasm "$RUNNER_TEMP/hourspilot/assets/hourspilot.wasm"
+          python3 .github/scripts/readme-txt.py README.md hourspilot.php > "$RUNNER_TEMP/hourspilot/readme.txt"   # wordpress.org format
           (cd "$RUNNER_TEMP" && zip -qrX "hourspilot-$v.zip" hourspilot && unzip -l "hourspilot-$v.zip")
           echo "ZIP=$RUNNER_TEMP/hourspilot-$v.zip" >> "$GITHUB_ENV"
 

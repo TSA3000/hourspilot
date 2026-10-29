@@ -8,6 +8,8 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
+| **Contributors** | tsa3000 |
+| **Tags** | business hours, opening hours, holidays, schema, open now |
 | **License** | GPL-2.0-or-later |
 
 ## Features
@@ -75,6 +77,8 @@ Filter: `hourspilot_schema( array $data, int $location_id )`
 Data is stored as post meta on the `hp_location` post type:
 `_hp_hours`, `_hp_holidays` (from, to, label, slots, recurring), `_hp_info`, `_hp_timezone`, `_hp_schema_type`.
 
+Uninstalling the plugin does not delete your locations.
+
 ### Time engine
 
 `rust/` (Rust, GPL-2.0-or-later) is compiled to `assets/hourspilot.wasm`; the compiler version is pinned in `rust/rust-toolchain.toml`.
@@ -94,7 +98,8 @@ cp target/wasm32-unknown-unknown/release/hourspilot_core.wasm ../assets/hourspil
 and publishes the installable zip as a GitHub release with this changelog entry as notes. Tags with a hyphen
 (`v1.0.0-beta.1`) become pre-releases.
 
-Uninstalling the plugin does not delete your locations.
+The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scripts/readme-txt.py`); the **Contributors**
+and **Tags** rows above exist for it.
 
 ## Changelog
 
