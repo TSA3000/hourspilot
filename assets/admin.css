@@ -1,4 +1,4 @@
-/* HoursPilot admin | v0.4.0 | Arthur Sam Mahdi */
+/* HoursPilot admin | v0.5.0 | Arthur Sam Mahdi */
 .hp-admin-week { width: 100%; border-collapse: collapse; }
 .hp-admin-week th,
 .hp-admin-week td { padding: 10px 8px 6px 0; vertical-align: top; border-top: 1px solid #f0f0f1; }
@@ -34,4 +34,74 @@
 	.hp-admin-week tr { display: block; border-top: 1px solid #f0f0f1; padding-bottom: 6px; }
 	.hp-info-grid { grid-template-columns: 1fr; gap: 4px; }
 	.hp-info-grid > label { padding-top: 10px; }
+}
+
+/* ---------- Location settings: tab bar with icons ---------- */
+#hp_panel .inside { margin: 0; padding: 0; }
+.hp-tablist {
+	display: flex;
+	flex-wrap: wrap;
+	background: #1d2327;
+}
+.hp-tab {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	min-width: 104px;
+	padding: 14px 14px 12px;
+	border: 0;
+	border-top: 3px solid transparent;
+	background: none;
+	color: #c3c4c7;
+	font: inherit;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+.hp-tab:hover { color: #fff; background: #2c3338; }
+.hp-tab:focus-visible { outline: 2px solid var(--wp-admin-theme-color, #2271b1); outline-offset: -4px; }
+.hp-tab[aria-selected="true"] {
+	background: #fff;
+	color: #1d2327;
+	border-top-color: var(--wp-admin-theme-color, #2271b1);
+}
+.hp-tab .hp-icon { flex: none; }
+.hp-panel { padding: 20px 22px 24px; }
+.hp-panel[hidden] { display: none; }
+.hp-defaults-note { margin-top: 18px; }
+
+/* Open / Closed / 24h as one segmented control */
+.hp-segmented { display: inline-flex; border: 1px solid #8c8f94; border-radius: 4px; overflow: hidden; }
+.hp-segmented label { position: relative; }
+.hp-segmented input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hp-segmented span { display: block; padding: 5px 11px; border-inline-start: 1px solid #c3c4c7; background: #fff; white-space: nowrap; }
+.hp-segmented label:first-child span { border-inline-start: 0; }
+.hp-segmented input:checked + span { background: #1d2327; color: #fff; }
+.hp-segmented input:focus-visible + span { box-shadow: inset 0 0 0 2px var(--wp-admin-theme-color, #2271b1); }
+.hp-admin-week .hp-mode-cell { width: 280px; }
+
+/* Settings tabs */
+.hp-settings-grid { grid-template-columns: 200px minmax(0, 1fr); }
+.hp-settings-grid > label, .hp-info-grid > .hp-label { padding-top: 6px; font-weight: 600; }
+.hp-plain { margin: 6px 0 0; }
+.hp-settings-grid .hp-section { grid-column: 1 / -1; margin: 14px 0 -2px; padding-bottom: 6px; border-bottom: 1px solid #dcdcde; font-size: 14px; }
+.hp-settings-grid .hp-section:first-child { margin-top: 0; }
+.hp-check { display: inline-flex; align-items: center; gap: 6px; }
+.hp-settings-grid .hp-check input { width: auto; }
+.hp-days { display: flex; flex-wrap: wrap; gap: 6px 16px; padding-top: 6px; }
+.hp-image-field { display: flex; gap: 8px; max-width: 480px; }
+.hp-image-field input { flex: 1; }
+.hp-settings-grid .wp-picker-container input[type="text"].wp-color-picker { width: 80px; }
+.hp-shared-toggle { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 16px; }
+
+/* Shared holidays and Import / Export pages */
+.hp-page h1 { display: flex; align-items: center; gap: 8px; }
+.hp-cards { display: flex; flex-wrap: wrap; gap: 16px; }
+.hp-cards .card { flex: 1 1 340px; max-width: 520px; margin-top: 8px; }
+
+@media (max-width: 782px) {
+	.hp-tab { min-width: 0; flex: 1 1 33%; padding: 10px 6px; font-size: 12px; }
+	.hp-settings-grid { grid-template-columns: 1fr; }
+	.hp-admin-week .hp-mode-cell { width: auto; }
 }
