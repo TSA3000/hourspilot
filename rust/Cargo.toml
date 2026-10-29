@@ -1,0 +1,22 @@
+[package]
+name = "hourspilot-core"
+version = "0.2.0"
+edition = "2024"
+description = "HoursPilot time engine: open/closed status, countdowns, recurring holidays, calendar. Compiled to WebAssembly for the plugin's frontend."
+license = "GPL-2.0-or-later"
+authors = ["Arthur Sam Mahdi <tsa3000@gmail.com>"]
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

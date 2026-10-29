@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset name="HoursPilot">
+	<description>WordPress Coding Standards + PHP 7.4 compatibility for HoursPilot.</description>
+
+	<file>.</file>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/rust/*</exclude-pattern>
+	<exclude-pattern>*.min.js</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<!-- Plugin header: Requires PHP 7.4, Requires at least 6.0 -->
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_wp_version" value="6.0"/>
+
+	<rule ref="WordPress"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="hourspilot"/>
+		</properties>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array" value="hourspilot,hp_"/>
+		</properties>
+	</rule>
+	<!-- Classes are named class-hp-*.php by convention already -->
+</ruleset>

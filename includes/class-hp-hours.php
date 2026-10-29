@@ -121,27 +121,60 @@ final class HP_Hours {
 			}
 			$to    = ( ! empty( $h['to'] ) && self::valid_date( $h['to'] ) && $h['to'] >= $h['from'] ) ? $h['to'] : $h['from'];
 			$out[] = array(
-				'from'  => $h['from'],
-				'to'    => $to,
-				'label' => isset( $h['label'] ) ? (string) $h['label'] : '',
-				'slots' => self::clean_slots( $h['slots'] ?? array() ),
+				'from'      => $h['from'],
+				'to'        => $to,
+				'label'     => isset( $h['label'] ) ? (string) $h['label'] : '',
+				'slots'     => self::clean_slots( $h['slots'] ?? array() ),
+				'recurring' => ! empty( $h['recurring'] ),
 			);
 		}
 		usort( $out, fn( $a, $b ) => strcmp( $a['from'], $b['from'] ) );
 		return $out;
 	}
 
-	/** Holidays that haven't ended and start within $days_ahead days. */
+	/**
+	 * Holidays that haven't ended and start within $days_ahead days, sorted.
+	 * Recurring holidays are moved to their next occurrence.
+	 */
 	public static function upcoming_holidays( $id, $days_ahead = 60 ) {
 		$now   = new DateTimeImmutable( 'now', self::timezone( $id ) );
 		$today = $now->format( 'Y-m-d' );
 		$limit = $now->modify( '+' . (int) $days_ahead . ' days' )->format( 'Y-m-d' );
-		return array_values(
-			array_filter(
-				self::get_holidays( $id ),
-				fn( $h ) => $h['to'] >= $today && $h['from'] <= $limit
-			)
+		$out   = array_filter(
+			array_map( fn( $h ) => self::next_occurrence( $h, $today ), self::get_holidays( $id ) ),
+			fn( $h ) => $h['to'] >= $today && $h['from'] <= $limit
 		);
+		usort( $out, fn( $a, $b ) => strcmp( $a['from'], $b['from'] ) );
+		return $out;
+	}
+
+	/** A recurring holiday moved to the first occurrence that hasn't ended by $today. Same logic as rust/src/lib.rs. */
+	public static function next_occurrence( $h, $today ) {
+		if ( empty( $h['recurring'] ) ) {
+			return $h;
+		}
+		$years = (int) substr( $today, 0, 4 ) - (int) substr( $h['from'], 0, 4 );
+		foreach ( array( $years - 1, $years, $years + 1 ) as $n ) {
+			$c = array_merge(
+				$h,
+				array(
+					'from' => self::shift_years( $h['from'], $n ),
+					'to'   => self::shift_years( $h['to'], $n ),
+				)
+			);
+			if ( $c['to'] >= $today ) {
+				return $c;
+			}
+		}
+		return $h;
+	}
+
+	/** Same month and day $n years later; 29 Feb becomes 28 Feb in common years. */
+	public static function shift_years( $ymd, $n ) {
+		list( $y, $m, $d ) = array_map( 'intval', explode( '-', $ymd ) );
+		$y += $n;
+		$d  = min( $d, (int) gmdate( 't', gmmktime( 12, 0, 0, $m, 1, $y ) ) );
+		return sprintf( '%04d-%02d-%02d', $y, $m, $d );
 	}
 
 	public static function get_info( $id ) {
