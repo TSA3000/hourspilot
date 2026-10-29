@@ -1,0 +1,282 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: HoursPilot 0.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/TSA3000/hourspilot/issues\n"
+"Last-Translator: Arthur Sam Mahdi <tsa3000@gmail.com>\n"
+"Language-Team: Arabic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-29T20:56:54+00:00\n"
+"PO-Revision-Date: 2026-10-29 22:00+0100\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=(n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n % 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 ? 4 : 5);\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: hourspilot\n"
+
+#. Plugin Name of the plugin
+#: hourspilot.php
+msgid "HoursPilot"
+msgstr "HoursPilot"
+
+#. Plugin URI of the plugin
+#: hourspilot.php
+msgid "https://github.com/TSA3000/hourspilot"
+msgstr "https://github.com/TSA3000/hourspilot"
+
+#. Description of the plugin
+#: hourspilot.php
+msgid "Business hours, holidays and live open/closed status for one or more locations. Shortcode, cache-friendly, schema.org markup."
+msgstr "ساعات العمل والعطلات وحالة مفتوح/مغلق المباشرة لموقع واحد أو أكثر. رمز قصير، متوافق مع التخزين المؤقت، وبيانات schema.org المنظمة."
+
+#. Author of the plugin
+#: hourspilot.php
+msgid "Arthur Sam Mahdi"
+msgstr "Arthur Sam Mahdi"
+
+#. Author URI of the plugin
+#: hourspilot.php
+msgid "https://github.com/TSA3000"
+msgstr "https://github.com/TSA3000"
+
+#: includes/class-hp-admin.php:34
+msgid "Weekly hours"
+msgstr "ساعات العمل الأسبوعية"
+
+#: includes/class-hp-admin.php:35
+#: includes/class-hp-shortcode.php:67
+msgid "Holidays and special hours"
+msgstr "العطلات والساعات الخاصة"
+
+#: includes/class-hp-admin.php:36
+msgid "Location details"
+msgstr "تفاصيل الموقع"
+
+#: includes/class-hp-admin.php:37
+#: includes/class-hp-admin.php:305
+msgid "Shortcode"
+msgstr "الرمز القصير"
+
+#: includes/class-hp-admin.php:46
+msgid "Open"
+msgstr "مفتوح"
+
+#: includes/class-hp-admin.php:47
+#: includes/class-hp-admin.php:146
+#: includes/class-hp-shortcode.php:65
+msgid "Closed"
+msgstr "مغلق"
+
+#: includes/class-hp-admin.php:48
+#: includes/class-hp-shortcode.php:66
+msgid "Open 24 hours"
+msgstr "مفتوح على مدار الساعة"
+
+#: includes/class-hp-admin.php:74
+msgid "Add hours"
+msgstr "إضافة ساعات"
+
+#: includes/class-hp-admin.php:80
+msgid "Copy Monday to Tuesday–Friday"
+msgstr "نسخ الإثنين إلى الثلاثاء–الجمعة"
+
+#: includes/class-hp-admin.php:82
+msgid "Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00)."
+msgstr "أضف عدة فترات في اليوم لاستراحة الغداء. وقت الإغلاق الأسبق من وقت الفتح يمتد إلى ما بعد منتصف الليل (مثل 22:00–02:00)."
+
+#: includes/class-hp-admin.php:94
+msgid "Opens"
+msgstr "يفتح"
+
+#: includes/class-hp-admin.php:95
+msgid "Closes"
+msgstr "يغلق"
+
+#: includes/class-hp-admin.php:96
+msgid "Remove hours"
+msgstr "إزالة الساعات"
+
+#: includes/class-hp-admin.php:108
+msgid "From"
+msgstr "من"
+
+#: includes/class-hp-admin.php:109
+msgid "To (optional)"
+msgstr "إلى (اختياري)"
+
+#: includes/class-hp-admin.php:110
+msgid "Name"
+msgstr "الاسم"
+
+#: includes/class-hp-admin.php:111
+msgid "Hours (empty = closed)"
+msgstr "الساعات (فارغ = مغلق)"
+
+#: includes/class-hp-admin.php:112
+#: includes/class-hp-admin.php:148
+msgid "Every year"
+msgstr "كل سنة"
+
+#: includes/class-hp-admin.php:113
+msgid "Remove"
+msgstr "إزالة"
+
+#: includes/class-hp-admin.php:124
+msgid "Add holiday or special day"
+msgstr "إضافة عطلة أو يوم خاص"
+
+#: includes/class-hp-admin.php:125
+msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
+msgstr "صيغة الساعات الخاصة: 10:00-14:00. افصل بين عدة فترات بفواصل. تُخفى العطلات الماضية تلقائيًا على الموقع. كل سنة: تتكرر التواريخ نفسها كل سنة (يتم تجاهل السنة التي تدخلها)."
+
+#: includes/class-hp-admin.php:145
+msgid "e.g. Christmas Eve"
+msgstr "مثلًا: عيد الفطر"
+
+#: includes/class-hp-admin.php:147
+msgid "Remove row"
+msgstr "إزالة الصف"
+
+#: includes/class-hp-admin.php:162
+msgid "Time zone"
+msgstr "المنطقة الزمنية"
+
+#: includes/class-hp-admin.php:170
+msgid "Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year."
+msgstr "يستخدم موقعك فارق توقيت UTC ثابتًا لا يراعي التوقيت الصيفي. اختر مدينة هنا لتبقى حالة مفتوح/مغلق صحيحة طوال السنة."
+
+#: includes/class-hp-admin.php:174
+msgid "Business type"
+msgstr "نوع النشاط التجاري"
+
+#: includes/class-hp-admin.php:181
+msgid "Used in the structured data search engines read."
+msgstr "يُستخدم في البيانات المنظمة التي تقرؤها محركات البحث."
+
+#: includes/class-hp-admin.php:184
+msgid "Phone"
+msgstr "الهاتف"
+
+#: includes/class-hp-admin.php:187
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: includes/class-hp-admin.php:190
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+#: includes/class-hp-admin.php:193
+msgid "Address"
+msgstr "العنوان"
+
+#: includes/class-hp-admin.php:196
+msgid "Map link"
+msgstr "رابط الخريطة"
+
+#: includes/class-hp-admin.php:199
+msgid "Set the location image with \"Location image\" in the sidebar."
+msgstr "عيّن صورة الموقع من «صورة الموقع» في الشريط الجانبي."
+
+#: includes/class-hp-admin.php:209
+msgid "Save the location to get its shortcode."
+msgstr "احفظ الموقع للحصول على الرمز القصير الخاص به."
+
+#: includes/class-hp-admin.php:215
+msgid "Paste into any page, widget or page-builder shortcode block. Common options:"
+msgstr "الصقه في أي صفحة أو ودجت أو كتلة رمز قصير في منشئ الصفحات. خيارات شائعة:"
+
+#: includes/class-hp-post-type.php:27
+#: includes/class-hp-post-type.php:29
+msgid "Business hours"
+msgstr "ساعات العمل"
+
+#: includes/class-hp-post-type.php:28
+msgid "Location"
+msgstr "موقع"
+
+#: includes/class-hp-post-type.php:30
+msgid "Locations"
+msgstr "المواقع"
+
+#: includes/class-hp-post-type.php:31
+#: includes/class-hp-post-type.php:32
+msgid "Add location"
+msgstr "إضافة موقع"
+
+#: includes/class-hp-post-type.php:33
+msgid "Edit location"
+msgstr "تعديل الموقع"
+
+#: includes/class-hp-post-type.php:34
+msgid "Search locations"
+msgstr "البحث في المواقع"
+
+#: includes/class-hp-post-type.php:35
+msgid "No locations yet. Add one to start showing hours."
+msgstr "لا توجد مواقع بعد. أضف موقعًا لبدء عرض ساعات العمل."
+
+#: includes/class-hp-post-type.php:36
+msgid "Location image"
+msgstr "صورة الموقع"
+
+#: includes/class-hp-post-type.php:37
+msgid "Set location image"
+msgstr "تعيين صورة الموقع"
+
+#: includes/class-hp-shortcode.php:61
+msgid "Opening in [time]"
+msgstr "يفتح بعد [time]"
+
+#: includes/class-hp-shortcode.php:62
+msgid "Closing in [time]"
+msgstr "يغلق بعد [time]"
+
+#: includes/class-hp-shortcode.php:63
+msgid "Open now"
+msgstr "مفتوح الآن"
+
+#: includes/class-hp-shortcode.php:64
+msgid "Closed now"
+msgstr "مغلق الآن"
+
+#: includes/class-hp-shortcode.php:76
+msgid "HoursPilot: location not found or not published. Check the id in the shortcode."
+msgstr "HoursPilot: لم يتم العثور على الموقع أو أنه غير منشور. تحقق من المعرّف (id) في الرمز القصير."
+
+#. translators: %s: closing time
+#: includes/class-hp-shortcode.php:170
+#, php-format
+msgid "closes %s"
+msgstr "يغلق %s"
+
+#. translators: %s: day and/or time, e.g. "Mon 09:00"
+#: includes/class-hp-shortcode.php:172
+#, php-format
+msgid "opens %s"
+msgstr "يفتح %s"
+
+#: includes/class-hp-shortcode.php:173
+msgid "Today"
+msgstr "اليوم"
+
+#: includes/class-hp-shortcode.php:174
+msgid "tomorrow"
+msgstr "غدًا"
+
+#: includes/class-hp-shortcode.php:178
+msgid "Previous month"
+msgstr "الشهر السابق"
+
+#: includes/class-hp-shortcode.php:179
+msgid "Next month"
+msgstr "الشهر التالي"
+
+#. translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، "
+#: includes/class-hp-shortcode.php:181
+msgctxt "list separator"
+msgid ", "
+msgstr "، "
+
+#: includes/class-hp-shortcode.php:289
+msgid "Get directions"
+msgstr "الحصول على الاتجاهات"

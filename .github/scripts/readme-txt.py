@@ -2,7 +2,8 @@
 """Generate a wordpress.org readme.txt from README.md + the plugin header (used by release.yml for the zip).
 Usage: python3 .github/scripts/readme-txt.py README.md hourspilot.php > readme.txt
 README.md layout: "# Name", one-line summary, a | **Key** | value | table, then ## sections.
-## Features -> == Description ==, ### X -> = X =, attribute tables -> bullet lists, ### Releases (maintainer-only) dropped."""
+## Features -> == Description ==, ### X -> = X =, attribute tables -> bullet lists, ### Releases (maintainer-only)
+and ```mermaid diagrams dropped."""
 import re
 import sys
 
@@ -45,7 +46,7 @@ def main(md_path, php_path):
             body.append(l)
         k += 1
 
-    out, fence, table = [], False, []
+    out, fence, table, diagram = [], False, [], False
 
     def flush_table():
         rows = table_rows(table)
@@ -64,6 +65,12 @@ def main(md_path, php_path):
         table.clear()
 
     for l in body:
+        if l.startswith("```mermaid"):      # diagrams render on GitHub only
+            diagram = True
+            continue
+        if diagram:
+            diagram = not l.startswith("```")
+            continue
         if l.startswith("```"):
             fence = not fence
             continue

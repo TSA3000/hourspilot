@@ -118,6 +118,14 @@ pub struct I18n {
     pub months_short: Vec<String>,
     pub prev_month: String,
     pub next_month: String,
+    /// List separator, ", " by default ("، " in Arabic): status + time, several opening slots.
+    pub sep: String,
+}
+
+impl I18n {
+    fn sep(&self) -> &str {
+        if self.sep.is_empty() { ", " } else { &self.sep }
+    }
 }
 
 /// Countdown messages; `[time]` in the texts is replaced by the duration in `format`
@@ -164,6 +172,19 @@ pub struct Config {
     /// First day of the week, ISO.
     #[serde(default = "monday")]
     pub ws: u8,
+    /// Digits in the output: "arab" = Arabic-Indic (٠١٢…), otherwise as given (Western).
+    #[serde(default)]
+    pub dg: String,
+}
+
+impl Config {
+    /// Applies the digit setting to text shown to visitors (idempotent).
+    pub fn digits(&self, s: String) -> String {
+        if self.dg != "arab" {
+            return s;
+        }
+        s.chars().map(|c| c.to_digit(10).and_then(|d| char::from_u32(0x0660 + d)).unwrap_or(c)).collect()
+    }
 }
 
 fn monday() -> u8 {
@@ -209,7 +230,7 @@ impl Config {
         match s.mode {
             Mode::H24 => self.i18n.open24.clone(),
             Mode::Open if !s.slots.is_empty() => {
-                s.slots.iter().map(|x| format!("{} – {}", x.of, x.cf)).collect::<Vec<_>>().join(", ")
+                s.slots.iter().map(|x| format!("{} – {}", x.of, x.cf)).collect::<Vec<_>>().join(self.i18n.sep())
             }
             _ => self.i18n.closed_label.clone(),
         }
@@ -318,7 +339,7 @@ impl Config {
             return if st.h24 {
                 t.open24.clone()
             } else {
-                format!("{}, {}", t.open, t.closes_at.replace("%s", st.until.as_deref().unwrap_or("")))
+                format!("{}{}{}", t.open, t.sep(), t.closes_at.replace("%s", st.until.as_deref().unwrap_or("")))
             };
         }
         let (Some(k), Some(nd)) = (st.next_days, st.next_date.as_deref().and_then(date::parse)) else {
@@ -331,7 +352,7 @@ impl Config {
             2..=6 => format!("{} {time}", self.day_name(date::weekday(nd))),
             _ => format!("{} {time}", self.date_short(nd)),
         };
-        format!("{}, {}", t.closed, t.opens_at.replace("%s", when.trim()))
+        format!("{}{}{}", t.closed, t.sep(), t.opens_at.replace("%s", when.trim()))
     }
 
     pub fn countdown(&self, st: &Status) -> Option<String> {
@@ -403,7 +424,7 @@ pub fn update(cfg: &Config, now: &Now) -> Result<Update, String> {
         .filter_map(|d| {
             let s = cfg.schedule(d);
             let h = s.hol?;
-            Some(RowOut { d: date::weekday(d), text: cfg.hours_text(&s), label: h.l.clone() })
+            Some(RowOut { d: date::weekday(d), text: cfg.digits(cfg.hours_text(&s)), label: h.l.clone() })
         })
         .collect();
 
@@ -412,9 +433,9 @@ pub fn update(cfg: &Config, now: &Now) -> Result<Update, String> {
         day: date::weekday(day),
         open: st.open,
         soon: st.open && st.left.is_some_and(|l| l <= SOON_SECS),
-        badge: cfg.badge(&st),
-        countdown: cfg.countdown(&st),
-        notice,
+        badge: cfg.digits(cfg.badge(&st)),
+        countdown: cfg.countdown(&st).map(|c| cfg.digits(c)),
+        notice: notice.map(|n| cfg.digits(n)),
         rows,
         status: st,
     })
@@ -445,7 +466,7 @@ pub fn calendar(cfg: &Config, today: i32, offset: i32, max_offset: i32) -> Strin
     let mut h = String::with_capacity(4096);
     h += r#"<div class="hp-cal-head">"#;
     h += &nav(-1, &t.prev_month, "‹", offset <= 0);
-    h += &format!(r#"<span class="hp-cal-title" tabindex="-1" aria-live="polite">{} {cy}</span>"#, esc(&month));
+    h += &format!(r#"<span class="hp-cal-title" tabindex="-1" aria-live="polite">{} {}</span>"#, esc(&month), cfg.digits(cy.to_string()));
     h += &nav(1, &t.next_month, "›", offset >= max_offset);
     h += r#"</div><table class="hp-cal"><thead><tr>"#;
     for i in 0..7u8 {
@@ -487,7 +508,7 @@ pub fn calendar(cfg: &Config, today: i32, offset: i32, max_offset: i32) -> Strin
                 r#"<td class="{cls}" title="{}"{}><span class="hp-cal-n">{}</span><span class="hp-cal-h">{short}</span></td>"#,
                 esc(&title),
                 if d == today { r#" aria-current="date""# } else { "" },
-                date::civil_from_days(d).2,
+                cfg.digits(date::civil_from_days(d).2.to_string()),
             );
         }
         if (d - start) % 7 == 6 {

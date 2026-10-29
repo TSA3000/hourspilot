@@ -52,6 +52,7 @@ final class HP_Shortcode {
 				'schema'               => '1',
 				'accent'               => '',
 				'date_format'          => 'j M',
+				'digits'               => apply_filters( 'hourspilot_digits', 'latn' ), // latn (0-9) | arab (٠-٩).
 				'holiday_hours'        => '0', // Holiday hours replace this week's regular hours (turns off grouping).
 				'open_countdown'       => '0',
 				'close_countdown'      => '0',
@@ -81,6 +82,7 @@ final class HP_Shortcode {
 		$short = $b( 'short_days' );
 		$view  = 'today' === $a['view'] ? 'today' : 'week';
 		$hh    = $b( 'holiday_hours' );
+		$dg    = 'arab' === $a['digits'] ? 'arab' : 'latn';
 		$lay   = in_array( $a['layout'], array( 'horizontal', 'calendar' ), true ) ? $a['layout'] : 'vertical';
 		$hours = HP_Hours::get_hours( $id );
 		$tz    = HP_Hours::timezone_string( $id );
@@ -105,8 +107,8 @@ final class HP_Shortcode {
 			fn( $s ) => array(
 				'o'  => $s['open'],
 				'c'  => $s['close'],
-				'of' => HP_Hours::fmt_time( $s['open'] ),
-				'cf' => HP_Hours::fmt_time( $s['close'] ),
+				'of' => HP_Hours::digits( HP_Hours::fmt_time( $s['open'] ), $dg ),
+				'cf' => HP_Hours::digits( HP_Hours::fmt_time( $s['close'] ), $dg ),
 			),
 			$slots
 		);
@@ -137,6 +139,7 @@ final class HP_Shortcode {
 			'layout' => $lay,
 			'ws'     => HP_Hours::ordered_days()[0],
 			'hh'     => $hh,
+			'dg'     => $dg,
 			'week'   => $week,
 			'hol'    => array_values(
 				array_map(
@@ -174,6 +177,8 @@ final class HP_Shortcode {
 				'monthsShort' => $months_short,
 				'prevMonth'   => __( 'Previous month', 'hourspilot' ),
 				'nextMonth'   => __( 'Next month', 'hourspilot' ),
+				/* translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، " */
+				'sep'         => _x( ', ', 'list separator', 'hourspilot' ),
 			),
 		);
 
@@ -248,6 +253,7 @@ final class HP_Shortcode {
 							if ( $h['to'] !== $h['from'] ) {
 								$range .= ' – ' . HP_Hours::fmt_date( $h['to'], $a['date_format'] );
 							}
+							$range = HP_Hours::digits( $range, $dg );
 							$hday = array(
 								'mode'  => $h['slots'] ? 'open' : 'closed',
 								'slots' => $h['slots'],
@@ -344,7 +350,7 @@ final class HP_Shortcode {
 		}
 		$out = '';
 		foreach ( $day['slots'] as $s ) {
-			$out .= '<span class="hp-slot">' . esc_html( HP_Hours::fmt_time( $s['open'] ) . ' – ' . HP_Hours::fmt_time( $s['close'] ) ) . '</span>';
+			$out .= '<span class="hp-slot">' . esc_html( HP_Hours::digits( HP_Hours::fmt_time( $s['open'] ) . ' – ' . HP_Hours::fmt_time( $s['close'] ), $a['digits'] ) ) . '</span>';
 		}
 		return $out;
 	}

@@ -1,5 +1,5 @@
 /* HoursPilot – live status, countdowns, holiday hours and calendar, computed in the browser by the
- * Rust engine (assets/hourspilot.wasm, source in rust/), so page caches never show a stale status. | v0.2.0 | Arthur Sam Mahdi */
+ * Rust engine (assets/hourspilot.wasm, source in rust/), so page caches never show a stale status. | v0.3.0 | Arthur Sam Mahdi */
 (function () {
 	'use strict';
 
@@ -121,7 +121,7 @@
 
 		var lt = el.querySelector('.hp-localtime');
 		if (lt) {
-			var opts = { timeZone: cfg.tz, hour: '2-digit', minute: '2-digit' };
+			var opts = { timeZone: cfg.tz, hour: '2-digit', minute: '2-digit', numberingSystem: cfg.dg === 'arab' ? 'arab' : 'latn' };
 			try { lt.textContent = new Intl.DateTimeFormat(document.documentElement.lang || undefined, opts).format(new Date()); }
 			catch (e) { lt.textContent = new Intl.DateTimeFormat(undefined, opts).format(new Date()); }
 		}

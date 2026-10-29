@@ -230,6 +230,11 @@ final class HP_Hours {
 		return wp_date( (string) get_option( 'time_format', 'H:i' ), gmmktime( $h, $m, 0, 1, 1, 2024 ), new DateTimeZone( 'UTC' ) );
 	}
 
+	/** Digits for visitors: 'arab' = Arabic-Indic (٠١٢…), anything else leaves Western digits. */
+	public static function digits( $str, $system ) {
+		return 'arab' === $system ? strtr( (string) $str, array_combine( range( 0, 9 ), array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩' ) ) ) : (string) $str;
+	}
+
 	public static function fmt_date( $ymd, $format = '' ) {
 		$format = $format ? $format : (string) get_option( 'date_format' );
 		return wp_date( $format, strtotime( $ymd . ' 12:00:00 UTC' ), new DateTimeZone( 'UTC' ) );

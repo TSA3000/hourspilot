@@ -1,4 +1,4 @@
-/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.2.0 | Arthur Sam Mahdi */
+/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.3.0 | Arthur Sam Mahdi */
 .hourspilot {
 	--hp-accent: #0f766e;
 	--hp-open: #15803d;
@@ -71,7 +71,7 @@
 .hourspilot .hp-notice {
 	margin: 0 0 1rem;
 	padding: 0.6em 0.85em;
-	border-left: 3px solid var(--hp-soon);
+	border-inline-start: 3px solid var(--hp-soon);
 	border-radius: 4px;
 	background: rgba(180, 83, 9, 0.08);
 	font-size: 0.875em;
@@ -96,20 +96,20 @@
 	font-weight: 400;
 }
 .hourspilot .hp-table tr:first-child > * { border-top: 0; }
-.hourspilot .hp-table th { text-align: left; padding-right: 1rem; }
-.hourspilot .hp-table td { text-align: right; }
+.hourspilot .hp-table th { text-align: start; padding-inline-end: 1rem; }
+.hourspilot .hp-table td { text-align: end; }
 .hourspilot .hp-slot { display: block; white-space: nowrap; }
 .hourspilot .hp-closed { opacity: 0.55; }
 
 .hourspilot .hp-row.hp-is-today > * { font-weight: 650; }
 .hourspilot .hp-row.hp-is-today th {
 	position: relative;
-	padding-left: 0.8em;
+	padding-inline-start: 0.8em;
 }
 .hourspilot .hp-row.hp-is-today th::before {
 	content: "";
 	position: absolute;
-	left: 0;
+	inset-inline-start: 0;
 	top: 0.6em;
 	bottom: 0.6em;
 	width: 3px;
@@ -145,7 +145,7 @@
 .hourspilot .hp-holidays li:first-child { border-top: 0; }
 .hourspilot .hp-h-date { font-weight: 600; white-space: nowrap; }
 .hourspilot .hp-h-label { opacity: 0.75; }
-.hourspilot .hp-h-hours { text-align: right; }
+.hourspilot .hp-h-hours { text-align: end; }
 
 /* Countdown */
 .hourspilot .hp-countdown {
@@ -183,11 +183,11 @@
 .hourspilot.hp-layout-horizontal .hp-table td {
 	padding: 0;
 	border: 0;
-	text-align: left;
+	text-align: start;
 }
 .hourspilot.hp-layout-horizontal .hp-table th { margin-bottom: 0.25em; font-size: 0.875em; opacity: 0.75; }
 .hourspilot.hp-layout-horizontal .hp-row.hp-is-today { border-color: var(--hp-accent); box-shadow: inset 0 3px 0 var(--hp-accent); }
-.hourspilot.hp-layout-horizontal .hp-row.hp-is-today th { padding-left: 0; }
+.hourspilot.hp-layout-horizontal .hp-row.hp-is-today th { padding-inline-start: 0; }
 .hourspilot.hp-layout-horizontal .hp-row.hp-is-today th::before { display: none; }
 
 /* Calendar layout (rendered by the engine) */
@@ -216,6 +216,7 @@
 .hourspilot .hp-cal-nav:hover:not(:disabled) { border-color: var(--hp-accent); color: var(--hp-accent); }
 .hourspilot .hp-cal-nav:focus-visible { outline: 2px solid var(--hp-accent); outline-offset: 2px; }
 .hourspilot .hp-cal-nav:disabled { opacity: 0.35; cursor: default; }
+.hourspilot:dir(rtl) .hp-cal-nav { transform: scaleX(-1); } /* ‹ › point the reading direction */
 .hourspilot .hp-cal {
 	width: 100%;
 	margin: 0;
