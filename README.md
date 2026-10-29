@@ -4,7 +4,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 | | |
 |---|---|
-| **Version** | 0.3.0 |
+| **Version** | 0.3.1 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
@@ -158,12 +158,17 @@ and **Tags** rows above exist for it.
 
 ## Changelog
 
+### 0.3.1
+
+- Horizontal layout: 12-hour times wrap inside the day cards instead of overlapping the next day
+- Arabic calendar: the month arrows point the right way (the browser already mirrors them)
+- Local time without a leading zero ("4:35 PM"), like WordPress's own times
+- README screenshots (English, Swedish, Arabic)
+
 ### 0.3.0
 
 - Swedish and Arabic translations; `.pot` template for more languages
-- Right-to-left layout (direction-neutral CSS)
-- Horizontal layout: 12-hour times wrap inside the day cards; local time without a leading zero
-- README screenshots (English, Swedish, Arabic)
+- Right-to-left layout (direction-neutral CSS, mirrored calendar arrows)
 - `digits="arab"`: Arabic-Indic digits in times, dates, countdowns and the calendar
 - Translatable list separator (Arabic "،")
 - Translations load on `init` (no "loaded too early" notice on WordPress 6.7+)

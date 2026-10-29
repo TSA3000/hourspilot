@@ -1,4 +1,4 @@
-/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.3.0 | Arthur Sam Mahdi */
+/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.3.1 | Arthur Sam Mahdi */
 .hourspilot {
 	--hp-accent: #0f766e;
 	--hp-open: #15803d;

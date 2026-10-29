@@ -3,7 +3,7 @@
  * Plugin Name:       HoursPilot
  * Plugin URI:        https://github.com/TSA3000/hourspilot
  * Description:       Business hours, holidays and live open/closed status for one or more locations. Shortcode, cache-friendly, schema.org markup.
- * Version:           0.3.0
+ * Version:           0.3.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Arthur Sam Mahdi
@@ -15,12 +15,12 @@
  *
  * @package HoursPilot
  * @author  Arthur Sam Mahdi <tsa3000@gmail.com>
- * @version 0.3.0
+ * @version 0.3.1
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'HOURSPILOT_VERSION', '0.3.0' );
+define( 'HOURSPILOT_VERSION', '0.3.1' );
 define( 'HOURSPILOT_FILE', __FILE__ );
 define( 'HOURSPILOT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HOURSPILOT_URL', plugin_dir_url( __FILE__ ) );
