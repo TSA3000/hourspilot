@@ -4,7 +4,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 | | |
 |---|---|
-| **Version** | 0.2.0 |
+| **Version** | 0.3.0 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
@@ -22,6 +22,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Live "Open now / Closed now" badge, computed in the browser by a small Rust/WebAssembly engine, so page caches never show a stale status
 - schema.org `OpeningHoursSpecification` + `specialOpeningHoursSpecification` JSON-LD
 - Works anywhere shortcodes do: block editor, Elementor, widgets
+- Translated into Swedish and Arabic (right-to-left layout, optional Arabic-Indic digits ٠١٢…)
 
 ## Installation
 
@@ -51,6 +52,7 @@ Omit `id` to use the first location.
 | `show_holidays` | `1` | List of upcoming holidays |
 | `holiday_days` | `60` | How far ahead to list holidays |
 | `date_format` | `j M` | PHP date format for holidays |
+| `digits` | `latn` | `latn` (0–9) or `arab` (Arabic-Indic ٠–٩); site-wide default via the `hourspilot_digits` filter |
 | `holiday_hours` | `0` | `1` = holiday hours replace this week's regular hours (turns off grouping) |
 | `show_info` | `1` | Address, phone, e-mail, website, directions |
 | `show_image` | `1` | Featured image |
@@ -64,6 +66,43 @@ Omit `id` to use the first location.
 | `close_countdown_text` | `Closing in [time]` | |
 | `open_text`, `closed_text`, `closed_label`, `open24_label`, `holiday_title` | *(translated)* | Labels |
 
+## How it works
+
+```mermaid
+flowchart LR
+    subgraph wp["WordPress (PHP)"]
+        admin["Admin: Locations<br/>weekly hours, holidays, info"] -->|post meta| db[("hp_location")]
+        db --> sc["Shortcode [hourspilot]"]
+        lang["languages/<br/>sv_SE, ar"] -.->|labels, day + month names| sc
+        sc --> ld["schema.org JSON-LD"]
+    end
+    subgraph browser["Browser"]
+        page["Page: hours table<br/>+ data-hp JSON"]
+        js["frontend.js"]
+        wasm[["hourspilot.wasm<br/>Rust time engine"]]
+        page --> js
+        js -->|"config + local time<br/>in the location's time zone"| wasm
+        wasm -->|"status, countdown,<br/>holiday rows, calendar"| js
+        js -->|"updates every 30 s<br/>(1 s with countdowns)"| page
+    end
+    sc -->|server-rendered HTML| page
+    cache["Page cache"] -.->|cached HTML stays correct| page
+```
+
+The server renders the hours once; everything that depends on *now* (open/closed, countdowns, today's holiday,
+the calendar) is computed in the browser by the Rust engine. A cached page therefore never shows a stale status.
+
+## Translations
+
+English (source), Swedish (`sv_SE`) and Arabic (`ar`) ship in `languages/`: `.po` (editable), `.mo` (WordPress 6.0–6.4)
+and `.l10n.php` (WordPress 6.5+). The site language (*Settings → General*) picks them automatically; day and month names
+come from WordPress itself. Arabic gets a right-to-left layout through direction-neutral CSS.
+
+To add a language: copy `languages/hourspilot.pot` to `hourspilot-<locale>.po`, translate it (e.g. with Poedit), then
+compile with `wp i18n make-mo languages/ && wp i18n make-php languages/`. After changing texts in the code, refresh the
+template with `wp i18n make-pot . languages/hourspilot.pot --exclude=rust,.github,languages` and
+`wp i18n update-po languages/hourspilot.pot languages/`.
+
 ## Styling
 
 Override CSS variables on `.hourspilot`:
@@ -72,7 +111,7 @@ Override CSS variables on `.hourspilot`:
 
 ## Developers
 
-Filter: `hourspilot_schema( array $data, int $location_id )`
+Filters: `hourspilot_schema( array $data, int $location_id )`, `hourspilot_digits( string $system )` (`latn` | `arab`)
 
 Data is stored as post meta on the `hp_location` post type:
 `_hp_hours`, `_hp_holidays` (from, to, label, slots, recurring), `_hp_info`, `_hp_timezone`, `_hp_schema_type`.
@@ -102,6 +141,14 @@ The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scr
 and **Tags** rows above exist for it.
 
 ## Changelog
+
+### 0.3.0
+
+- Swedish and Arabic translations; `.pot` template for more languages
+- Right-to-left layout (direction-neutral CSS, mirrored calendar arrows)
+- `digits="arab"`: Arabic-Indic digits in times, dates, countdowns and the calendar
+- Translatable list separator (Arabic "،")
+- Translations load on `init` (no "loaded too early" notice on WordPress 6.7+)
 
 ### 0.2.0
 

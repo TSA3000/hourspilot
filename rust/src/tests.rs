@@ -183,3 +183,27 @@ fn bad_input() {
     let u = update(&c, &Now { date: "2026-10-29".into(), sec: 0 }).unwrap();
     assert!(!u.open && u.status.next_days.is_none());
 }
+
+#[test]
+fn arabic_digits() {
+    let c = cfg(r#","dg":"arab","cd":{"close":true,"mins":600,"closeText":"[time]"}"#);
+    let u = update(&c, &Now { date: "2026-10-27".into(), sec: at(9, 0) }).unwrap();
+    assert_eq!(u.badge, "Open now, closes ١٧:٠٠");
+    assert_eq!(u.countdown.as_deref(), Some("٨:٠٠:٠٠"));
+    assert_eq!(c.digits("٠٨:٣٠".into()), "٠٨:٣٠");
+    let cal = calendar(&c, d("2026-10-29"), 0, 11);
+    assert!(cal.contains("October ٢٠٢٦"));
+    assert!(cal.contains(r#"<span class="hp-cal-n">٢٩</span>"#));
+    assert!(cal.contains(r#"data-hp-nav="1""#)); // attributes keep Western digits
+    assert_eq!(cfg("").digits("17:00".into()), "17:00");
+}
+
+#[test]
+fn arabic_separator() {
+    let mut c = cfg("");
+    c.i18n.sep = "، ".into();
+    c.i18n.open = "مفتوح الآن".into();
+    c.i18n.closes_at = "يغلق %s".into();
+    assert_eq!(c.badge(&status(&c, d("2026-10-27"), at(9, 0))), "مفتوح الآن، يغلق 17:00");
+    assert_eq!(c.hours_text(&c.schedule(d("2026-10-26"))), "08:00 – 12:00، 13:00 – 17:00");
+}
