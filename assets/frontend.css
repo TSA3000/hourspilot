@@ -1,0 +1,174 @@
+/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.1.0 | Arthur Sam Mahdi */
+.hourspilot {
+	--hp-accent: #0f766e;
+	--hp-open: #15803d;
+	--hp-soon: #b45309;
+	--hp-shut: #b91c1c;
+	--hp-line: rgba(128, 128, 128, 0.22);
+	--hp-radius: 12px;
+	--hp-pad: 1.25rem;
+
+	box-sizing: border-box;
+	max-width: 30rem;
+	padding: var(--hp-pad);
+	border: 1px solid var(--hp-line);
+	border-radius: var(--hp-radius);
+	line-height: 1.45;
+	font-variant-numeric: tabular-nums;
+}
+.hourspilot *,
+.hourspilot *::before,
+.hourspilot *::after { box-sizing: inherit; }
+.hourspilot [hidden] { display: none !important; }
+
+/* Header */
+.hourspilot .hp-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+	margin-bottom: 1rem;
+}
+.hourspilot .hp-title {
+	flex: 1 1 auto;
+	margin: 0;
+	font-size: 1.125em;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+}
+.hourspilot .hp-localtime { font-size: 0.8125em; opacity: 0.65; }
+
+/* Status – the one loud element */
+.hourspilot .hp-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	padding: 0.3em 0.8em 0.3em 0.65em;
+	border-radius: 999px;
+	font-size: 0.8125em;
+	font-weight: 600;
+	color: var(--hp-shut);
+	background: rgba(185, 28, 28, 0.1);
+}
+.hourspilot .hp-status::before {
+	content: "";
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: 50%;
+	background: currentColor;
+}
+.hourspilot .hp-status.hp-open { color: var(--hp-open); background: rgba(21, 128, 61, 0.12); }
+.hourspilot .hp-status.hp-soon { color: var(--hp-soon); background: rgba(180, 83, 9, 0.12); }
+.hourspilot .hp-status.hp-open::before { animation: hp-pulse 2.4s ease-out infinite; }
+@keyframes hp-pulse {
+	0% { box-shadow: 0 0 0 0 currentColor; }
+	70%, 100% { box-shadow: 0 0 0 0.45em transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.hourspilot .hp-status::before { animation: none !important; }
+}
+
+.hourspilot .hp-notice {
+	margin: 0 0 1rem;
+	padding: 0.6em 0.85em;
+	border-left: 3px solid var(--hp-soon);
+	border-radius: 4px;
+	background: rgba(180, 83, 9, 0.08);
+	font-size: 0.875em;
+}
+
+/* Hours table – reset common theme table styles */
+.hourspilot .hp-table {
+	width: 100%;
+	margin: 0;
+	border: 0;
+	border-collapse: collapse;
+	background: none;
+	font-size: 0.9375em;
+}
+.hourspilot .hp-table th,
+.hourspilot .hp-table td {
+	padding: 0.55em 0;
+	border: 0;
+	border-top: 1px solid var(--hp-line);
+	background: none;
+	vertical-align: top;
+	font-weight: 400;
+}
+.hourspilot .hp-table tr:first-child > * { border-top: 0; }
+.hourspilot .hp-table th { text-align: left; padding-right: 1rem; }
+.hourspilot .hp-table td { text-align: right; }
+.hourspilot .hp-slot { display: block; white-space: nowrap; }
+.hourspilot .hp-closed { opacity: 0.55; }
+
+.hourspilot .hp-row.hp-is-today > * { font-weight: 650; }
+.hourspilot .hp-row.hp-is-today th {
+	position: relative;
+	padding-left: 0.8em;
+}
+.hourspilot .hp-row.hp-is-today th::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.6em;
+	bottom: 0.6em;
+	width: 3px;
+	border-radius: 3px;
+	background: var(--hp-accent);
+}
+
+/* "Today" view: only today's row */
+.hourspilot.hp-view-today .hp-row:not(.hp-is-today) { display: none; }
+.hourspilot.hp-view-today .hp-table th,
+.hourspilot.hp-view-today .hp-table td { border-top: 0; }
+
+/* Holidays */
+.hourspilot .hp-subtitle {
+	margin: 1.25rem 0 0.4rem;
+	font-size: 0.875em;
+	font-weight: 650;
+}
+.hourspilot ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.hourspilot .hp-holidays li {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 0.15rem 0.75rem;
+	margin: 0;
+	padding: 0.45em 0;
+	border-top: 1px solid var(--hp-line);
+	font-size: 0.875em;
+}
+.hourspilot .hp-holidays li:first-child { border-top: 0; }
+.hourspilot .hp-h-date { font-weight: 600; white-space: nowrap; }
+.hourspilot .hp-h-label { opacity: 0.75; }
+.hourspilot .hp-h-hours { text-align: right; }
+
+/* Location */
+.hourspilot .hp-info {
+	margin-top: 1.25rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--hp-line);
+	font-size: 0.875em;
+}
+.hourspilot .hp-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 14rem;
+	margin-bottom: 0.9rem;
+	object-fit: cover;
+	border-radius: calc(var(--hp-radius) - 4px);
+}
+.hourspilot .hp-info li { margin: 0; padding: 0.15em 0; }
+.hourspilot .hp-info a { color: var(--hp-accent); text-underline-offset: 0.15em; }
+.hourspilot .hp-info a:focus-visible { outline: 2px solid var(--hp-accent); outline-offset: 2px; border-radius: 2px; }
+
+@media (max-width: 380px) {
+	.hourspilot { --hp-pad: 1rem; }
+	.hourspilot .hp-holidays li { grid-template-columns: 1fr auto; }
+	.hourspilot .hp-h-label { grid-column: 1 / -1; grid-row: 2; }
+}
