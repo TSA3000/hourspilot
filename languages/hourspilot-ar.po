@@ -48,7 +48,7 @@ msgid "Location details"
 msgstr "تفاصيل الموقع"
 
 #: includes/class-hp-admin.php:52
-#: includes/class-hp-admin.php:633
+#: includes/class-hp-admin.php:743
 msgid "Shortcode"
 msgstr "الرمز القصير"
 
@@ -58,7 +58,7 @@ msgid "Open"
 msgstr "مفتوح"
 
 #: includes/class-hp-admin.php:151
-#: includes/class-hp-admin.php:280
+#: includes/class-hp-admin.php:378
 #: includes/class-hp-settings.php:64
 #: includes/class-hp-settings.php:68
 msgid "Closed"
@@ -94,44 +94,44 @@ msgstr "يغلق"
 msgid "Remove hours"
 msgstr "إزالة الساعات"
 
-#: includes/class-hp-admin.php:242
+#: includes/class-hp-admin.php:340
 msgid "From"
 msgstr "من"
 
-#: includes/class-hp-admin.php:243
+#: includes/class-hp-admin.php:341
 msgid "To (optional)"
 msgstr "إلى (اختياري)"
 
-#: includes/class-hp-admin.php:244
+#: includes/class-hp-admin.php:342
 msgid "Name"
 msgstr "الاسم"
 
-#: includes/class-hp-admin.php:245
+#: includes/class-hp-admin.php:343
 msgid "Hours (empty = closed)"
 msgstr "الساعات (فارغ = مغلق)"
 
-#: includes/class-hp-admin.php:246
-#: includes/class-hp-admin.php:282
+#: includes/class-hp-admin.php:344
+#: includes/class-hp-admin.php:380
 msgid "Every year"
 msgstr "كل سنة"
 
-#: includes/class-hp-admin.php:247
+#: includes/class-hp-admin.php:345
 msgid "Remove"
 msgstr "إزالة"
 
-#: includes/class-hp-admin.php:258
+#: includes/class-hp-admin.php:356
 msgid "Add holiday or special day"
 msgstr "إضافة عطلة أو يوم خاص"
 
-#: includes/class-hp-admin.php:259
+#: includes/class-hp-admin.php:357
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr "صيغة الساعات الخاصة: 10:00-14:00. افصل بين عدة فترات بفواصل. تُخفى العطلات الماضية تلقائيًا على الموقع. كل سنة: تتكرر التواريخ نفسها كل سنة (يتم تجاهل السنة التي تدخلها)."
 
-#: includes/class-hp-admin.php:279
+#: includes/class-hp-admin.php:377
 msgid "e.g. Christmas Eve"
 msgstr "مثلًا: عيد الفطر"
 
-#: includes/class-hp-admin.php:281
+#: includes/class-hp-admin.php:379
 msgid "Remove row"
 msgstr "إزالة الصف"
 
@@ -151,31 +151,31 @@ msgstr "نوع النشاط التجاري"
 msgid "Used in the structured data search engines read."
 msgstr "يُستخدم في البيانات المنظمة التي تقرؤها محركات البحث."
 
-#: includes/class-hp-admin.php:319
+#: includes/class-hp-admin.php:417
 msgid "Phone"
 msgstr "الهاتف"
 
-#: includes/class-hp-admin.php:325
+#: includes/class-hp-admin.php:423
 msgid "Email"
 msgstr "البريد الإلكتروني"
 
-#: includes/class-hp-admin.php:328
+#: includes/class-hp-admin.php:426
 msgid "Website"
 msgstr "الموقع الإلكتروني"
 
-#: includes/class-hp-admin.php:316
+#: includes/class-hp-admin.php:414
 msgid "Address"
 msgstr "العنوان"
 
-#: includes/class-hp-admin.php:331
+#: includes/class-hp-admin.php:429
 msgid "Map link"
 msgstr "رابط الخريطة"
 
-#: includes/class-hp-admin.php:334
+#: includes/class-hp-admin.php:432
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr "عيّن صورة الموقع من «صورة الموقع» في الشريط الجانبي."
 
-#: includes/class-hp-admin.php:363
+#: includes/class-hp-admin.php:461
 msgid "Save the location to get its shortcode."
 msgstr "احفظ الموقع للحصول على الرمز القصير الخاص به."
 
@@ -297,15 +297,15 @@ msgstr "التسمية"
 msgid "Break"
 msgstr "استراحة"
 
-#: includes/class-hp-admin.php:322
+#: includes/class-hp-admin.php:420
 msgid "Second phone"
 msgstr "هاتف ثانٍ"
 
-#: includes/class-hp-admin.php:337
+#: includes/class-hp-admin.php:435
 msgid "Map position"
 msgstr "موقع الخريطة"
 
-#: includes/class-hp-admin.php:340
+#: includes/class-hp-admin.php:438
 msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
 msgstr "خط العرض، خط الطول للخريطة المضمّنة (مطلوب لـ OpenStreetMap؛ يمكن لخرائط Google استخدام العنوان بدلًا من ذلك)."
 
@@ -405,12 +405,12 @@ msgid "Loads the map from %s."
 msgstr "يحمّل الخريطة من %s."
 
 #: includes/class-hp-admin.php:44
-#: includes/class-hp-admin.php:427
+#: includes/class-hp-admin.php:535
 msgid "Shared holidays"
 msgstr "العطلات المشتركة"
 
 #: includes/class-hp-admin.php:45
-#: includes/class-hp-admin.php:457
+#: includes/class-hp-admin.php:565
 msgid "Import / Export"
 msgstr "استيراد / تصدير"
 
@@ -468,65 +468,65 @@ msgstr[5] "استخدم أيضًا العطلات المشتركة (%d)"
 msgid "Edit shared holidays"
 msgstr "تعديل العطلات المشتركة"
 
-#: includes/class-hp-admin.php:369
+#: includes/class-hp-admin.php:467
 msgid "Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:"
 msgstr "الصقه في أي صفحة أو ودجت أو كتلة رمز قصير. يستخدم إعدادات التبويبات، وتتقدّم عليها الخصائص، مثلًا:"
 
-#: includes/class-hp-admin.php:429
+#: includes/class-hp-admin.php:537
 msgid "Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own."
 msgstr "عطلات تستخدمها جميع المواقع، مثل العطلات الرسمية. يمكن للموقع إلغاء استخدامها من تبويب العطلات وإضافة عطلاته الخاصة."
 
-#: includes/class-hp-admin.php:434
+#: includes/class-hp-admin.php:542
 msgid "Save shared holidays"
 msgstr "حفظ العطلات المشتركة"
 
-#: includes/class-hp-admin.php:442
-#: includes/class-hp-admin.php:511
-#: includes/class-hp-admin.php:517
 #: includes/class-hp-admin.php:550
+#: includes/class-hp-admin.php:620
+#: includes/class-hp-admin.php:626
+#: includes/class-hp-admin.php:659
 msgid "Sorry, you are not allowed to do that."
 msgstr "عذرًا، غير مسموح لك بذلك."
 
-#: includes/class-hp-admin.php:461
-#: includes/class-hp-admin.php:485
+#: includes/class-hp-admin.php:569
+#: includes/class-hp-admin.php:593
 msgid "Export"
 msgstr "تصدير"
 
-#: includes/class-hp-admin.php:462
+#: includes/class-hp-admin.php:570
 msgid "Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included."
 msgstr "نزّل جميع المواقع (الساعات، العطلات، التفاصيل، الإعدادات) والعطلات المشتركة كملف JSON. الصور غير مضمّنة."
 
-#: includes/class-hp-admin.php:463
+#: includes/class-hp-admin.php:571
 msgid "To export one location, use \"Export\" below its name in the Locations list."
 msgstr "لتصدير موقع واحد، استخدم «تصدير» أسفل اسمه في قائمة المواقع."
 
-#: includes/class-hp-admin.php:464
+#: includes/class-hp-admin.php:572
 msgid "Export all locations"
 msgstr "تصدير جميع المواقع"
 
-#: includes/class-hp-admin.php:467
-#: includes/class-hp-admin.php:474
+#: includes/class-hp-admin.php:575
+#: includes/class-hp-admin.php:582
 msgid "Import"
 msgstr "استيراد"
 
-#: includes/class-hp-admin.php:468
+#: includes/class-hp-admin.php:576
 msgid "Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing."
 msgstr "استورد ملف JSON من HoursPilot. يُضاف كل موقع كمسودة جديدة لتتمكن من مراجعته قبل النشر."
 
-#: includes/class-hp-admin.php:473
+#: includes/class-hp-admin.php:581
 msgid "Also replace the shared holidays with the ones in the file"
 msgstr "استبدل أيضًا العطلات المشتركة بالعطلات الموجودة في الملف"
 
-#: includes/class-hp-admin.php:569
+#: includes/class-hp-admin.php:678
 msgid "Imported location"
 msgstr "موقع مستورد"
 
-#: includes/class-hp-admin.php:616
+#: includes/class-hp-admin.php:726
 msgid "Shared holidays saved."
 msgstr "تم حفظ العطلات المشتركة."
 
 #. translators: %d: number of imported locations
-#: includes/class-hp-admin.php:618
+#: includes/class-hp-admin.php:728
 #, php-format
 msgid "%d location imported as a draft."
 msgid_plural "%d locations imported as drafts."
@@ -537,7 +537,7 @@ msgstr[3] "تم استيراد مواقع كمسودات: %d"
 msgstr[4] "تم استيراد مواقع كمسودات: %d"
 msgstr[5] "تم استيراد مواقع كمسودات: %d"
 
-#: includes/class-hp-admin.php:619
+#: includes/class-hp-admin.php:729
 msgid "That file is not a HoursPilot export."
 msgstr "هذا الملف ليس تصديرًا من HoursPilot."
 
@@ -858,3 +858,39 @@ msgstr "تحميل الخريطة بعد النقر فقط (لا يُرسل شي
 #: includes/class-hp-settings.php:320
 msgid "Choose image"
 msgstr "اختيار صورة"
+
+#: includes/class-hp-admin.php:247
+msgid "Closed on public holidays"
+msgstr "مغلق في العطلات الرسمية"
+
+#: includes/class-hp-admin.php:252
+msgid "Source"
+msgstr "المصدر"
+
+#: includes/class-hp-admin.php:264
+msgid "Country"
+msgstr "الدولة"
+
+#: includes/class-hp-admin.php:267
+msgid "— Choose —"
+msgstr "— اختر —"
+
+#. translators: %s: name of the holiday source
+#: includes/class-hp-admin.php:277
+#, php-format
+msgid "%s couldn't be reached; enter a two-letter country code."
+msgstr "تعذّر الوصول إلى %s؛ أدخل رمز الدولة المكوّن من حرفين."
+
+#. translators: %s: link to the holiday source
+#: includes/class-hp-admin.php:289
+#, php-format
+msgid "Nationwide public holidays from %s, checked weekly. To open on one of them, add that day above with its hours."
+msgstr "العطلات الرسمية على مستوى الدولة من %s، تُحدَّث أسبوعيًا. لتفتح في إحداها، أضف ذلك اليوم أعلاه مع ساعاته."
+
+#: includes/class-hp-admin.php:307
+msgid "No public holidays found for this country."
+msgstr "لم يُعثر على عطلات رسمية لهذه الدولة."
+
+#: includes/class-hp-admin.php:311
+msgid "Next public holidays:"
+msgstr "العطلات الرسمية القادمة:"

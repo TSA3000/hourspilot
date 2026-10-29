@@ -135,24 +135,46 @@ final class HP_Hours {
 		return $out;
 	}
 
-	/** Holidays sorted by start date. Empty slots = closed. */
 	/** Option with the holidays every location can use (Locations → Shared holidays). */
 	const SHARED_OPTION = 'hourspilot_shared_holidays';
 
 	/**
 	 * Holidays of a location sorted by start date: its own plus, unless the location
-	 * opted out (_hp_use_shared = 0), the shared ones. Empty slots = closed.
+	 * opted out (_hp_use_shared = 0), the shared ones, plus the public holidays of its
+	 * country (Holidays tab) on days not already covered. Empty slots = closed.
 	 */
 	public static function get_holidays( $id, $with_shared = true ) {
 		$own = get_post_meta( $id, '_hp_holidays', true );
 		$out = self::normalize_holidays( is_array( $own ) ? $own : array() );
-		if ( $with_shared && self::uses_shared( $id ) ) {
+		if ( ! $with_shared ) {
+			return $out;
+		}
+		if ( self::uses_shared( $id ) ) {
 			foreach ( self::shared_holidays() as $h ) {
 				$out[] = $h + array( 'shared' => true );
 			}
-			usort( $out, fn( $a, $b ) => strcmp( $a['from'], $b['from'] ) );
 		}
+		$set = $out;
+		foreach ( HP_Public_Holidays::for_location( $id ) as $h ) {
+			if ( ! self::covered( $set, $h['from'] ) ) {
+				$out[] = $h;
+			}
+		}
+		usort( $out, fn( $a, $b ) => strcmp( $a['from'], $b['from'] ) );
 		return $out;
+	}
+
+	/** Is $ymd inside one of the holidays (recurring ones by month and day)? */
+	private static function covered( $holidays, $ymd ) {
+		foreach ( $holidays as $h ) {
+			$d = $h['recurring'] ? substr( $ymd, 5 ) : $ymd;
+			$f = $h['recurring'] ? substr( $h['from'], 5 ) : $h['from'];
+			$t = $h['recurring'] ? substr( $h['to'], 5 ) : $h['to'];
+			if ( $f <= $d && $d <= $t ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static function uses_shared( $id ) {
