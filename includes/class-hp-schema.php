@@ -56,7 +56,7 @@ final class HP_Schema {
 				);
 				continue;
 			}
-			foreach ( $day['slots'] as $s ) {
+			foreach ( HP_Hours::open_slots( $day['slots'] ) as $s ) {
 				$spec[] = $base + array(
 					'opens'  => $s['open'],
 					'closes' => $s['close'],

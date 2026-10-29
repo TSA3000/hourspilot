@@ -4,7 +4,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 | | |
 |---|---|
-| **Version** | 0.3.1 |
+| **Version** | 0.4.0 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
@@ -18,6 +18,10 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Several opening hours per day (lunch breaks), "open 24 hours", hours past midnight
 - Holidays and special hours (single days or date ranges), optionally repeating every year
 - Countdown to opening / closing, calendar month view, vertical or horizontal layout
+- Two styles: clean (default) and **card**, with a coloured header band, today's date, an OPEN/CLOSED badge, custom open/closed messages and a header image
+- Lunch and other breaks with labels ("Lunch"), shown in the hours but counted as closed
+- Map below the location details (OpenStreetMap or Google Maps), loaded only after a click
+- Appearance box per location: style, colours, font, header image and map, without CSS
 - Day names in the site language automatically, week start from *Settings → General*
 - Live "Open now / Closed now" badge, computed in the browser by a small Rust/WebAssembly engine, so page caches never show a stale status
 - schema.org `OpeningHoursSpecification` + `specialOpeningHoursSpecification` JSON-LD
@@ -25,6 +29,16 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Translated into Swedish and Arabic (right-to-left layout, optional Arabic-Indic digits ٠١٢…)
 
 ## Screenshots
+
+### Card style (`style="card"`)
+
+| Status band, message, lunch break, map | Arabic | Monospace, Swedish |
+|---|---|---|
+| <img src="docs/screenshots/card-week.png" alt="Card style: green header band with date and OPEN badge, lunch break chip, location image beside the details, Show map button" width="280"> | <img src="docs/screenshots/card-ar.png" alt="Card style in Arabic, right-to-left" width="280"> | <img src="docs/screenshots/card-mono-sv.png" alt="Card style with monospace font in Swedish" width="280"> |
+
+<img src="docs/screenshots/card-today.png" alt="Card style, today only" width="420"> <img src="docs/screenshots/card-image.png" alt="Card style with a header image, close countdown and holidays before the regular hours" width="420">
+
+### Clean style (default)
 
 Tuesday 16:35, 25 minutes before closing, with short holiday hours later in the week:
 
@@ -56,6 +70,15 @@ Omit `id` to use the first location.
 | Attribute | Default | Description |
 |---|---|---|
 | `view` | `week` | `week` or `today` |
+| `style` | `default`¹ | `default` (clean) or `card` (header band with date and OPEN/CLOSED badge, dashed rows) |
+| `font` | `theme`¹ | `theme` or `mono` |
+| `band` | `accent`¹ | Card header colour: `accent`, `status` (green when open, red when closed) or `color` (see `band_color`) |
+| `band_color` | ¹ | Card header colour with `band="color"`, e.g. `#3346b8` |
+| `header_image` | ¹ | Image URL behind the card header (darkened for readability) |
+| `header_date_format` | `l F jS` | PHP date format of the card header date ("Tuesday November 17th"); translated per language |
+| `badge_open`, `badge_closed` | `Open`, `Closed` | Card badge texts |
+| `open_message`, `closed_message` | | Card header line, e.g. "We are open! Come in." |
+| `local_time_label` | `Current local time is` | Card: text before the local time |
 | `layout` | `vertical` | `vertical`, `horizontal` (one card per day) or `calendar` (month view, 12 months ahead) |
 | `title` | *(empty)* | Empty = location name, `0` = no title |
 | `group` | `1` | Merge consecutive days with identical hours |
@@ -68,6 +91,11 @@ Omit `id` to use the first location.
 | `show_holidays` | `1` | List of upcoming holidays |
 | `holiday_days` | `60` | How far ahead to list holidays |
 | `date_format` | `j M` | PHP date format for holidays |
+| `time_format` | | e.g. `H:i` (24 h) or `g:i A` (12 h); empty = *Settings → General* |
+| `holidays_position` | `bottom` | `top` = holidays before the regular hours |
+| `hide_hours_on_holiday` | `0` | `1` = only the holiday notice while today is a holiday |
+| `map` | ¹ | `osm` (needs the map position) or `google`: map below the location details |
+| `map_consent` | `1` | `1` = visitors click "Show map" first (nothing is sent to the map service before); `0` = load directly |
 | `digits` | `latn` | `latn` (0–9) or `arab` (Arabic-Indic ٠–٩); site-wide default via the `hourspilot_digits` filter |
 | `holiday_hours` | `0` | `1` = holiday hours replace this week's regular hours (turns off grouping) |
 | `show_info` | `1` | Address, phone, e-mail, website, directions |
@@ -80,7 +108,11 @@ Omit `id` to use the first location.
 | `countdown_format` | `{h}:{mm}:{ss}` | Tokens `{d}` `{h}` `{hh}` `{m}` `{mm}` `{s}` `{ss}`; without `{d}` hours keep counting past 24 |
 | `open_countdown_text` | `Opening in [time]` | `[time]` = the countdown |
 | `close_countdown_text` | `Closing in [time]` | |
-| `open_text`, `closed_text`, `closed_label`, `open24_label`, `holiday_title` | *(translated)* | Labels |
+| `open_text`, `closed_text`, `closed_label`, `open24_label`, `holiday_title` | *(translated)* | Labels, e.g. `closed_label="Closed All Day"` |
+
+¹ Default comes from the location's **Appearance** box (*Locations → edit*); the attribute overrides it.
+
+**Breaks:** in the weekly hours, give a time slot a label (e.g. "Lunch") and tick *Break*: it is shown with the label but counts as closed.
 
 ## How it works
 
@@ -121,9 +153,10 @@ template with `wp i18n make-pot . languages/hourspilot.pot --exclude=rust,.githu
 
 ## Styling
 
-Override CSS variables on `.hourspilot`:
+Most things are set in the Appearance box. For more, override CSS variables on `.hourspilot`:
 
-`--hp-accent`, `--hp-open`, `--hp-soon`, `--hp-shut`, `--hp-line`, `--hp-radius`, `--hp-pad`
+`--hp-accent`, `--hp-open`, `--hp-soon`, `--hp-shut`, `--hp-line`, `--hp-radius`, `--hp-pad`, and for the card style
+`--hp-band`, `--hp-band-open`, `--hp-band-closed`, `--hp-band-edge`, `--hp-dot`, `--hp-chip`.
 
 ## Developers
 
@@ -157,6 +190,18 @@ The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scr
 and **Tags** rows above exist for it.
 
 ## Changelog
+
+### 0.4.0
+
+- Card style (`style="card"`): header band with today's date, OPEN/CLOSED badge, local time, open/closed messages, dashed rows, a dot before today, image beside the location details
+- Header band colour from the accent, the status (green/red) or an own colour; header background image
+- Monospace font option
+- Breaks: time slots with a label ("Lunch") that count as closed; labels on any slot
+- Map below the location details: OpenStreetMap or Google Maps, click to load (`map`, `map_consent`); map position field
+- Second phone number
+- Appearance box per location (style, colours, font, header image, map) as defaults for the shortcode
+- `time_format`, `holidays_position`, `hide_hours_on_holiday`, `header_date_format`, `badge_open`/`badge_closed`, `open_message`/`closed_message`
+- All new texts translated into Swedish and Arabic
 
 ### 0.3.1
 

@@ -1,4 +1,4 @@
-/* HoursPilot admin – hour slot and holiday repeaters. | v0.1.0 | Arthur Sam Mahdi */
+/* HoursPilot admin – hour slot and holiday repeaters. | v0.4.0 | Arthur Sam Mahdi */
 (function () {
 	'use strict';
 
@@ -12,13 +12,16 @@
 		return t.content.firstElementChild;
 	}
 
-	function addSlot(row, open, close) {
-		row.querySelector('.hp-slots').appendChild(fromTpl('hp-tpl-slot', {
+	function addSlot(row, open, close, label, brk) {
+		var slot = fromTpl('hp-tpl-slot', {
 			__DAY__: row.getAttribute('data-day'),
 			__IDX__: String(uid++),
 			__OPEN__: open || '09:00',
 			__CLOSE__: close || '17:00'
-		}));
+		});
+		slot.querySelector('.hp-slot-label').value = label || '';
+		slot.querySelector('.hp-slot-break input').checked = !!brk;
+		row.querySelector('.hp-slots').appendChild(slot);
 	}
 
 	function setMode(row, mode) {
@@ -31,13 +34,13 @@
 		if (!src) { return; }
 		var mode = src.querySelector('.hp-mode').value;
 		var slots = Array.prototype.map.call(src.querySelectorAll('.hp-slot'), function (s) {
-			var i = s.querySelectorAll('input');
-			return [i[0].value, i[1].value];
+			var i = s.querySelectorAll('input[type="time"]');
+			return [i[0].value, i[1].value, s.querySelector('.hp-slot-label').value, s.querySelector('.hp-slot-break input').checked];
 		});
 		[2, 3, 4, 5].forEach(function (d) {
 			var row = document.querySelector('.hp-day[data-day="' + d + '"]');
 			row.querySelectorAll('.hp-slot').forEach(function (s) { s.remove(); });
-			slots.forEach(function (s) { addSlot(row, s[0], s[1]); });
+			slots.forEach(function (s) { addSlot(row, s[0], s[1], s[2], s[3]); });
 			setMode(row, mode);
 		});
 	}

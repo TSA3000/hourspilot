@@ -1,4 +1,4 @@
-/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.3.1 | Arthur Sam Mahdi */
+/* HoursPilot – inherits the theme's font and text colour; override the variables to restyle. | v0.4.0 | Arthur Sam Mahdi */
 .hourspilot {
 	--hp-accent: #0f766e;
 	--hp-open: #15803d;
@@ -278,4 +278,147 @@
 	.hourspilot .hp-cal td { height: 2.4em; }
 	.hourspilot .hp-holidays li { grid-template-columns: 1fr auto; }
 	.hourspilot .hp-h-label { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* ---------- Labels and breaks (both styles) ---------- */
+.hourspilot .hp-chip {
+	display: inline-block;
+	margin-inline-end: 0.5em;
+	padding: 0.1em 0.5em;
+	border-radius: 4px;
+	background: var(--hp-chip, #2f4f3a);
+	color: #fff;
+	font-size: 0.75em;
+	font-weight: 600;
+	line-height: 1.5;
+	vertical-align: 0.1em;
+}
+.hourspilot .hp-break .hp-time { opacity: 0.6; }
+
+/* ---------- Fonts ---------- */
+.hourspilot.hp-font-mono {
+	font-family: ui-monospace, "Roboto Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+	letter-spacing: 0.02em;
+}
+
+/* ---------- Map (click to load) ---------- */
+.hourspilot .hp-map { margin-top: 1rem; }
+.hourspilot .hp-map iframe {
+	display: block;
+	width: 100%;
+	height: 16rem;
+	border: 0;
+	border-radius: calc(var(--hp-radius) - 4px);
+}
+.hourspilot .hp-map-load {
+	padding: 0.55em 1em;
+	border: 1px solid var(--hp-line);
+	border-radius: 999px;
+	background: none;
+	color: var(--hp-accent);
+	font: inherit;
+	font-size: 0.875em;
+	font-weight: 600;
+	cursor: pointer;
+}
+.hourspilot .hp-map-load:hover { border-color: var(--hp-accent); }
+.hourspilot .hp-map-load:focus-visible { outline: 2px solid var(--hp-accent); outline-offset: 2px; }
+.hourspilot .hp-map-note { margin: 0.4em 0 0; font-size: 0.75em; opacity: 0.6; }
+
+/* ---------- Card style: header band, black badge, dashed rows ---------- */
+.hourspilot.hp-style-card {
+	--hp-band-open: #5f9f4f;
+	--hp-band-closed: #b4433a;
+	--hp-band-edge: #1d1d1f;
+	max-width: 36rem;
+	padding: 0;
+	overflow: hidden;
+	background: #fff;
+	color: #333;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.hourspilot.hp-style-card.hp-layout-calendar { max-width: 40rem; }
+.hourspilot.hp-style-card.hp-layout-horizontal { max-width: none; }
+.hourspilot.hp-style-card .hp-band {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1.35rem var(--hp-pad) 1.5rem;
+	border-top: 8px solid var(--hp-band-edge);
+	background-color: var(--hp-band, var(--hp-accent));
+	color: #fff;
+}
+.hourspilot.hp-style-card.hp-band-status.hp-is-open .hp-band { background-color: var(--hp-band-open); }
+.hourspilot.hp-style-card.hp-band-status.hp-is-closed .hp-band { background-color: var(--hp-band-closed); }
+.hourspilot.hp-style-card.hp-has-band-image .hp-band {
+	min-height: 11rem;
+	background-image: var(--hp-band-image);
+	background-size: cover;
+	background-position: center;
+	box-shadow: inset 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+}
+.hourspilot.hp-style-card .hp-band-main { min-width: 0; }
+.hourspilot.hp-style-card .hp-date { font-size: 1.3em; font-weight: 650; line-height: 1.3; }
+.hourspilot.hp-style-card .hp-band-line { margin-top: 0.35em; font-size: 0.9em; opacity: 0.95; }
+.hourspilot.hp-style-card .hp-band .hp-localtime { font-size: inherit; opacity: 1; }
+.hourspilot.hp-style-card .hp-badge {
+	flex: none;
+	padding: 0.55em 0.95em;
+	border-radius: 4px;
+	background: #111;
+	color: #fff;
+	font-size: 0.85em;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+.hourspilot.hp-style-card .hp-badge::before { display: none; }
+.hourspilot.hp-style-card .hp-body { padding: 1.1rem var(--hp-pad) 1.25rem; }
+.hourspilot.hp-style-card .hp-countdown,
+.hourspilot.hp-style-card .hp-notice { margin: 0 0 0.75rem; }
+
+.hourspilot.hp-style-card .hp-table th,
+.hourspilot.hp-style-card .hp-table td {
+	padding: 0.6em 0;
+	border-top: 0;
+	border-bottom: 1px dashed rgba(128, 128, 128, 0.55);
+	font-weight: 500;
+}
+.hourspilot.hp-style-card .hp-row:not(.hp-is-today) th { font-weight: 400; }
+.hourspilot.hp-style-card .hp-row.hp-is-today > * { font-weight: 650; }
+.hourspilot.hp-style-card .hp-row.hp-is-today th { padding-inline-start: 1.6em; }
+.hourspilot.hp-style-card .hp-row.hp-is-today th::before {
+	top: calc(0.6em + 0.725em); /* centre of the first line, also in rows with several slots */
+	bottom: auto;
+	width: 0.8em;
+	height: 0.8em;
+	border-radius: 50%;
+	transform: translateY(-50%);
+	background: var(--hp-dot, var(--hp-accent));
+}
+.hourspilot.hp-style-card.hp-is-closed .hp-row.hp-is-today th::before { background: var(--hp-dot-closed, var(--hp-shut)); }
+
+.hourspilot.hp-style-card .hp-holidays li { border-top: 0; border-bottom: 1px dashed rgba(128, 128, 128, 0.55); }
+
+/* Location: image beside the details */
+.hourspilot.hp-style-card .hp-info {
+	margin: 0;
+	padding: 1.25rem var(--hp-pad);
+	border-top: 1px solid var(--hp-line);
+}
+.hourspilot.hp-style-card .hp-info.hp-has-image {
+	display: grid;
+	grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+	gap: 1.25rem;
+	align-items: start;
+}
+.hourspilot.hp-style-card .hp-info .hp-image { margin: 0; max-height: 11rem; aspect-ratio: 1; }
+.hourspilot.hp-style-card .hp-info-name { font-weight: 650; }
+.hourspilot.hp-style-card .hp-info a { color: inherit; text-decoration-thickness: 1px; }
+.hourspilot.hp-style-card .hp-map { margin: 0 var(--hp-pad) var(--hp-pad); }
+
+@media (max-width: 480px) {
+	.hourspilot.hp-style-card .hp-band { flex-direction: column; }
+	.hourspilot.hp-style-card .hp-info.hp-has-image { grid-template-columns: 1fr; }
 }

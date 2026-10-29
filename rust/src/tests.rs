@@ -207,3 +207,38 @@ fn arabic_separator() {
     assert_eq!(c.badge(&status(&c, d("2026-10-27"), at(9, 0))), "مفتوح الآن، يغلق 17:00");
     assert_eq!(c.hours_text(&c.schedule(d("2026-10-26"))), "08:00 – 12:00، 13:00 – 17:00");
 }
+
+#[test]
+fn breaks_and_labels() {
+    // Tuesday 08-12, lunch break 12-13 (closed, labelled), 13-17.
+    let c: Config = serde_json::from_str(r#"{"week":{"2":{"m":"open","s":[
+        {"o":"08:00","c":"12:00","of":"08:00","cf":"12:00"},
+        {"o":"12:00","c":"13:00","of":"12:00","cf":"13:00","l":"Lunch","x":true},
+        {"o":"13:00","c":"17:00","of":"13:00","cf":"17:00"}]},
+        "3":{"m":"open","s":[{"o":"12:00","c":"13:00","of":"12:00","cf":"13:00","x":true}]}},
+        "i18n":{"closedLabel":"Closed"}}"#).unwrap();
+    let tue = d("2026-10-27");
+    let lunch = status(&c, tue, at(12, 30));
+    assert!(!lunch.open);
+    assert_eq!(lunch.next_time.as_deref(), Some("13:00"));
+    assert_eq!(status(&c, tue, at(11, 0)).left, Some(at(1, 0)));
+    assert_eq!(c.hours_text(&c.schedule(tue)), "08:00 – 12:00, 13:00 – 17:00");
+    // A day with only a break counts as closed.
+    assert_eq!(c.schedule(tue + 1).mode, Mode::Closed);
+    assert_eq!(c.hours_text(&c.schedule(tue + 1)), "Closed");
+}
+
+#[test]
+fn header_date() {
+    let mut c = cfg(r##","hdf":"l F jS""##);
+    c.i18n.days_long = (1..=7).map(|i| (i.to_string(), ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][i - 1].to_string())).collect();
+    assert_eq!(c.format_date("l F jS", d("2021-11-29")), "Monday November 29th");
+    assert_eq!(c.format_date("D j M Y", d("2026-11-01")), "Sun 1 Nov 2026");
+    assert_eq!(c.format_date("jS jS jS jS", d("2026-11-02")), "2nd 2nd 2nd 2nd");
+    assert_eq!(c.format_date("jS", d("2026-11-11")), "11th");
+    assert_eq!(c.format_date("jS", d("2026-11-23")), "23rd");
+    assert_eq!(c.format_date("d.m.y \\o\\f N", d("2026-03-05")), "05.03.26 of 4");
+    let u = update(&c, &Now { date: "2026-10-27".into(), sec: 0 }).unwrap();
+    assert_eq!(u.date_text, "Tuesday October 27th");
+    assert_eq!(update(&cfg(""), &Now { date: "2026-10-27".into(), sec: 0 }).unwrap().date_text, "");
+}
