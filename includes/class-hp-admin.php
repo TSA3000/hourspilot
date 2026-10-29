@@ -34,6 +34,7 @@ final class HP_Admin {
 		add_meta_box( 'hp_hours', __( 'Weekly hours', 'hourspilot' ), array( __CLASS__, 'box_hours' ), null, 'normal', 'high' );
 		add_meta_box( 'hp_holidays', __( 'Holidays and special hours', 'hourspilot' ), array( __CLASS__, 'box_holidays' ), null, 'normal' );
 		add_meta_box( 'hp_info', __( 'Location details', 'hourspilot' ), array( __CLASS__, 'box_info' ), null, 'normal' );
+		add_meta_box( 'hp_style', __( 'Appearance', 'hourspilot' ), array( __CLASS__, 'box_style' ), null, 'normal' );
 		add_meta_box( 'hp_shortcode', __( 'Shortcode', 'hourspilot' ), array( __CLASS__, 'box_shortcode' ), null, 'side', 'high' );
 	}
 
@@ -67,7 +68,7 @@ final class HP_Admin {
 						<div class="hp-slots">
 							<?php
 							foreach ( $slots as $i => $s ) {
-								self::slot_row( $d, $i, $s['open'], $s['close'] );
+								self::slot_row( $d, $i, $s['open'], $s['close'], $s['label'] ?? '', ! empty( $s['closed'] ) );
 							}
 							?>
 						</div>
@@ -80,20 +81,29 @@ final class HP_Admin {
 			<button type="button" class="button hp-copy-weekdays"><?php esc_html_e( 'Copy Monday to Tuesday–Friday', 'hourspilot' ); ?></button>
 		</p>
 		<p class="description"><?php esc_html_e( 'Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00).', 'hourspilot' ); ?></p>
-		<script type="text/html" id="hp-tpl-slot"><?php self::slot_row( '__DAY__', '__IDX__', '__OPEN__', '__CLOSE__' ); ?></script>
+		<p class="description"><?php esc_html_e( 'Label: optional text shown next to the hours, e.g. "Lunch". Break: the hours are shown but count as closed.', 'hourspilot' ); ?></p>
+		<script type="text/html" id="hp-tpl-slot"><?php self::slot_row( '__DAY__', '__IDX__', '__OPEN__', '__CLOSE__', '', false ); ?></script>
 		<?php
 	}
 
-	private static function slot_row( $d, $i, $open, $close ) {
+	private static function slot_row( $d, $i, $open, $close, $label, $closed ) {
 		printf(
-			'<div class="hp-slot"><input type="time" name="hp_hours[%1$s][slots][%2$s][open]" value="%3$s" aria-label="%5$s"><span aria-hidden="true">–</span><input type="time" name="hp_hours[%1$s][slots][%2$s][close]" value="%4$s" aria-label="%6$s"><button type="button" class="button-link hp-remove" aria-label="%7$s">&times;</button></div>',
+			'<div class="hp-slot"><input type="time" name="hp_hours[%1$s][slots][%2$s][open]" value="%3$s" aria-label="%5$s"><span aria-hidden="true">–</span><input type="time" name="hp_hours[%1$s][slots][%2$s][close]" value="%4$s" aria-label="%6$s">'
+			. '<input type="text" class="hp-slot-label" name="hp_hours[%1$s][slots][%2$s][label]" value="%8$s" placeholder="%9$s" aria-label="%10$s">'
+			. '<label class="hp-slot-break"><input type="checkbox" name="hp_hours[%1$s][slots][%2$s][closed]" value="1"%11$s> %12$s</label>'
+			. '<button type="button" class="button-link hp-remove" aria-label="%7$s">&times;</button></div>',
 			esc_attr( $d ),
 			esc_attr( $i ),
 			esc_attr( $open ),
 			esc_attr( $close ),
 			esc_attr__( 'Opens', 'hourspilot' ),
 			esc_attr__( 'Closes', 'hourspilot' ),
-			esc_attr__( 'Remove hours', 'hourspilot' )
+			esc_attr__( 'Remove hours', 'hourspilot' ),
+			esc_attr( $label ),
+			esc_attr__( 'Label (optional)', 'hourspilot' ),
+			esc_attr__( 'Label', 'hourspilot' ),
+			checked( $closed, true, false ),
+			esc_html__( 'Break', 'hourspilot' )
 		);
 	}
 
@@ -184,6 +194,9 @@ final class HP_Admin {
 			<label for="hp_phone"><?php esc_html_e( 'Phone', 'hourspilot' ); ?></label>
 			<input type="tel" id="hp_phone" name="hp_info[phone]" value="<?php echo esc_attr( $info['phone'] ); ?>">
 
+			<label for="hp_phone2"><?php esc_html_e( 'Second phone', 'hourspilot' ); ?></label>
+			<input type="tel" id="hp_phone2" name="hp_info[phone2]" value="<?php echo esc_attr( $info['phone2'] ); ?>">
+
 			<label for="hp_email"><?php esc_html_e( 'Email', 'hourspilot' ); ?></label>
 			<input type="email" id="hp_email" name="hp_info[email]" value="<?php echo esc_attr( $info['email'] ); ?>">
 
@@ -198,7 +211,96 @@ final class HP_Admin {
 				<input type="url" id="hp_map_url" name="hp_info[map_url]" value="<?php echo esc_attr( $info['map_url'] ); ?>" placeholder="https://maps.google.com/…">
 				<p class="description"><?php esc_html_e( 'Set the location image with "Location image" in the sidebar.', 'hourspilot' ); ?></p>
 			</div>
+
+			<label for="hp_coords"><?php esc_html_e( 'Map position', 'hourspilot' ); ?></label>
+			<div>
+				<input type="text" id="hp_coords" name="hp_info[coords]" value="<?php echo esc_attr( $info['coords'] ); ?>" placeholder="59.3293, 18.0686" inputmode="decimal">
+				<p class="description"><?php esc_html_e( 'Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead).', 'hourspilot' ); ?></p>
+			</div>
 		</div>
+		<?php
+	}
+
+	/* ---------- Appearance ---------- */
+
+	public static function box_style( $post ) {
+		$st = HP_Hours::get_style( $post->ID );
+		$sel = function ( $name, $options ) use ( $st ) {
+			echo '<select id="hp_style_' . esc_attr( $name ) . '" name="hp_style[' . esc_attr( $name ) . ']">';
+			foreach ( $options as $val => $label ) {
+				echo '<option value="' . esc_attr( $val ) . '"' . selected( $st[ $name ], $val, false ) . '>' . esc_html( $label ) . '</option>';
+			}
+			echo '</select>';
+		};
+		?>
+		<div class="hp-info-grid">
+			<label for="hp_style_style"><?php esc_html_e( 'Style', 'hourspilot' ); ?></label>
+			<div>
+				<?php
+				$sel(
+					'style',
+					array(
+						'default' => __( 'Clean (default)', 'hourspilot' ),
+						'card'    => __( 'Card with header band', 'hourspilot' ),
+					)
+				);
+				?>
+			</div>
+
+			<label for="hp_style_accent"><?php esc_html_e( 'Accent colour', 'hourspilot' ); ?></label>
+			<input type="color" id="hp_style_accent" name="hp_style[accent]" value="<?php echo esc_attr( $st['accent'] ? $st['accent'] : '#0f766e' ); ?>">
+
+			<label for="hp_style_band"><?php esc_html_e( 'Header band', 'hourspilot' ); ?></label>
+			<div>
+				<?php
+				$sel(
+					'band',
+					array(
+						'accent' => __( 'Accent colour', 'hourspilot' ),
+						'status' => __( 'Green when open, red when closed', 'hourspilot' ),
+						'color'  => __( 'Own colour (below)', 'hourspilot' ),
+					)
+				);
+				?>
+				<input type="color" name="hp_style[band_color]" value="<?php echo esc_attr( $st['band_color'] ? $st['band_color'] : '#3346b8' ); ?>" aria-label="<?php esc_attr_e( 'Header band colour', 'hourspilot' ); ?>">
+				<p class="description"><?php esc_html_e( 'Card style only.', 'hourspilot' ); ?></p>
+			</div>
+
+			<label for="hp_style_header_image"><?php esc_html_e( 'Header image', 'hourspilot' ); ?></label>
+			<div>
+				<input type="url" id="hp_style_header_image" name="hp_style[header_image]" value="<?php echo esc_attr( $st['header_image'] ); ?>" placeholder="https://…">
+				<p class="description"><?php esc_html_e( 'Card style: image behind the header band, darkened so the text stays readable. Copy the file URL from the Media Library.', 'hourspilot' ); ?></p>
+			</div>
+
+			<label for="hp_style_font"><?php esc_html_e( 'Font', 'hourspilot' ); ?></label>
+			<div>
+				<?php
+				$sel(
+					'font',
+					array(
+						'theme' => __( 'Theme font', 'hourspilot' ),
+						'mono'  => __( 'Monospace', 'hourspilot' ),
+					)
+				);
+				?>
+			</div>
+
+			<label for="hp_style_map"><?php esc_html_e( 'Map', 'hourspilot' ); ?></label>
+			<div>
+				<?php
+				$sel(
+					'map',
+					array(
+						''       => __( 'None', 'hourspilot' ),
+						'osm'    => __( 'OpenStreetMap', 'hourspilot' ),
+						'google' => __( 'Google Maps', 'hourspilot' ),
+					)
+				);
+				?>
+				<p class="description"><?php esc_html_e( 'Shown below the location details. Visitors click to load it, so no data goes to the map service before that.', 'hourspilot' ); ?></p>
+			</div>
+		</div>
+		<p class="description"><?php esc_html_e( 'These are the defaults for this location; shortcode attributes override them.', 'hourspilot' ); ?></p>
 		<?php
 	}
 
@@ -214,6 +316,9 @@ final class HP_Admin {
 		<input type="text" readonly class="widefat hp-copy" value="<?php echo esc_attr( $sc ); ?>" onclick="this.select()">
 		<p class="description"><?php esc_html_e( 'Paste into any page, widget or page-builder shortcode block. Common options:', 'hourspilot' ); ?></p>
 		<ul class="hp-sc-help">
+			<li><code>style="card"</code></li>
+			<li><code>layout="horizontal"</code></li>
+			<li><code>layout="calendar"</code></li>
 			<li><code>view="today"</code></li>
 			<li><code>short_days="1"</code></li>
 			<li><code>group="0"</code></li>
@@ -281,10 +386,30 @@ final class HP_Admin {
 			'_hp_info',
 			array(
 				'phone'   => sanitize_text_field( $info_in['phone'] ?? '' ),
+				'phone2'  => sanitize_text_field( $info_in['phone2'] ?? '' ),
 				'email'   => sanitize_email( $info_in['email'] ?? '' ),
 				'website' => esc_url_raw( $info_in['website'] ?? '' ),
 				'address' => sanitize_textarea_field( $info_in['address'] ?? '' ),
 				'map_url' => esc_url_raw( $info_in['map_url'] ?? '' ),
+				'coords'  => HP_Hours::valid_coords( $info_in['coords'] ?? '' ),
+			)
+		);
+
+		// Appearance.
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitised field by field.
+		$style_in = isset( $_POST['hp_style'] ) && is_array( $_POST['hp_style'] ) ? wp_unslash( $_POST['hp_style'] ) : array();
+		$pick     = fn( $k, $allowed ) => in_array( $style_in[ $k ] ?? '', $allowed, true ) ? $style_in[ $k ] : HP_Hours::STYLE_DEFAULTS[ $k ];
+		update_post_meta(
+			$post_id,
+			'_hp_style',
+			array(
+				'style'        => $pick( 'style', array( 'default', 'card' ) ),
+				'accent'       => (string) sanitize_hex_color( $style_in['accent'] ?? '' ),
+				'band'         => $pick( 'band', array( 'accent', 'status', 'color' ) ),
+				'band_color'   => (string) sanitize_hex_color( $style_in['band_color'] ?? '' ),
+				'header_image' => esc_url_raw( $style_in['header_image'] ?? '' ),
+				'font'         => $pick( 'font', array( 'theme', 'mono' ) ),
+				'map'          => $pick( 'map', array( '', 'osm', 'google' ) ),
 			)
 		);
 

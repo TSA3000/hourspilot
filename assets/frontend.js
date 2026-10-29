@@ -82,12 +82,23 @@
 		var u = JSON.parse(call(st.ex, 'hp_update', st.raw, JSON.stringify(st.now)));
 		if (u.error) { window.console && console.warn('HoursPilot:', u.error); return; }
 
+		var t = cfg.i18n || {};
+		el.classList.toggle('hp-is-open', u.open);
+		el.classList.toggle('hp-is-closed', !u.open);
+
 		var badge = el.querySelector('.hp-status');
 		if (badge) {
-			badge.textContent = u.badge;
-			badge.className = 'hp-status ' + (u.open ? 'hp-open' : 'hp-shut') + (u.soon ? ' hp-soon' : '');
+			// Card style: short badge ("OPEN"), the full status for screen readers.
+			var short = cfg.card ? (u.open ? t.badgeOpen : t.badgeClosed) : '';
+			badge.textContent = short || u.badge;
+			if (short) { badge.setAttribute('aria-label', u.badge); badge.title = u.badge; }
+			badge.className = 'hp-status' + (cfg.card ? ' hp-badge' : '') + ' ' + (u.open ? 'hp-open' : 'hp-shut') + (u.soon ? ' hp-soon' : '');
 			badge.hidden = false;
 		}
+
+		var dateEl = el.querySelector('.hp-date');
+		if (dateEl && u.date_text) { dateEl.textContent = u.date_text; }
+		show(el.querySelector('.hp-message'), u.open ? t.msgOpen : t.msgClosed);
 
 		var cd = el.querySelector('.hp-countdown');
 		show(cd, u.countdown);
@@ -107,6 +118,10 @@
 		});
 
 		show(el.querySelector('.hp-notice'), u.notice);
+
+		// hide_hours_on_holiday: only the holiday notice while today is a holiday.
+		var table = el.querySelector('.hp-table');
+		if (table && cfg.hoh && cfg.layout !== 'calendar') { table.hidden = !!u.notice; }
 
 		// Drop holidays that ended since the page was cached.
 		var list = el.querySelector('.hp-holidays');
@@ -148,6 +163,21 @@
 		var cdOn = cfg.cd && (cfg.cd.open || cfg.cd.close);
 		setInterval(function () { update(st); }, cdOn ? 1000 : 30000);
 	}
+
+	/** Click-to-load maps: nothing is requested from the map service before the click. */
+	document.addEventListener('click', function (e) {
+		var btn = e.target.closest && e.target.closest('.hourspilot .hp-map-load');
+		if (!btn) { return; }
+		var box = btn.closest('.hp-map');
+		var f = document.createElement('iframe');
+		f.src = box.getAttribute('data-src');
+		f.title = box.getAttribute('data-title') || '';
+		f.loading = 'lazy';
+		f.referrerPolicy = 'no-referrer-when-downgrade';
+		box.textContent = '';
+		box.appendChild(f);
+		box.classList.add('hp-map-on');
+	});
 
 	function init() {
 		var els = Array.prototype.filter.call(document.querySelectorAll('.hourspilot[data-hp]'), function (el) {

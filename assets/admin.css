@@ -1,4 +1,4 @@
-/* HoursPilot admin | v0.1.0 | Arthur Sam Mahdi */
+/* HoursPilot admin | v0.4.0 | Arthur Sam Mahdi */
 .hp-admin-week { width: 100%; border-collapse: collapse; }
 .hp-admin-week th,
 .hp-admin-week td { padding: 10px 8px 6px 0; vertical-align: top; border-top: 1px solid #f0f0f1; }
@@ -8,6 +8,9 @@
 .hp-day:not(.hp-mode-open) .hp-slots-cell > * { display: none; }
 .hp-slot { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
 .hp-slot input[type="time"] { width: 120px; }
+.hp-slot .hp-slot-label { width: 140px; }
+.hp-slot-break { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+#hp_style input[type="color"] { width: 56px; height: 32px; padding: 2px; vertical-align: middle; }
 .hp-add-slot { margin-top: 2px; }
 .hp-remove { color: #b32d2e; font-size: 20px; line-height: 1; text-decoration: none; padding: 0 4px; }
 .hp-remove:hover, .hp-remove:focus { color: #8a2424; }

@@ -46,7 +46,7 @@ def main(md_path, php_path):
             body.append(l)
         k += 1
 
-    out, fence, table, diagram = [], False, [], False
+    out, fence, table, diagram, section_skip = [], False, [], False, False
 
     def flush_table():
         rows = table_rows(table)
@@ -85,12 +85,12 @@ def main(md_path, php_path):
             flush_table()
         if l.startswith("## "):
             t = l[3:].strip()
-            skip = t in DROP
+            skip = section_skip = t in DROP
             if not skip:
                 out.append(f"== {RENAME.get(t, t)} ==")
         elif l.startswith("### "):
             t = l[4:].strip()
-            skip = t in DROP
+            skip = section_skip or t in DROP
             if not skip:
                 out.append(f"= {t} =")
         elif not skip:

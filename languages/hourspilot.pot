@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: HoursPilot 0.2.0\n"
+"Project-Id-Version: HoursPilot 0.4.0\n"
 "Report-Msgid-Bugs-To: https://github.com/TSA3000/hourspilot/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-29T20:57:43+00:00\n"
+"POT-Creation-Date: 2026-10-29T21:26:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: hourspilot\n"
@@ -44,7 +44,7 @@ msgid "Weekly hours"
 msgstr ""
 
 #: includes/class-hp-admin.php:35
-#: includes/class-hp-shortcode.php:67
+#: includes/class-hp-shortcode.php:94
 msgid "Holidays and special hours"
 msgstr ""
 
@@ -53,135 +53,250 @@ msgid "Location details"
 msgstr ""
 
 #: includes/class-hp-admin.php:37
-#: includes/class-hp-admin.php:305
+msgid "Appearance"
+msgstr ""
+
+#: includes/class-hp-admin.php:38
+#: includes/class-hp-admin.php:430
 msgid "Shortcode"
 msgstr ""
 
-#: includes/class-hp-admin.php:46
+#: includes/class-hp-admin.php:47
+#: includes/class-hp-shortcode.php:87
 msgid "Open"
 msgstr ""
 
-#: includes/class-hp-admin.php:47
-#: includes/class-hp-admin.php:146
-#: includes/class-hp-shortcode.php:65
+#: includes/class-hp-admin.php:48
+#: includes/class-hp-admin.php:156
+#: includes/class-hp-shortcode.php:88
+#: includes/class-hp-shortcode.php:92
 msgid "Closed"
 msgstr ""
 
-#: includes/class-hp-admin.php:48
-#: includes/class-hp-shortcode.php:66
+#: includes/class-hp-admin.php:49
+#: includes/class-hp-shortcode.php:93
 msgid "Open 24 hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:74
+#: includes/class-hp-admin.php:75
 msgid "Add hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:80
+#: includes/class-hp-admin.php:81
 msgid "Copy Monday to Tuesday–Friday"
 msgstr ""
 
-#: includes/class-hp-admin.php:82
+#: includes/class-hp-admin.php:83
 msgid "Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00)."
 msgstr ""
 
-#: includes/class-hp-admin.php:94
+#: includes/class-hp-admin.php:84
+msgid "Label: optional text shown next to the hours, e.g. \"Lunch\". Break: the hours are shown but count as closed."
+msgstr ""
+
+#: includes/class-hp-admin.php:99
 msgid "Opens"
 msgstr ""
 
-#: includes/class-hp-admin.php:95
+#: includes/class-hp-admin.php:100
 msgid "Closes"
 msgstr ""
 
-#: includes/class-hp-admin.php:96
+#: includes/class-hp-admin.php:101
 msgid "Remove hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:108
+#: includes/class-hp-admin.php:103
+msgid "Label (optional)"
+msgstr ""
+
+#: includes/class-hp-admin.php:104
+msgid "Label"
+msgstr ""
+
+#: includes/class-hp-admin.php:106
+msgid "Break"
+msgstr ""
+
+#: includes/class-hp-admin.php:118
 msgid "From"
 msgstr ""
 
-#: includes/class-hp-admin.php:109
+#: includes/class-hp-admin.php:119
 msgid "To (optional)"
 msgstr ""
 
-#: includes/class-hp-admin.php:110
+#: includes/class-hp-admin.php:120
 msgid "Name"
 msgstr ""
 
-#: includes/class-hp-admin.php:111
+#: includes/class-hp-admin.php:121
 msgid "Hours (empty = closed)"
 msgstr ""
 
-#: includes/class-hp-admin.php:112
-#: includes/class-hp-admin.php:148
+#: includes/class-hp-admin.php:122
+#: includes/class-hp-admin.php:158
 msgid "Every year"
 msgstr ""
 
-#: includes/class-hp-admin.php:113
+#: includes/class-hp-admin.php:123
 msgid "Remove"
 msgstr ""
 
-#: includes/class-hp-admin.php:124
+#: includes/class-hp-admin.php:134
 msgid "Add holiday or special day"
 msgstr ""
 
-#: includes/class-hp-admin.php:125
+#: includes/class-hp-admin.php:135
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr ""
 
-#: includes/class-hp-admin.php:145
+#: includes/class-hp-admin.php:155
 msgid "e.g. Christmas Eve"
 msgstr ""
 
-#: includes/class-hp-admin.php:147
+#: includes/class-hp-admin.php:157
 msgid "Remove row"
 msgstr ""
 
-#: includes/class-hp-admin.php:162
+#: includes/class-hp-admin.php:172
 msgid "Time zone"
 msgstr ""
 
-#: includes/class-hp-admin.php:170
+#: includes/class-hp-admin.php:180
 msgid "Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year."
 msgstr ""
 
-#: includes/class-hp-admin.php:174
+#: includes/class-hp-admin.php:184
 msgid "Business type"
 msgstr ""
 
-#: includes/class-hp-admin.php:181
+#: includes/class-hp-admin.php:191
 msgid "Used in the structured data search engines read."
 msgstr ""
 
-#: includes/class-hp-admin.php:184
+#: includes/class-hp-admin.php:194
 msgid "Phone"
 msgstr ""
 
-#: includes/class-hp-admin.php:187
+#: includes/class-hp-admin.php:197
+msgid "Second phone"
+msgstr ""
+
+#: includes/class-hp-admin.php:200
 msgid "Email"
 msgstr ""
 
-#: includes/class-hp-admin.php:190
+#: includes/class-hp-admin.php:203
 msgid "Website"
 msgstr ""
 
-#: includes/class-hp-admin.php:193
+#: includes/class-hp-admin.php:206
 msgid "Address"
 msgstr ""
 
-#: includes/class-hp-admin.php:196
+#: includes/class-hp-admin.php:209
 msgid "Map link"
 msgstr ""
 
-#: includes/class-hp-admin.php:199
+#: includes/class-hp-admin.php:212
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr ""
 
-#: includes/class-hp-admin.php:209
+#: includes/class-hp-admin.php:215
+msgid "Map position"
+msgstr ""
+
+#: includes/class-hp-admin.php:218
+msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
+msgstr ""
+
+#: includes/class-hp-admin.php:237
+msgid "Style"
+msgstr ""
+
+#: includes/class-hp-admin.php:243
+msgid "Clean (default)"
+msgstr ""
+
+#: includes/class-hp-admin.php:244
+msgid "Card with header band"
+msgstr ""
+
+#: includes/class-hp-admin.php:250
+#: includes/class-hp-admin.php:259
+msgid "Accent colour"
+msgstr ""
+
+#: includes/class-hp-admin.php:253
+msgid "Header band"
+msgstr ""
+
+#: includes/class-hp-admin.php:260
+msgid "Green when open, red when closed"
+msgstr ""
+
+#: includes/class-hp-admin.php:261
+msgid "Own colour (below)"
+msgstr ""
+
+#: includes/class-hp-admin.php:265
+msgid "Header band colour"
+msgstr ""
+
+#: includes/class-hp-admin.php:266
+msgid "Card style only."
+msgstr ""
+
+#: includes/class-hp-admin.php:269
+msgid "Header image"
+msgstr ""
+
+#: includes/class-hp-admin.php:272
+msgid "Card style: image behind the header band, darkened so the text stays readable. Copy the file URL from the Media Library."
+msgstr ""
+
+#: includes/class-hp-admin.php:275
+msgid "Font"
+msgstr ""
+
+#: includes/class-hp-admin.php:281
+msgid "Theme font"
+msgstr ""
+
+#: includes/class-hp-admin.php:282
+msgid "Monospace"
+msgstr ""
+
+#: includes/class-hp-admin.php:288
+msgid "Map"
+msgstr ""
+
+#: includes/class-hp-admin.php:294
+msgid "None"
+msgstr ""
+
+#: includes/class-hp-admin.php:295
+msgid "OpenStreetMap"
+msgstr ""
+
+#: includes/class-hp-admin.php:296
+msgid "Google Maps"
+msgstr ""
+
+#: includes/class-hp-admin.php:300
+msgid "Shown below the location details. Visitors click to load it, so no data goes to the map service before that."
+msgstr ""
+
+#: includes/class-hp-admin.php:303
+msgid "These are the defaults for this location; shortcode attributes override them."
+msgstr ""
+
+#: includes/class-hp-admin.php:311
 msgid "Save the location to get its shortcode."
 msgstr ""
 
-#: includes/class-hp-admin.php:215
+#: includes/class-hp-admin.php:317
 msgid "Paste into any page, widget or page-builder shortcode block. Common options:"
 msgstr ""
 
@@ -223,60 +338,86 @@ msgstr ""
 msgid "Set location image"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:61
-msgid "Opening in [time]"
-msgstr ""
-
-#: includes/class-hp-shortcode.php:62
-msgid "Closing in [time]"
-msgstr ""
-
-#: includes/class-hp-shortcode.php:63
-msgid "Open now"
-msgstr ""
-
-#: includes/class-hp-shortcode.php:64
-msgid "Closed now"
-msgstr ""
-
-#: includes/class-hp-shortcode.php:76
+#: includes/class-hp-shortcode.php:39
 msgid "HoursPilot: location not found or not published. Check the id in the shortcode."
 msgstr ""
 
+#. translators: PHP date() format of the date in the card header, e.g. "Monday November 29th".
+#: includes/class-hp-shortcode.php:56
+msgctxt "header date format"
+msgid "l F jS"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:83
+msgid "Opening in [time]"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:84
+msgid "Closing in [time]"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:85
+msgid "Open now"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:86
+msgid "Closed now"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:91
+msgid "Current local time is"
+msgstr ""
+
 #. translators: %s: closing time
-#: includes/class-hp-shortcode.php:170
+#: includes/class-hp-shortcode.php:198
 #, php-format
 msgid "closes %s"
 msgstr ""
 
 #. translators: %s: day and/or time, e.g. "Mon 09:00"
-#: includes/class-hp-shortcode.php:172
+#: includes/class-hp-shortcode.php:200
 #, php-format
 msgid "opens %s"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:173
+#: includes/class-hp-shortcode.php:201
 msgid "Today"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:174
+#: includes/class-hp-shortcode.php:202
 msgid "tomorrow"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:178
+#: includes/class-hp-shortcode.php:207
 msgid "Previous month"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:179
+#: includes/class-hp-shortcode.php:208
 msgid "Next month"
 msgstr ""
 
 #. translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، "
-#: includes/class-hp-shortcode.php:181
+#: includes/class-hp-shortcode.php:210
 msgctxt "list separator"
 msgid ", "
 msgstr ""
 
-#: includes/class-hp-shortcode.php:289
+#: includes/class-hp-shortcode.php:348
 msgid "Get directions"
+msgstr ""
+
+#. translators: %s: map service, e.g. "OpenStreetMap"
+#: includes/class-hp-shortcode.php:422
+#, php-format
+msgid "Map (%s)"
+msgstr ""
+
+#: includes/class-hp-shortcode.php:430
+msgid "Show map"
+msgstr ""
+
+#. translators: %s: map service, e.g. "Google Maps"
+#: includes/class-hp-shortcode.php:432
+#, php-format
+msgid "Loads the map from %s."
 msgstr ""

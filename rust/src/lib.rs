@@ -34,6 +34,7 @@ pub enum Mode {
 }
 
 /// Opening slot: `o`/`c` = "HH:MM", `of`/`cf` = the same times formatted in the site's time format.
+/// `l` = optional label ("Lunch"); `x` = break: shown in the hours but closed.
 #[derive(Deserialize, Clone, Debug, Default)]
 pub struct Slot {
     pub o: String,
@@ -42,11 +43,18 @@ pub struct Slot {
     pub of: String,
     #[serde(default)]
     pub cf: String,
+    #[serde(default)]
+    pub l: String,
+    #[serde(default)]
+    pub x: bool,
 }
 
 impl Slot {
-    /// (open, close) in minutes since midnight; None if malformed.
+    /// (open, close) in minutes since midnight; None if malformed or a break.
     fn mins(&self) -> Option<(i64, i64)> {
+        if self.x {
+            return None;
+        }
         Some((hhmm(&self.o)?, hhmm(&self.c)?))
     }
 }
@@ -114,6 +122,8 @@ pub struct I18n {
     pub tomorrow: String,
     /// Short day names keyed "1".."7".
     pub days: HashMap<String, String>,
+    /// Full day names keyed "1".."7" (header date).
+    pub days_long: HashMap<String, String>,
     pub months: Vec<String>,
     pub months_short: Vec<String>,
     pub prev_month: String,
@@ -175,6 +185,9 @@ pub struct Config {
     /// Digits in the output: "arab" = Arabic-Indic (٠١٢…), otherwise as given (Western).
     #[serde(default)]
     pub dg: String,
+    /// Header date format, PHP date() tokens d j S D l N F M m n Y y (\\ escapes); empty = no header date.
+    #[serde(default)]
+    pub hdf: String,
 }
 
 impl Config {
@@ -220,7 +233,7 @@ impl Config {
             return Sched { mode, slots: &h.s, hol: Some(h) };
         }
         match self.week.get(&date::weekday(day).to_string()) {
-            Some(d) if d.m == Mode::Open && d.s.is_empty() => Sched { mode: Mode::Closed, slots: &[], hol: None },
+            Some(d) if d.m == Mode::Open && d.s.iter().all(|s| s.x) => Sched { mode: Mode::Closed, slots: &[], hol: None },
             Some(d) => Sched { mode: d.m, slots: &d.s, hol: None },
             None => Sched { mode: Mode::Closed, slots: &[], hol: None },
         }
@@ -229,9 +242,13 @@ impl Config {
     pub fn hours_text(&self, s: &Sched) -> String {
         match s.mode {
             Mode::H24 => self.i18n.open24.clone(),
-            Mode::Open if !s.slots.is_empty() => {
-                s.slots.iter().map(|x| format!("{} – {}", x.of, x.cf)).collect::<Vec<_>>().join(self.i18n.sep())
-            }
+            Mode::Open if s.slots.iter().any(|x| !x.x) => s
+                .slots
+                .iter()
+                .filter(|x| !x.x)
+                .map(|x| format!("{} – {}", x.of, x.cf))
+                .collect::<Vec<_>>()
+                .join(self.i18n.sep()),
             _ => self.i18n.closed_label.clone(),
         }
     }
@@ -367,6 +384,43 @@ impl Config {
     }
 }
 
+impl Config {
+    /// PHP date()-style formatting with the site's day and month names.
+    pub fn format_date(&self, fmt: &str, day: i32) -> String {
+        let (y, m, d) = date::civil_from_days(day);
+        let wd = date::weekday(day);
+        let t = &self.i18n;
+        let month = |v: &Vec<String>| v.get(m as usize - 1).cloned().unwrap_or_else(|| m.to_string());
+        let mut out = String::new();
+        let mut chars = fmt.chars();
+        while let Some(c) = chars.next() {
+            match c {
+                '\\' => out.extend(chars.next()),
+                'd' => out += &format!("{d:02}"),
+                'j' => out += &d.to_string(),
+                'S' => out += match (d % 10, d % 100) {
+                    (_, 11..=13) => "th",
+                    (1, _) => "st",
+                    (2, _) => "nd",
+                    (3, _) => "rd",
+                    _ => "th",
+                },
+                'D' => out += &self.day_name(wd),
+                'l' => out += &t.days_long.get(&wd.to_string()).cloned().unwrap_or_else(|| self.day_name(wd)),
+                'N' => out += &wd.to_string(),
+                'F' => out += &month(&t.months),
+                'M' => out += &month(&t.months_short),
+                'm' => out += &format!("{m:02}"),
+                'n' => out += &m.to_string(),
+                'Y' => out += &y.to_string(),
+                'y' => out += &format!("{:02}", y.rem_euclid(100)),
+                _ => out.push(c),
+            }
+        }
+        out
+    }
+}
+
 pub fn duration(secs: i64, fmt: &str) -> String {
     let s = secs.max(0);
     let h = if fmt.contains("{d}") { s % 86_400 / 3600 } else { s / 3600 };
@@ -393,6 +447,8 @@ pub struct RowOut {
 #[derive(Serialize, Debug)]
 pub struct Update {
     pub date: String,
+    /// Today in the header date format (empty if none).
+    pub date_text: String,
     pub day: u8,
     pub open: bool,
     pub soon: bool,
@@ -430,6 +486,7 @@ pub fn update(cfg: &Config, now: &Now) -> Result<Update, String> {
 
     Ok(Update {
         date: date::format(day),
+        date_text: cfg.digits(cfg.format_date(&cfg.hdf, day)),
         day: date::weekday(day),
         open: st.open,
         soon: st.open && st.left.is_some_and(|l| l <= SOON_SECS),
@@ -501,7 +558,7 @@ pub fn calendar(cfg: &Config, today: i32, offset: i32, max_offset: i32) -> Strin
                 _ => text.clone(),
             };
             let short = match s.mode {
-                Mode::Open => s.slots.iter().map(|x| format!("{}–{}", esc(&x.of), esc(&x.cf))).collect::<Vec<_>>().join("<br>"),
+                Mode::Open => s.slots.iter().filter(|x| !x.x).map(|x| format!("{}–{}", esc(&x.of), esc(&x.cf))).collect::<Vec<_>>().join("<br>"),
                 _ => esc(&text),
             };
             h += &format!(

@@ -15,7 +15,18 @@ final class HP_Hours {
 	const DAYS  = array( 1, 2, 3, 4, 5, 6, 7 );
 	const MODES = array( 'open', 'closed', '24h' );
 
-	const INFO_FIELDS = array( 'phone', 'email', 'address', 'map_url', 'website' );
+	const INFO_FIELDS = array( 'phone', 'phone2', 'email', 'address', 'map_url', 'website', 'coords' );
+
+	/** Appearance defaults per location (Appearance box); shortcode attributes override them. */
+	const STYLE_DEFAULTS = array(
+		'style'        => 'default', // default | card.
+		'accent'       => '',
+		'band'         => 'accent',  // accent | status | color.
+		'band_color'   => '',
+		'header_image' => '',
+		'font'         => 'theme',   // theme | mono.
+		'map'          => '',        // '' | osm | google.
+	);
 
 	const SCHEMA_TYPES = array(
 		'LocalBusiness',
@@ -51,6 +62,7 @@ final class HP_Hours {
 	/**
 	 * Normalise slots: drop invalid ones, sort by opening time.
 	 * A slot where close < open runs past midnight (e.g. 22:00–02:00).
+	 * Optional: 'label' (e.g. "Lunch"), 'closed' = a break shown in the hours but closed.
 	 */
 	public static function clean_slots( $slots ) {
 		$out = array();
@@ -61,10 +73,18 @@ final class HP_Hours {
 			$open  = isset( $s['open'] ) ? trim( (string) $s['open'] ) : '';
 			$close = isset( $s['close'] ) ? trim( (string) $s['close'] ) : '';
 			if ( self::valid_time( $open ) && self::valid_time( $close ) && $open !== $close ) {
-				$out[] = array(
+				$slot  = array(
 					'open'  => $open,
 					'close' => $close,
 				);
+				$label = isset( $s['label'] ) ? sanitize_text_field( (string) $s['label'] ) : '';
+				if ( '' !== $label ) {
+					$slot['label'] = $label;
+				}
+				if ( ! empty( $s['closed'] ) ) {
+					$slot['closed'] = true;
+				}
+				$out[] = $slot;
 			}
 		}
 		usort( $out, fn( $a, $b ) => strcmp( $a['open'], $b['open'] ) );
@@ -85,6 +105,27 @@ final class HP_Hours {
 		return self::clean_slots( $slots );
 	}
 
+	/** "lat, lng" normalised, or '' if invalid. */
+	public static function valid_coords( $str ) {
+		if ( ! preg_match( '/^\s*(-?\d{1,2}(?:\.\d+)?)\s*[,;\s]\s*(-?\d{1,3}(?:\.\d+)?)\s*$/', (string) $str, $m ) ) {
+			return '';
+		}
+		$lat = (float) $m[1];
+		$lng = (float) $m[2];
+		return ( abs( $lat ) <= 90 && abs( $lng ) <= 180 ) ? $lat . ', ' . $lng : '';
+	}
+
+	/** Slots without breaks. */
+	public static function open_slots( $slots ) {
+		return array_values( array_filter( (array) $slots, fn( $s ) => empty( $s['closed'] ) ) );
+	}
+
+	/** Appearance settings of a location, filled with defaults. */
+	public static function get_style( $id ) {
+		$raw = $id ? get_post_meta( $id, '_hp_style', true ) : array();
+		return array_merge( self::STYLE_DEFAULTS, is_array( $raw ) ? array_intersect_key( $raw, self::STYLE_DEFAULTS ) : array() );
+	}
+
 	public static function slots_to_string( $slots ) {
 		return implode( ', ', array_map( fn( $s ) => $s['open'] . '-' . $s['close'], (array) $slots ) );
 	}
@@ -100,8 +141,8 @@ final class HP_Hours {
 			$day   = isset( $raw[ $d ] ) && is_array( $raw[ $d ] ) ? $raw[ $d ] : array();
 			$mode  = isset( $day['mode'] ) && in_array( $day['mode'], self::MODES, true ) ? $day['mode'] : 'closed';
 			$slots = self::clean_slots( $day['slots'] ?? array() );
-			if ( 'open' === $mode && ! $slots ) {
-				$mode = 'closed';
+			if ( 'open' === $mode && ! self::open_slots( $slots ) ) {
+				$mode = 'closed'; // No slots, or only breaks.
 			}
 			$out[ $d ] = array(
 				'mode'  => $mode,
@@ -225,9 +266,11 @@ final class HP_Hours {
 		return wp_date( $short ? 'D' : 'l', gmmktime( 12, 0, 0, 1, (int) $iso, 2024 ), new DateTimeZone( 'UTC' ) );
 	}
 
-	public static function fmt_time( $hhmm ) {
+	/** "HH:MM" in the site's time format, or $format (e.g. "H:i" or "g:i A"). */
+	public static function fmt_time( $hhmm, $format = '' ) {
 		list( $h, $m ) = array_map( 'intval', explode( ':', $hhmm ) );
-		return wp_date( (string) get_option( 'time_format', 'H:i' ), gmmktime( $h, $m, 0, 1, 1, 2024 ), new DateTimeZone( 'UTC' ) );
+		$format        = $format ? $format : (string) get_option( 'time_format', 'H:i' );
+		return wp_date( $format, gmmktime( $h, $m, 0, 1, 1, 2024 ), new DateTimeZone( 'UTC' ) );
 	}
 
 	/** Digits for visitors: 'arab' = Arabic-Indic (٠١٢…), anything else leaves Western digits. */
