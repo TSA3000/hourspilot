@@ -70,6 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 && { echo "Release exists (re-run): keeping it"; exit 0; }
           pre=; case "$GITHUB_REF_NAME" in *-*) pre=--prerelease ;; esac
           gh release create "$GITHUB_REF_NAME" "$ZIP" --verify-tag $pre \
             --title "HoursPilot ${GITHUB_REF_NAME#v}" --notes-file "$RUNNER_TEMP/notes.md"
