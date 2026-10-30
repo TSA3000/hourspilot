@@ -2,8 +2,10 @@
 .gitattributes   export-ignore
 .github          export-ignore
 docs             export-ignore
+.wordpress-org   export-ignore
 .gitignore       export-ignore
 phpcs.xml.dist   export-ignore
 rust/.gitignore  export-ignore
 *.wasm           binary
 *.png            binary
+languages/.gitkeep export-ignore

@@ -11,9 +11,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Public_Holidays {
+final class HoursPilot_Public_Holidays {
 
-	const META    = '_hp_public_holidays';
+	const META    = '_hourspilot_public_holidays';
 	const REFRESH = WEEK_IN_SECONDS;
 	const RETRY   = HOUR_IN_SECONDS;
 
@@ -61,7 +61,7 @@ final class HP_Public_Holidays {
 		if ( ! $c ) {
 			return array();
 		}
-		$year = (int) ( new DateTimeImmutable( 'now', HP_Hours::timezone( $id ) ) )->format( 'Y' );
+		$year = (int) ( new DateTimeImmutable( 'now', HoursPilot_Hours::timezone( $id ) ) )->format( 'Y' );
 		$lang = strtolower( substr( determine_locale(), 0, 2 ) );
 		$out  = array();
 		foreach ( array( $year, $year + 1 ) as $y ) {
@@ -96,7 +96,7 @@ final class HP_Public_Holidays {
 	public static function countries( $source ) {
 		$locale = determine_locale();
 		$intl   = class_exists( 'Locale' );
-		$list   = self::cached( 'hp_ph_countries_' . $source, 4 * self::REFRESH, fn() => self::fetch_countries( $source ) );
+		$list   = self::cached( 'hourspilot_ph_countries_' . $source, 4 * self::REFRESH, fn() => self::fetch_countries( $source ) );
 		$out    = array();
 		foreach ( $list as $code => $names ) {
 			$name         = $intl ? Locale::getDisplayRegion( 'und-' . $code, $locale ) : '';
@@ -112,7 +112,7 @@ final class HP_Public_Holidays {
 
 	/** Nationwide public holidays of one year: list of { from, to, names: { lang|local => text } }. */
 	private static function year( $source, $cc, $year ) {
-		$key = 'hp_ph_' . $source . '_' . $cc . '_' . $year;
+		$key = 'hourspilot_ph_' . $source . '_' . $cc . '_' . $year;
 		if ( ! isset( self::$memo[ $key ] ) ) {
 			self::$memo[ $key ] = self::cached( $key, self::REFRESH, fn() => self::fetch_year( $source, $cc, $year ) );
 		}
@@ -210,7 +210,7 @@ final class HP_Public_Holidays {
 				return null;
 			}
 			foreach ( $data as $h ) {
-				if ( empty( $h['global'] ) || ! in_array( 'Public', (array) ( $h['types'] ?? array() ), true ) || ! HP_Hours::valid_date( $h['date'] ?? '' ) ) {
+				if ( empty( $h['global'] ) || ! in_array( 'Public', (array) ( $h['types'] ?? array() ), true ) || ! HoursPilot_Hours::valid_date( $h['date'] ?? '' ) ) {
 					continue;
 				}
 				$out[] = array(
@@ -240,7 +240,7 @@ final class HP_Public_Holidays {
 		}
 		foreach ( $data as $h ) {
 			if ( empty( $h['nationwide'] ) || 'Public' !== ( $h['type'] ?? '' ) || 'FullDay' !== ( $h['temporalScope'] ?? 'FullDay' )
-				|| ! HP_Hours::valid_date( $h['startDate'] ?? '' ) || ! HP_Hours::valid_date( $h['endDate'] ?? '' ) ) {
+				|| ! HoursPilot_Hours::valid_date( $h['startDate'] ?? '' ) || ! HoursPilot_Hours::valid_date( $h['endDate'] ?? '' ) ) {
 				continue;
 			}
 			$out[] = array(

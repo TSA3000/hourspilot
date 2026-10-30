@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Icons {
+final class HoursPilot_Icons {
 
 	/** Inner SVG markup per icon. */
 	const PATHS = array(

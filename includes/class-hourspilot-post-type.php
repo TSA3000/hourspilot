@@ -10,9 +10,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Post_Type {
+final class HoursPilot_Post_Type {
 
-	const TYPE = 'hp_location';
+	const TYPE = 'hourspilot_location';
 
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'register' ) );
@@ -40,7 +40,7 @@ final class HP_Post_Type {
 				'show_ui'         => true,
 				'show_in_menu'    => true,
 				'show_in_rest'    => false,
-				'menu_icon'       => HP_Icons::menu_icon(),
+				'menu_icon'       => HoursPilot_Icons::menu_icon(),
 				'menu_position'   => 25,
 				'supports'        => array( 'title', 'thumbnail', 'page-attributes' ),
 				'capability_type' => 'page',

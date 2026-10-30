@@ -10,7 +10,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Hours {
+final class HoursPilot_Hours {
 
 	const DAYS  = array( 1, 2, 3, 4, 5, 6, 7 );
 	const MODES = array( 'open', 'closed', '24h' );
@@ -117,7 +117,7 @@ final class HP_Hours {
 
 	/** @return array<int,array{mode:string,slots:array}> keyed 1..7 */
 	public static function get_hours( $id ) {
-		$raw = get_post_meta( $id, '_hp_hours', true );
+		$raw = get_post_meta( $id, '_hourspilot_hours', true );
 		$raw = is_array( $raw ) ? $raw : array();
 		$out = array();
 		foreach ( self::DAYS as $d ) {
@@ -140,11 +140,11 @@ final class HP_Hours {
 
 	/**
 	 * Holidays of a location sorted by start date: its own plus, unless the location
-	 * opted out (_hp_use_shared = 0), the shared ones, plus the public holidays of its
+	 * opted out (_hourspilot_use_shared = 0), the shared ones, plus the public holidays of its
 	 * country (Holidays tab) on days not already covered. Empty slots = closed.
 	 */
 	public static function get_holidays( $id, $with_shared = true ) {
-		$own = get_post_meta( $id, '_hp_holidays', true );
+		$own = get_post_meta( $id, '_hourspilot_holidays', true );
 		$out = self::normalize_holidays( is_array( $own ) ? $own : array() );
 		if ( ! $with_shared ) {
 			return $out;
@@ -155,7 +155,7 @@ final class HP_Hours {
 			}
 		}
 		$set = $out;
-		foreach ( HP_Public_Holidays::for_location( $id ) as $h ) {
+		foreach ( HoursPilot_Public_Holidays::for_location( $id ) as $h ) {
 			if ( ! self::covered( $set, $h['from'] ) ) {
 				$out[] = $h;
 			}
@@ -178,7 +178,7 @@ final class HP_Hours {
 	}
 
 	public static function uses_shared( $id ) {
-		return '0' !== (string) get_post_meta( $id, '_hp_use_shared', true );
+		return '0' !== (string) get_post_meta( $id, '_hourspilot_use_shared', true );
 	}
 
 	public static function shared_holidays() {
@@ -252,7 +252,7 @@ final class HP_Hours {
 	}
 
 	public static function get_info( $id ) {
-		$raw = get_post_meta( $id, '_hp_info', true );
+		$raw = get_post_meta( $id, '_hourspilot_info', true );
 		$raw = is_array( $raw ) ? $raw : array();
 		$out = array();
 		foreach ( self::INFO_FIELDS as $f ) {
@@ -262,14 +262,14 @@ final class HP_Hours {
 	}
 
 	public static function schema_type( $id ) {
-		$t = (string) get_post_meta( $id, '_hp_schema_type', true );
+		$t = (string) get_post_meta( $id, '_hourspilot_schema_type', true );
 		return in_array( $t, self::SCHEMA_TYPES, true ) ? $t : 'LocalBusiness';
 	}
 
 	/** IANA timezone: location setting → site setting → UTC. */
 	public static function timezone_string( $id = 0 ) {
 		$ids = timezone_identifiers_list();
-		$tz  = $id ? (string) get_post_meta( $id, '_hp_timezone', true ) : '';
+		$tz  = $id ? (string) get_post_meta( $id, '_hourspilot_timezone', true ) : '';
 		if ( in_array( $tz, $ids, true ) ) {
 			return $tz;
 		}

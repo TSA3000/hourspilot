@@ -1,0 +1,8 @@
+Card style: the week with a live status band, today marked and the next holidays
+Clean style (default) with the open/closed badge
+Calendar view: a month with holidays and today marked
+Arabic, right-to-left, with Arabic digits
+Hours tab: open, closed or 24 hours per day, several time slots, labelled breaks
+Holidays tab: own holidays, shared holidays and closed on public holidays by country
+Display tab: what to show, layout, countdowns, formats
+Appearance tab: card or clean style, colours, header image
