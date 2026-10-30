@@ -4,7 +4,7 @@
  *
  * @package HoursPilot
  * @author  Arthur Sam Mahdi <tsa3000@gmail.com>
- * @version 0.5.0
+ * @version 0.6.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -231,6 +231,104 @@ final class HP_Admin {
 			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . HP_Post_Type::TYPE . '&page=hp-shared-holidays' ) ); ?>"><?php esc_html_e( 'Edit shared holidays', 'hourspilot' ); ?></a>
 		</p>
 		<?php
+		self::public_holidays_box( $post );
+	}
+
+	/** "Closed on public holidays": checkbox, source and country, next few holidays. */
+	private static function public_holidays_box( $post ) {
+		$saved   = HP_Public_Holidays::get( $post->ID );
+		$sources = HP_Public_Holidays::sources();
+		$source  = $saved ? $saved['source'] : 'nager';
+		$country = $saved ? $saved['country'] : strtoupper( substr( (string) strrchr( '_' . get_locale(), '_' ), 1, 2 ) );
+		?>
+		<div class="hp-public">
+			<label class="hp-check">
+				<input type="checkbox" name="hp_public[on]" value="1" class="hp-public-on" <?php checked( (bool) $saved ); ?>>
+				<strong><?php esc_html_e( 'Closed on public holidays', 'hourspilot' ); ?></strong>
+			</label>
+			<div class="hp-public-fields"<?php echo $saved ? '' : ' hidden'; ?>>
+				<p class="hp-public-pick">
+					<label>
+						<?php esc_html_e( 'Source', 'hourspilot' ); ?>
+						<select name="hp_public[source]" class="hp-public-source">
+							<?php foreach ( $sources as $key => $src ) : ?>
+								<option value="<?php echo esc_attr( $key ); ?>" data-url="<?php echo esc_url( $src['url'] ); ?>" <?php selected( $source, $key ); ?>><?php echo esc_html( $src['name'] ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</label>
+					<?php
+					foreach ( $sources as $key => $src ) :
+						$countries = HP_Public_Holidays::countries( $key );
+						?>
+						<label class="hp-public-country" data-source="<?php echo esc_attr( $key ); ?>"<?php echo $key === $source ? '' : ' hidden'; ?>>
+							<?php esc_html_e( 'Country', 'hourspilot' ); ?>
+							<?php if ( $countries ) : ?>
+								<select name="hp_public[country_<?php echo esc_attr( $key ); ?>]">
+									<option value=""><?php esc_html_e( '— Choose —', 'hourspilot' ); ?></option>
+									<?php foreach ( $countries as $code => $name ) : ?>
+										<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $country, $code ); ?>><?php echo esc_html( $name ); ?></option>
+									<?php endforeach; ?>
+								</select>
+							<?php else : ?>
+								<input type="text" name="hp_public[country_<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $country ); ?>" size="3" maxlength="2" pattern="[A-Za-z]{2}" placeholder="SE">
+								<span class="description">
+									<?php
+									/* translators: %s: name of the holiday source */
+									echo esc_html( sprintf( __( "%s couldn't be reached; enter a two-letter country code.", 'hourspilot' ), $src['name'] ) );
+									?>
+								</span>
+							<?php endif; ?>
+						</label>
+					<?php endforeach; ?>
+				</p>
+				<?php self::public_preview( $post->ID, $saved ); ?>
+				<p class="description">
+					<?php
+					printf(
+						/* translators: %s: link to the holiday source */
+						esc_html__( 'Nationwide public holidays from %s, checked weekly. To open on one of them, add that day above with its hours.', 'hourspilot' ),
+						'<a class="hp-public-link" href="' . esc_url( $sources[ $source ]['url'] ) . '" target="_blank" rel="noopener">' . esc_html( $sources[ $source ]['name'] ) . '</a>'
+					);
+					?>
+				</p>
+			</div>
+		</div>
+		<?php
+	}
+
+	/** The next public holidays of the saved choice (after saving). */
+	private static function public_preview( $id, $saved ) {
+		if ( ! $saved ) {
+			return;
+		}
+		$today = ( new DateTimeImmutable( 'now', HP_Hours::timezone( $id ) ) )->format( 'Y-m-d' );
+		$next  = array_slice( array_values( array_filter( HP_Public_Holidays::for_location( $id ), fn( $h ) => $h['to'] >= $today ) ), 0, 5 );
+		if ( ! $next ) {
+			echo '<p class="hp-public-none">' . esc_html__( 'No public holidays found for this country.', 'hourspilot' ) . '</p>';
+			return;
+		}
+		?>
+		<p class="hp-public-next"><?php esc_html_e( 'Next public holidays:', 'hourspilot' ); ?></p>
+		<ul class="hp-public-list">
+			<?php foreach ( $next as $h ) : ?>
+				<li><span><?php echo esc_html( wp_date( get_option( 'date_format' ), strtotime( $h['from'] . ' 12:00 UTC' ), new DateTimeZone( 'UTC' ) ) ); ?></span> <?php echo esc_html( $h['label'] ); ?></li>
+			<?php endforeach; ?>
+		</ul>
+		<?php
+	}
+
+	/** hp_public[] form fields => saved choice or null. */
+	private static function parse_public( $in ) {
+		if ( empty( $in['on'] ) ) {
+			return null;
+		}
+		$source = sanitize_key( $in['source'] ?? '' );
+		return HP_Public_Holidays::sanitize(
+			array(
+				'source'  => $source,
+				'country' => sanitize_text_field( $in[ 'country_' . $source ] ?? '' ),
+			)
+		);
 	}
 
 	/** Holiday table + add button + row template (location tab and Shared holidays page). */
@@ -391,6 +489,7 @@ final class HP_Admin {
 		$holidays_in = isset( $_POST['hp_holidays'] ) && is_array( $_POST['hp_holidays'] ) ? wp_unslash( $_POST['hp_holidays'] ) : array();
 		$info_in     = isset( $_POST['hp_info'] ) && is_array( $_POST['hp_info'] ) ? wp_unslash( $_POST['hp_info'] ) : array();
 		$settings_in = isset( $_POST['hp_settings'] ) && is_array( $_POST['hp_settings'] ) ? wp_unslash( $_POST['hp_settings'] ) : array();
+		$public_in   = isset( $_POST['hp_public'] ) && is_array( $_POST['hp_public'] ) ? wp_unslash( $_POST['hp_public'] ) : array();
 		// phpcs:enable
 
 		update_post_meta( $post_id, '_hp_hours', self::sanitize_hours( $hours_in ) );
@@ -399,12 +498,21 @@ final class HP_Admin {
 		update_post_meta( $post_id, HP_Settings::META, HP_Settings::sanitize( $settings_in ) );
 		delete_post_meta( $post_id, '_hp_style' ); // 0.4.0 Appearance box, now part of the settings.
 		update_post_meta( $post_id, '_hp_use_shared', empty( $_POST['hp_use_shared'] ) ? '0' : '1' );
+		self::save_public( $post_id, self::parse_public( $public_in ) );
 
 		$tz = isset( $_POST['hp_timezone'] ) ? sanitize_text_field( wp_unslash( $_POST['hp_timezone'] ) ) : '';
 		update_post_meta( $post_id, '_hp_timezone', in_array( $tz, timezone_identifiers_list(), true ) ? $tz : '' );
 
 		$type = isset( $_POST['hp_schema_type'] ) ? sanitize_text_field( wp_unslash( $_POST['hp_schema_type'] ) ) : '';
 		update_post_meta( $post_id, '_hp_schema_type', in_array( $type, HP_Hours::SCHEMA_TYPES, true ) ? $type : 'LocalBusiness' );
+	}
+
+	private static function save_public( $post_id, $choice ) {
+		if ( $choice ) {
+			update_post_meta( $post_id, HP_Public_Holidays::META, $choice );
+		} else {
+			delete_post_meta( $post_id, HP_Public_Holidays::META );
+		}
 	}
 
 	private static function sanitize_hours( $in ) {
@@ -498,6 +606,7 @@ final class HP_Admin {
 			'hours'       => HP_Hours::get_hours( $id ),
 			'holidays'    => HP_Hours::get_holidays( $id, false ),
 			'use_shared'  => HP_Hours::uses_shared( $id ),
+			'public'      => HP_Public_Holidays::get( $id ),
 			'info'        => HP_Hours::get_info( $id ),
 			'settings'    => HP_Settings::get( $id ),
 		);
@@ -581,6 +690,7 @@ final class HP_Admin {
 			update_post_meta( $id, '_hp_info', self::sanitize_info( $loc['info'] ?? array() ) );
 			update_post_meta( $id, HP_Settings::META, HP_Settings::sanitize( $loc['settings'] ?? array(), false ) );
 			update_post_meta( $id, '_hp_use_shared', empty( $loc['use_shared'] ) ? '0' : '1' );
+			self::save_public( $id, HP_Public_Holidays::sanitize( $loc['public'] ?? null ) );
 			update_post_meta( $id, '_hp_timezone', in_array( $tz, timezone_identifiers_list(), true ) ? $tz : '' );
 			update_post_meta( $id, '_hp_schema_type', in_array( $type, HP_Hours::SCHEMA_TYPES, true ) ? $type : 'LocalBusiness' );
 			++$n;

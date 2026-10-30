@@ -1,4 +1,4 @@
-/* HoursPilot admin | v0.5.0 | Arthur Sam Mahdi */
+/* HoursPilot admin | v0.6.0 | Arthur Sam Mahdi */
 .hp-admin-week { width: 100%; border-collapse: collapse; }
 .hp-admin-week th,
 .hp-admin-week td { padding: 10px 8px 6px 0; vertical-align: top; border-top: 1px solid #f0f0f1; }
@@ -93,6 +93,13 @@
 .hp-image-field { display: flex; gap: 8px; max-width: 480px; }
 .hp-image-field input { flex: 1; }
 .hp-settings-grid .wp-picker-container input[type="text"].wp-color-picker { width: 80px; }
+.hp-public { margin-top: 18px; padding: 12px 14px; border: 1px solid #dcdcde; border-radius: 4px; background: #f6f7f7; }
+.hp-public-pick { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.hp-public-pick label { display: inline-flex; align-items: center; gap: 6px; }
+.hp-public-pick label[hidden] { display: none; }
+.hp-public-next { margin-bottom: 4px; font-weight: 600; }
+.hp-public-list { margin: 0 0 8px; }
+.hp-public-list span { display: inline-block; min-width: 9em; color: #50575e; }
 .hp-shared-toggle { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 16px; }
 
 /* Shared holidays and Import / Export pages */

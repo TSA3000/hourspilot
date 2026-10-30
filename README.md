@@ -4,7 +4,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 | | |
 |---|---|
-| **Version** | 0.5.0 |
+| **Version** | 0.6.0 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
 | **Tested up to** | WordPress 6.8 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
@@ -23,6 +23,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 - Map below the location details (OpenStreetMap or Google Maps), loaded only after a click
 - Everything set per location in wp-admin, in tabs: General, Hours, Holidays, Messages, Display, Appearance, Location; a bare `[hourspilot id="…"]` is enough
 - Shared holidays for all locations (e.g. public holidays), with opt-out per location
+- Closed on public holidays automatically: tick the box, pick a source (Nager.Date or OpenHolidays API) and a country
 - Import / export of locations as JSON
 - Day names in the site language automatically, week start from *Settings → General*
 - Live "Open now / Closed now" badge, computed in the browser by a small Rust/WebAssembly engine, so page caches never show a stale status
@@ -46,7 +47,7 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 
 <img src="docs/screenshots/admin-messages.png" alt="Messages tab" width="430"> <img src="docs/screenshots/admin-appearance.png" alt="Appearance tab" width="430">
 
-<img src="docs/screenshots/admin-hours-ar.png" alt="Hours tab in Arabic, right-to-left" width="430"> <img src="docs/screenshots/admin-menu.png" alt="Admin menu: Business hours with Locations, Add location, Shared holidays, Import / Export" width="150">
+<img src="docs/screenshots/admin-holidays.png" alt="Holidays tab: own holidays, shared holidays, Closed on public holidays with source, country and the next public holidays" width="430"> <img src="docs/screenshots/admin-hours-ar.png" alt="Hours tab in Arabic, right-to-left" width="430"> <img src="docs/screenshots/admin-menu.png" alt="Admin menu: Business hours with Locations, Add location, Shared holidays, Import / Export" width="150">
 
 ### Clean style (default)
 
@@ -76,7 +77,7 @@ then *WordPress → Plugins → Add New → Upload Plugin*. Add locations under 
 - **Locations / Add location**: one location per shop, office or branch, each with its settings in tabs:
   - **General**: time zone, business type (for search engines)
   - **Hours**: Open / Closed / Open 24 hours per day, several time slots per day, labels and breaks ("Lunch")
-  - **Holidays**: holidays and special hours, every year or once; whether to also use the shared holidays
+  - **Holidays**: holidays and special hours, every year or once; whether to also use the shared holidays; *Closed on public holidays* with source and country (your own holidays win on the same day, so add a day with hours to stay open)
   - **Messages**: every text visitors see (status, badges, open/closed messages, "Closed All Day", countdowns)
   - **Display**: what to show (week or today, layout, header, local time, grouping, hidden days, holidays, countdowns, formats, digits, details, structured data)
   - **Appearance**: style (clean or card), font, colours, header band and image, map
@@ -168,6 +169,17 @@ flowchart LR
 The server renders the hours once; everything that depends on *now* (open/closed, countdowns, today's holiday,
 the calendar) is computed in the browser by the Rust engine. A cached page therefore never shows a stale status.
 
+## External services
+
+Only if *Closed on public holidays* is ticked for a location, the server (never the visitor's browser) fetches the
+country list and that country's public holidays from the chosen source. Sent: the country code and the year. Results are
+cached for a week. Nothing is fetched while the option is off.
+
+- [Nager.Date](https://date.nager.at) (`date.nager.at`): [terms](https://date.nager.at/legal/termsofservice), [privacy](https://date.nager.at/legal/privacy)
+- [OpenHolidays API](https://www.openholidaysapi.org) (`openholidaysapi.org`): [privacy](https://legal.stueber.de/en/privacy.php)
+
+The map in the Location tab is loaded from OpenStreetMap or Google Maps only after the visitor clicks it.
+
 ## Translations
 
 English (source), Swedish (`sv_SE`) and Arabic (`ar`) ship in `languages/`: `.po` (editable), `.mo` (WordPress 6.0–6.4)
@@ -191,7 +203,8 @@ Most things are set in the Appearance box. For more, override CSS variables on `
 Filters: `hourspilot_schema( array $data, int $location_id )`, `hourspilot_digits( string $system )` (`latn` | `arab`)
 
 Data is stored as post meta on the `hp_location` post type:
-`_hp_hours`, `_hp_holidays` (from, to, label, slots, recurring), `_hp_info`, `_hp_timezone`, `_hp_schema_type`.
+`_hp_hours`, `_hp_holidays` (from, to, label, slots, recurring), `_hp_info`, `_hp_timezone`, `_hp_schema_type`,
+`_hp_settings`, `_hp_use_shared`, `_hp_public_holidays` (source, country). Fetched public holidays are cached in transients `hp_ph_*`.
 
 Uninstalling the plugin does not delete your locations.
 
@@ -218,6 +231,12 @@ The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scr
 and **Tags** rows above exist for it.
 
 ## Changelog
+
+### 0.6.0
+
+- *Closed on public holidays* (Holidays tab): pick a source (Nager.Date, OpenHolidays API) and a country; nationwide public holidays are shown as closed, cached weekly, with a preview of the next ones
+- Own and shared holidays override a public holiday on the same day
+- Included in import / export
 
 ### 0.5.0
 

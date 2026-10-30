@@ -107,6 +107,22 @@
 		}, true);
 	}
 
+	/* ---------- Public holidays: show source + country when on, country list of the chosen source ---------- */
+	document.addEventListener('change', function (e) {
+		var box = e.target.closest && e.target.closest('.hp-public');
+		if (!box) { return; }
+		if (e.target.classList.contains('hp-public-on')) {
+			box.querySelector('.hp-public-fields').hidden = !e.target.checked;
+		}
+		if (e.target.classList.contains('hp-public-source')) {
+			var opt = e.target.options[e.target.selectedIndex], link = box.querySelector('.hp-public-link');
+			box.querySelectorAll('.hp-public-country').forEach(function (l) {
+				l.hidden = l.getAttribute('data-source') !== e.target.value;
+			});
+			if (link) { link.href = opt.getAttribute('data-url'); link.textContent = opt.textContent; }
+		}
+	});
+
 	/* ---------- Colour pickers and image picker ---------- */
 	if (window.jQuery && jQuery.fn.wpColorPicker) {
 		jQuery('.hp-color').wpColorPicker();

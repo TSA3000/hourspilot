@@ -48,7 +48,7 @@ msgid "Location details"
 msgstr "Platsinformation"
 
 #: includes/class-hp-admin.php:52
-#: includes/class-hp-admin.php:633
+#: includes/class-hp-admin.php:743
 msgid "Shortcode"
 msgstr "Kortkod"
 
@@ -58,7 +58,7 @@ msgid "Open"
 msgstr "Öppet"
 
 #: includes/class-hp-admin.php:151
-#: includes/class-hp-admin.php:280
+#: includes/class-hp-admin.php:378
 #: includes/class-hp-settings.php:64
 #: includes/class-hp-settings.php:68
 msgid "Closed"
@@ -94,44 +94,44 @@ msgstr "Stänger"
 msgid "Remove hours"
 msgstr "Ta bort tider"
 
-#: includes/class-hp-admin.php:242
+#: includes/class-hp-admin.php:340
 msgid "From"
 msgstr "Från"
 
-#: includes/class-hp-admin.php:243
+#: includes/class-hp-admin.php:341
 msgid "To (optional)"
 msgstr "Till (valfritt)"
 
-#: includes/class-hp-admin.php:244
+#: includes/class-hp-admin.php:342
 msgid "Name"
 msgstr "Namn"
 
-#: includes/class-hp-admin.php:245
+#: includes/class-hp-admin.php:343
 msgid "Hours (empty = closed)"
 msgstr "Tider (tomt = stängt)"
 
-#: includes/class-hp-admin.php:246
-#: includes/class-hp-admin.php:282
+#: includes/class-hp-admin.php:344
+#: includes/class-hp-admin.php:380
 msgid "Every year"
 msgstr "Varje år"
 
-#: includes/class-hp-admin.php:247
+#: includes/class-hp-admin.php:345
 msgid "Remove"
 msgstr "Ta bort"
 
-#: includes/class-hp-admin.php:258
+#: includes/class-hp-admin.php:356
 msgid "Add holiday or special day"
 msgstr "Lägg till helgdag eller specialdag"
 
-#: includes/class-hp-admin.php:259
+#: includes/class-hp-admin.php:357
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr "Format för avvikande tider: 10:00-14:00. Separera flera med kommatecken. Passerade helgdagar döljs automatiskt på webbplatsen. Varje år: samma datum återkommer varje år (året du anger ignoreras)."
 
-#: includes/class-hp-admin.php:279
+#: includes/class-hp-admin.php:377
 msgid "e.g. Christmas Eve"
 msgstr "t.ex. julafton"
 
-#: includes/class-hp-admin.php:281
+#: includes/class-hp-admin.php:379
 msgid "Remove row"
 msgstr "Ta bort rad"
 
@@ -151,31 +151,31 @@ msgstr "Verksamhetstyp"
 msgid "Used in the structured data search engines read."
 msgstr "Används i den strukturerade data som sökmotorer läser."
 
-#: includes/class-hp-admin.php:319
+#: includes/class-hp-admin.php:417
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/class-hp-admin.php:325
+#: includes/class-hp-admin.php:423
 msgid "Email"
 msgstr "E-post"
 
-#: includes/class-hp-admin.php:328
+#: includes/class-hp-admin.php:426
 msgid "Website"
 msgstr "Webbplats"
 
-#: includes/class-hp-admin.php:316
+#: includes/class-hp-admin.php:414
 msgid "Address"
 msgstr "Adress"
 
-#: includes/class-hp-admin.php:331
+#: includes/class-hp-admin.php:429
 msgid "Map link"
 msgstr "Kartlänk"
 
-#: includes/class-hp-admin.php:334
+#: includes/class-hp-admin.php:432
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr "Ange platsens bild med ”Platsbild” i sidofältet."
 
-#: includes/class-hp-admin.php:363
+#: includes/class-hp-admin.php:461
 msgid "Save the location to get its shortcode."
 msgstr "Spara platsen för att få dess kortkod."
 
@@ -297,15 +297,15 @@ msgstr "Etikett"
 msgid "Break"
 msgstr "Paus"
 
-#: includes/class-hp-admin.php:322
+#: includes/class-hp-admin.php:420
 msgid "Second phone"
 msgstr "Telefon 2"
 
-#: includes/class-hp-admin.php:337
+#: includes/class-hp-admin.php:435
 msgid "Map position"
 msgstr "Kartposition"
 
-#: includes/class-hp-admin.php:340
+#: includes/class-hp-admin.php:438
 msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
 msgstr "Latitud, longitud för den inbäddade kartan (krävs för OpenStreetMap; Google Maps kan använda adressen i stället)."
 
@@ -405,12 +405,12 @@ msgid "Loads the map from %s."
 msgstr "Laddar kartan från %s."
 
 #: includes/class-hp-admin.php:44
-#: includes/class-hp-admin.php:427
+#: includes/class-hp-admin.php:535
 msgid "Shared holidays"
 msgstr "Gemensamma helgdagar"
 
 #: includes/class-hp-admin.php:45
-#: includes/class-hp-admin.php:457
+#: includes/class-hp-admin.php:565
 msgid "Import / Export"
 msgstr "Import / export"
 
@@ -464,72 +464,72 @@ msgstr[1] "Använd även de %d gemensamma helgdagarna"
 msgid "Edit shared holidays"
 msgstr "Redigera gemensamma helgdagar"
 
-#: includes/class-hp-admin.php:369
+#: includes/class-hp-admin.php:467
 msgid "Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:"
 msgstr "Klistra in på valfri sida, i en widget eller i ett kortkodsblock. Den använder inställningarna i flikarna; attribut går före, t.ex.:"
 
-#: includes/class-hp-admin.php:429
+#: includes/class-hp-admin.php:537
 msgid "Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own."
 msgstr "Helgdagar som alla platser använder, t.ex. allmänna helgdagar. En plats kan välja bort dem under fliken Helgdagar och lägga till egna."
 
-#: includes/class-hp-admin.php:434
+#: includes/class-hp-admin.php:542
 msgid "Save shared holidays"
 msgstr "Spara gemensamma helgdagar"
 
-#: includes/class-hp-admin.php:442
-#: includes/class-hp-admin.php:511
-#: includes/class-hp-admin.php:517
 #: includes/class-hp-admin.php:550
+#: includes/class-hp-admin.php:620
+#: includes/class-hp-admin.php:626
+#: includes/class-hp-admin.php:659
 msgid "Sorry, you are not allowed to do that."
 msgstr "Du har tyvärr inte behörighet att göra det."
 
-#: includes/class-hp-admin.php:461
-#: includes/class-hp-admin.php:485
+#: includes/class-hp-admin.php:569
+#: includes/class-hp-admin.php:593
 msgid "Export"
 msgstr "Exportera"
 
-#: includes/class-hp-admin.php:462
+#: includes/class-hp-admin.php:570
 msgid "Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included."
 msgstr "Ladda ner alla platser (öppettider, helgdagar, uppgifter, inställningar) och de gemensamma helgdagarna som en JSON-fil. Bilder ingår inte."
 
-#: includes/class-hp-admin.php:463
+#: includes/class-hp-admin.php:571
 msgid "To export one location, use \"Export\" below its name in the Locations list."
 msgstr "Exportera en enskild plats med ”Exportera” under dess namn i listan Platser."
 
-#: includes/class-hp-admin.php:464
+#: includes/class-hp-admin.php:572
 msgid "Export all locations"
 msgstr "Exportera alla platser"
 
-#: includes/class-hp-admin.php:467
-#: includes/class-hp-admin.php:474
+#: includes/class-hp-admin.php:575
+#: includes/class-hp-admin.php:582
 msgid "Import"
 msgstr "Importera"
 
-#: includes/class-hp-admin.php:468
+#: includes/class-hp-admin.php:576
 msgid "Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing."
 msgstr "Importera en JSON-fil från HoursPilot. Varje plats läggs till som ett nytt utkast, så att du kan kontrollera den innan du publicerar."
 
-#: includes/class-hp-admin.php:473
+#: includes/class-hp-admin.php:581
 msgid "Also replace the shared holidays with the ones in the file"
 msgstr "Ersätt även de gemensamma helgdagarna med dem i filen"
 
-#: includes/class-hp-admin.php:569
+#: includes/class-hp-admin.php:678
 msgid "Imported location"
 msgstr "Importerad plats"
 
-#: includes/class-hp-admin.php:616
+#: includes/class-hp-admin.php:726
 msgid "Shared holidays saved."
 msgstr "De gemensamma helgdagarna har sparats."
 
 #. translators: %d: number of imported locations
-#: includes/class-hp-admin.php:618
+#: includes/class-hp-admin.php:728
 #, php-format
 msgid "%d location imported as a draft."
 msgid_plural "%d locations imported as drafts."
 msgstr[0] "%d plats importerades som utkast."
 msgstr[1] "%d platser importerades som utkast."
 
-#: includes/class-hp-admin.php:619
+#: includes/class-hp-admin.php:729
 msgid "That file is not a HoursPilot export."
 msgstr "Filen är ingen export från HoursPilot."
 
@@ -850,3 +850,39 @@ msgstr "Ladda kartan först efter ett klick (inget skickas till karttjänsten in
 #: includes/class-hp-settings.php:320
 msgid "Choose image"
 msgstr "Välj bild"
+
+#: includes/class-hp-admin.php:247
+msgid "Closed on public holidays"
+msgstr "Stängt på allmänna helgdagar"
+
+#: includes/class-hp-admin.php:252
+msgid "Source"
+msgstr "Källa"
+
+#: includes/class-hp-admin.php:264
+msgid "Country"
+msgstr "Land"
+
+#: includes/class-hp-admin.php:267
+msgid "— Choose —"
+msgstr "— Välj —"
+
+#. translators: %s: name of the holiday source
+#: includes/class-hp-admin.php:277
+#, php-format
+msgid "%s couldn't be reached; enter a two-letter country code."
+msgstr "Det gick inte att nå %s; ange en landskod med två bokstäver."
+
+#. translators: %s: link to the holiday source
+#: includes/class-hp-admin.php:289
+#, php-format
+msgid "Nationwide public holidays from %s, checked weekly. To open on one of them, add that day above with its hours."
+msgstr "Rikstäckande allmänna helgdagar från %s, kontrolleras varje vecka. För att ha öppet en av dem, lägg till dagen ovan med dess öppettider."
+
+#: includes/class-hp-admin.php:307
+msgid "No public holidays found for this country."
+msgstr "Inga allmänna helgdagar hittades för det här landet."
+
+#: includes/class-hp-admin.php:311
+msgid "Next public holidays:"
+msgstr "Kommande allmänna helgdagar:"
