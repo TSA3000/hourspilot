@@ -4,7 +4,7 @@
  *
  * Every shortcode attribute can be set on the location (tabs Messages, Display, Appearance);
  * priority: built-in default < location setting < shortcode attribute.
- * Stored as post meta _hp_settings; empty text = use the (translated) default.
+ * Stored as post meta _hourspilot_settings; empty text = use the (translated) default.
  *
  * @package HoursPilot
  * @author  Arthur Sam Mahdi <tsa3000@gmail.com>
@@ -13,9 +13,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Settings {
+final class HoursPilot_Settings {
 
-	const META = '_hp_settings';
+	const META = '_hourspilot_settings';
 
 	/** Built-in defaults of all shortcode attributes. */
 	public static function defaults() {
@@ -214,12 +214,12 @@ final class HP_Settings {
 		);
 	}
 
-	/** Saved settings of a location (only non-empty values); includes 0.4.0's Appearance box (_hp_style). */
+	/** Saved settings of a location (only non-empty values); includes 0.4.0's Appearance box (_hourspilot_style). */
 	public static function get( $id ) {
 		if ( ! $id ) {
 			return array();
 		}
-		$legacy = get_post_meta( $id, '_hp_style', true );
+		$legacy = get_post_meta( $id, '_hourspilot_style', true );
 		$saved  = get_post_meta( $id, self::META, true );
 		$out    = array_merge( is_array( $legacy ) ? $legacy : array(), is_array( $saved ) ? $saved : array() );
 		return array_filter(
@@ -259,7 +259,7 @@ final class HP_Settings {
 					break;
 				case 'days':
 					$days        = is_array( $v ) ? $v : explode( ',', (string) $v );
-					$days        = array_intersect( HP_Hours::DAYS, array_map( 'intval', $days ) );
+					$days        = array_intersect( HoursPilot_Hours::DAYS, array_map( 'intval', $days ) );
 					$out[ $key ] = implode( ',', $days );
 					break;
 				default:
@@ -323,13 +323,13 @@ final class HP_Settings {
 				case 'days':
 					$sel = array_map( 'intval', array_filter( explode( ',', (string) $current ) ) );
 					echo '<fieldset class="hp-days" id="' . esc_attr( $id ) . '">';
-					foreach ( HP_Hours::ordered_days() as $d ) {
+					foreach ( HoursPilot_Hours::ordered_days() as $d ) {
 						printf(
 							'<label class="hp-check"><input type="checkbox" name="%1$s[]" value="%2$d"%3$s> %4$s</label>',
 							esc_attr( $name ),
 							(int) $d,
 							checked( in_array( $d, $sel, true ), true, false ),
-							esc_html( HP_Hours::day_name( $d ) )
+							esc_html( HoursPilot_Hours::day_name( $d ) )
 						);
 					}
 					echo '</fieldset>';

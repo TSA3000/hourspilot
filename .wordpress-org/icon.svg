@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="hot" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <!-- dial -->
+  <circle cx="128" cy="128" r="84" fill="none" stroke="#fff" stroke-width="14"/>
+  <g stroke="#fff" stroke-linecap="round">
+    <g stroke-width="10">
+      <path d="M128 62v14M128 180v14M62 128h14M180 128h14"/>
+    </g>
+    <g stroke-width="6" opacity=".7">
+      <path d="M161 70.8l-4 6.9M185.2 95l-6.9 4M185.2 161l-6.9-4M161 185.2l-4-6.9M95 185.2l4-6.9M70.8 161l6.9-4M70.8 95l6.9 4M95 70.8l4 6.9"/>
+    </g>
+  </g>
+  <!-- compass needle as the clock hand -->
+  <path d="M172 84 138 138 118 118z" fill="url(#hot)"/>
+  <path d="M84 172 118 118 138 138z" fill="#fff"/>
+  <circle cx="128" cy="128" r="10" fill="#1e3a8a" stroke="#fff" stroke-width="5"/>
+  <!-- open-now dot -->
+  <circle cx="200" cy="200" r="30" fill="#22c55e" stroke="#fff" stroke-width="9"/>
+</svg>

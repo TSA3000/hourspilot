@@ -1,4 +1,4 @@
-# Push a tag vX.Y.Z -> checks, fresh WebAssembly build from rust/, installable plugin zip, GitHub release.
+# Push a tag vX.Y.Z -> checks, fresh WebAssembly build from rust/, installable plugin zip, GitHub release, and (with SVN secrets) wordpress.org.
 # Before tagging: bump Version + HOURSPILOT_VERSION in hourspilot.php, the version row + a "### X.Y.Z" changelog entry in README.md.
 # Tags with a hyphen (v1.0.0-beta.1) become pre-releases.
 name: Release
@@ -73,3 +73,27 @@ jobs:
           pre=; case "$GITHUB_REF_NAME" in *-*) pre=--prerelease ;; esac
           gh release create "$GITHUB_REF_NAME" "$ZIP" --verify-tag $pre \
             --title "HoursPilot ${GITHUB_REF_NAME#v}" --notes-file "$RUNNER_TEMP/notes.md"
+
+      # Only once the plugin is approved on wordpress.org and the repo has the secrets
+      # SVN_USERNAME (wordpress.org username) and SVN_PASSWORD (SVN password from wordpress.org profile → Account & Security).
+      - name: wordpress.org (SVN trunk, tag, assets)
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          [ -n "$SVN_USERNAME" ] && [ -n "$SVN_PASSWORD" ] || { echo "No SVN secrets: skipping wordpress.org"; exit 0; }
+          case "$GITHUB_REF_NAME" in *-*) echo "Pre-release: skipping wordpress.org"; exit 0 ;; esac
+          v=${GITHUB_REF_NAME#v}; S="$RUNNER_TEMP/svn"
+          sudo apt-get -qq install -y subversion >/dev/null
+          svn checkout -q --depth immediates https://plugins.svn.wordpress.org/hourspilot "$S"
+          svn update -q --set-depth infinity "$S/trunk" "$S/assets"
+          rsync -a --delete --exclude=.svn "$RUNNER_TEMP/hourspilot/" "$S/trunk/"
+          rsync -a --delete --exclude=.svn --exclude=screenshots.txt --exclude=banner.svg .wordpress-org/ "$S/assets/"
+          cd "$S"
+          svn add -q --force trunk assets
+          svn status | awk '/^!/ { sub(/^! +/, ""); print }' | xargs -r -d '\n' svn rm -q
+          for f in assets/*.png; do svn propset -q svn:mime-type image/png "$f"; done
+          svn propset -q svn:mime-type image/svg+xml assets/icon.svg
+          [ -d "tags/$v" ] || svn cp -q trunk "tags/$v"
+          svn status
+          svn commit -m "HoursPilot $v" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --no-auth-cache

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: HoursPilot 0.6.0\n"
+"Project-Id-Version: HoursPilot 0.7.0\n"
 "Report-Msgid-Bugs-To: https://github.com/TSA3000/hourspilot/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-29T23:51:17+00:00\n"
+"POT-Creation-Date: 2026-10-30T19:59:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: hourspilot\n"
@@ -39,850 +39,850 @@ msgstr ""
 msgid "https://github.com/TSA3000"
 msgstr ""
 
-#: includes/class-hp-admin.php:44
-#: includes/class-hp-admin.php:535
+#: includes/class-hourspilot-admin.php:44
+#: includes/class-hourspilot-admin.php:535
 msgid "Shared holidays"
 msgstr ""
 
-#: includes/class-hp-admin.php:45
-#: includes/class-hp-admin.php:565
+#: includes/class-hourspilot-admin.php:45
+#: includes/class-hourspilot-admin.php:565
 msgid "Import / Export"
 msgstr ""
 
-#: includes/class-hp-admin.php:51
-#: includes/class-hp-admin.php:72
+#: includes/class-hourspilot-admin.php:51
+#: includes/class-hourspilot-admin.php:72
 msgid "Location settings"
 msgstr ""
 
-#: includes/class-hp-admin.php:52
-#: includes/class-hp-admin.php:743
+#: includes/class-hourspilot-admin.php:52
+#: includes/class-hourspilot-admin.php:743
 msgid "Shortcode"
 msgstr ""
 
-#: includes/class-hp-admin.php:57
+#: includes/class-hourspilot-admin.php:57
 msgid "General"
 msgstr ""
 
-#: includes/class-hp-admin.php:58
+#: includes/class-hourspilot-admin.php:58
 msgid "Hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:59
-#: includes/class-hp-settings.php:124
+#: includes/class-hourspilot-admin.php:59
+#: includes/class-hourspilot-settings.php:124
 msgid "Holidays"
 msgstr ""
 
-#: includes/class-hp-admin.php:60
+#: includes/class-hourspilot-admin.php:60
 msgid "Messages"
 msgstr ""
 
-#: includes/class-hp-admin.php:61
+#: includes/class-hourspilot-admin.php:61
 msgid "Display"
 msgstr ""
 
-#: includes/class-hp-admin.php:62
+#: includes/class-hourspilot-admin.php:62
 msgid "Appearance"
 msgstr ""
 
-#: includes/class-hp-admin.php:63
-#: includes/class-hp-post-type.php:28
+#: includes/class-hourspilot-admin.php:63
+#: includes/class-hourspilot-post-type.php:28
 msgid "Location"
 msgstr ""
 
-#: includes/class-hp-admin.php:99
+#: includes/class-hourspilot-admin.php:99
 msgid "Empty fields use the default shown in grey. Shortcode attributes override these settings."
 msgstr ""
 
-#: includes/class-hp-admin.php:117
+#: includes/class-hourspilot-admin.php:117
 msgid "Time zone"
 msgstr ""
 
-#: includes/class-hp-admin.php:125
+#: includes/class-hourspilot-admin.php:125
 msgid "Your site uses a UTC offset, which ignores daylight saving time. Pick a city here so the open/closed status stays correct all year."
 msgstr ""
 
-#: includes/class-hp-admin.php:129
+#: includes/class-hourspilot-admin.php:129
 msgid "Business type"
 msgstr ""
 
-#: includes/class-hp-admin.php:136
+#: includes/class-hourspilot-admin.php:136
 msgid "Used in the structured data search engines read."
 msgstr ""
 
-#: includes/class-hp-admin.php:139
+#: includes/class-hourspilot-admin.php:139
 msgid "Language"
 msgstr ""
 
-#: includes/class-hp-admin.php:140
+#: includes/class-hourspilot-admin.php:140
 msgid "Day and month names follow the site language (Settings → General). With Polylang or WPML they follow the page language."
 msgstr ""
 
-#: includes/class-hp-admin.php:150
-#: includes/class-hp-settings.php:63
+#: includes/class-hourspilot-admin.php:150
+#: includes/class-hourspilot-settings.php:63
 msgid "Open"
 msgstr ""
 
-#: includes/class-hp-admin.php:151
-#: includes/class-hp-admin.php:378
-#: includes/class-hp-settings.php:64
-#: includes/class-hp-settings.php:68
+#: includes/class-hourspilot-admin.php:151
+#: includes/class-hourspilot-admin.php:378
+#: includes/class-hourspilot-settings.php:64
+#: includes/class-hourspilot-settings.php:68
 msgid "Closed"
 msgstr ""
 
-#: includes/class-hp-admin.php:152
-#: includes/class-hp-settings.php:69
-#: includes/class-hp-settings.php:87
+#: includes/class-hourspilot-admin.php:152
+#: includes/class-hourspilot-settings.php:69
+#: includes/class-hourspilot-settings.php:87
 msgid "Open 24 hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:178
+#: includes/class-hourspilot-admin.php:178
 msgid "Add hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:184
+#: includes/class-hourspilot-admin.php:184
 msgid "Copy Monday to Tuesday–Friday"
 msgstr ""
 
-#: includes/class-hp-admin.php:186
+#: includes/class-hourspilot-admin.php:186
 msgid "Add several hours per day for lunch breaks. A closing time earlier than the opening time runs past midnight (e.g. 22:00–02:00)."
 msgstr ""
 
-#: includes/class-hp-admin.php:187
+#: includes/class-hourspilot-admin.php:187
 msgid "Label: optional text shown next to the hours, e.g. \"Lunch\". Break: the hours are shown but count as closed."
 msgstr ""
 
-#: includes/class-hp-admin.php:202
+#: includes/class-hourspilot-admin.php:202
 msgid "Opens"
 msgstr ""
 
-#: includes/class-hp-admin.php:203
+#: includes/class-hourspilot-admin.php:203
 msgid "Closes"
 msgstr ""
 
-#: includes/class-hp-admin.php:204
+#: includes/class-hourspilot-admin.php:204
 msgid "Remove hours"
 msgstr ""
 
-#: includes/class-hp-admin.php:206
+#: includes/class-hourspilot-admin.php:206
 msgid "Label (optional)"
 msgstr ""
 
-#: includes/class-hp-admin.php:207
+#: includes/class-hourspilot-admin.php:207
 msgid "Label"
 msgstr ""
 
-#: includes/class-hp-admin.php:209
+#: includes/class-hourspilot-admin.php:209
 msgid "Break"
 msgstr ""
 
 #. translators: %d: number of shared holidays
-#: includes/class-hp-admin.php:226
+#: includes/class-hourspilot-admin.php:226
 #, php-format
 msgid "Also use the %d shared holiday"
 msgid_plural "Also use the %d shared holidays"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-hp-admin.php:231
+#: includes/class-hourspilot-admin.php:231
 msgid "Edit shared holidays"
 msgstr ""
 
-#: includes/class-hp-admin.php:247
+#: includes/class-hourspilot-admin.php:247
 msgid "Closed on public holidays"
 msgstr ""
 
-#: includes/class-hp-admin.php:252
+#: includes/class-hourspilot-admin.php:252
 msgid "Source"
 msgstr ""
 
-#: includes/class-hp-admin.php:264
+#: includes/class-hourspilot-admin.php:264
 msgid "Country"
 msgstr ""
 
-#: includes/class-hp-admin.php:267
+#: includes/class-hourspilot-admin.php:267
 msgid "— Choose —"
 msgstr ""
 
 #. translators: %s: name of the holiday source
-#: includes/class-hp-admin.php:277
+#: includes/class-hourspilot-admin.php:277
 #, php-format
 msgid "%s couldn't be reached; enter a two-letter country code."
 msgstr ""
 
 #. translators: %s: link to the holiday source
-#: includes/class-hp-admin.php:289
+#: includes/class-hourspilot-admin.php:289
 #, php-format
 msgid "Nationwide public holidays from %s, checked weekly. To open on one of them, add that day above with its hours."
 msgstr ""
 
-#: includes/class-hp-admin.php:307
+#: includes/class-hourspilot-admin.php:307
 msgid "No public holidays found for this country."
 msgstr ""
 
-#: includes/class-hp-admin.php:311
+#: includes/class-hourspilot-admin.php:311
 msgid "Next public holidays:"
 msgstr ""
 
-#: includes/class-hp-admin.php:340
+#: includes/class-hourspilot-admin.php:340
 msgid "From"
 msgstr ""
 
-#: includes/class-hp-admin.php:341
+#: includes/class-hourspilot-admin.php:341
 msgid "To (optional)"
 msgstr ""
 
-#: includes/class-hp-admin.php:342
+#: includes/class-hourspilot-admin.php:342
 msgid "Name"
 msgstr ""
 
-#: includes/class-hp-admin.php:343
+#: includes/class-hourspilot-admin.php:343
 msgid "Hours (empty = closed)"
 msgstr ""
 
-#: includes/class-hp-admin.php:344
-#: includes/class-hp-admin.php:380
+#: includes/class-hourspilot-admin.php:344
+#: includes/class-hourspilot-admin.php:380
 msgid "Every year"
 msgstr ""
 
-#: includes/class-hp-admin.php:345
+#: includes/class-hourspilot-admin.php:345
 msgid "Remove"
 msgstr ""
 
-#: includes/class-hp-admin.php:356
+#: includes/class-hourspilot-admin.php:356
 msgid "Add holiday or special day"
 msgstr ""
 
-#: includes/class-hp-admin.php:357
+#: includes/class-hourspilot-admin.php:357
 msgid "Special hours format: 10:00-14:00. Separate several with commas. Past holidays are hidden automatically on the site. Every year: the same dates repeat each year (the year you enter is ignored)."
 msgstr ""
 
-#: includes/class-hp-admin.php:377
+#: includes/class-hourspilot-admin.php:377
 msgid "e.g. Christmas Eve"
 msgstr ""
 
-#: includes/class-hp-admin.php:379
+#: includes/class-hourspilot-admin.php:379
 msgid "Remove row"
 msgstr ""
 
-#: includes/class-hp-admin.php:414
+#: includes/class-hourspilot-admin.php:414
 msgid "Address"
 msgstr ""
 
-#: includes/class-hp-admin.php:417
+#: includes/class-hourspilot-admin.php:417
 msgid "Phone"
 msgstr ""
 
-#: includes/class-hp-admin.php:420
+#: includes/class-hourspilot-admin.php:420
 msgid "Second phone"
 msgstr ""
 
-#: includes/class-hp-admin.php:423
+#: includes/class-hourspilot-admin.php:423
 msgid "Email"
 msgstr ""
 
-#: includes/class-hp-admin.php:426
+#: includes/class-hourspilot-admin.php:426
 msgid "Website"
 msgstr ""
 
-#: includes/class-hp-admin.php:429
+#: includes/class-hourspilot-admin.php:429
 msgid "Map link"
 msgstr ""
 
-#: includes/class-hp-admin.php:432
+#: includes/class-hourspilot-admin.php:432
 msgid "Set the location image with \"Location image\" in the sidebar."
 msgstr ""
 
-#: includes/class-hp-admin.php:435
+#: includes/class-hourspilot-admin.php:435
 msgid "Map position"
 msgstr ""
 
-#: includes/class-hp-admin.php:438
+#: includes/class-hourspilot-admin.php:438
 msgid "Latitude, longitude for the embedded map (needed for OpenStreetMap; Google Maps can use the address instead)."
 msgstr ""
 
-#: includes/class-hp-admin.php:461
+#: includes/class-hourspilot-admin.php:461
 msgid "Save the location to get its shortcode."
 msgstr ""
 
-#: includes/class-hp-admin.php:467
+#: includes/class-hourspilot-admin.php:467
 msgid "Paste into any page, widget or page-builder shortcode block. It uses the settings in the tabs; attributes override them, e.g.:"
 msgstr ""
 
-#: includes/class-hp-admin.php:537
+#: includes/class-hourspilot-admin.php:537
 msgid "Holidays every location uses, e.g. public holidays. A location can opt out in its Holidays tab and add its own."
 msgstr ""
 
-#: includes/class-hp-admin.php:542
+#: includes/class-hourspilot-admin.php:542
 msgid "Save shared holidays"
 msgstr ""
 
-#: includes/class-hp-admin.php:550
-#: includes/class-hp-admin.php:620
-#: includes/class-hp-admin.php:626
-#: includes/class-hp-admin.php:659
+#: includes/class-hourspilot-admin.php:550
+#: includes/class-hourspilot-admin.php:620
+#: includes/class-hourspilot-admin.php:626
+#: includes/class-hourspilot-admin.php:659
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
-#: includes/class-hp-admin.php:569
-#: includes/class-hp-admin.php:593
+#: includes/class-hourspilot-admin.php:569
+#: includes/class-hourspilot-admin.php:593
 msgid "Export"
 msgstr ""
 
-#: includes/class-hp-admin.php:570
+#: includes/class-hourspilot-admin.php:570
 msgid "Download all locations (hours, holidays, details, settings) and the shared holidays as a JSON file. Images are not included."
 msgstr ""
 
-#: includes/class-hp-admin.php:571
+#: includes/class-hourspilot-admin.php:571
 msgid "To export one location, use \"Export\" below its name in the Locations list."
 msgstr ""
 
-#: includes/class-hp-admin.php:572
+#: includes/class-hourspilot-admin.php:572
 msgid "Export all locations"
 msgstr ""
 
-#: includes/class-hp-admin.php:575
-#: includes/class-hp-admin.php:582
+#: includes/class-hourspilot-admin.php:575
+#: includes/class-hourspilot-admin.php:582
 msgid "Import"
 msgstr ""
 
-#: includes/class-hp-admin.php:576
+#: includes/class-hourspilot-admin.php:576
 msgid "Import a HoursPilot JSON file. Each location is added as a new draft, so you can check it before publishing."
 msgstr ""
 
-#: includes/class-hp-admin.php:581
+#: includes/class-hourspilot-admin.php:581
 msgid "Also replace the shared holidays with the ones in the file"
 msgstr ""
 
-#: includes/class-hp-admin.php:678
+#: includes/class-hourspilot-admin.php:678
 msgid "Imported location"
 msgstr ""
 
-#: includes/class-hp-admin.php:726
+#: includes/class-hourspilot-admin.php:726
 msgid "Shared holidays saved."
 msgstr ""
 
 #. translators: %d: number of imported locations
-#: includes/class-hp-admin.php:728
+#: includes/class-hourspilot-admin.php:728
 #, php-format
 msgid "%d location imported as a draft."
 msgid_plural "%d locations imported as drafts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-hp-admin.php:729
+#: includes/class-hourspilot-admin.php:729
 msgid "That file is not a HoursPilot export."
 msgstr ""
 
-#: includes/class-hp-post-type.php:27
-#: includes/class-hp-post-type.php:29
+#: includes/class-hourspilot-post-type.php:27
+#: includes/class-hourspilot-post-type.php:29
 msgid "Business hours"
 msgstr ""
 
-#: includes/class-hp-post-type.php:30
+#: includes/class-hourspilot-post-type.php:30
 msgid "Locations"
 msgstr ""
 
-#: includes/class-hp-post-type.php:31
-#: includes/class-hp-post-type.php:32
+#: includes/class-hourspilot-post-type.php:31
+#: includes/class-hourspilot-post-type.php:32
 msgid "Add location"
 msgstr ""
 
-#: includes/class-hp-post-type.php:33
+#: includes/class-hourspilot-post-type.php:33
 msgid "Edit location"
 msgstr ""
 
-#: includes/class-hp-post-type.php:34
+#: includes/class-hourspilot-post-type.php:34
 msgid "Search locations"
 msgstr ""
 
-#: includes/class-hp-post-type.php:35
+#: includes/class-hourspilot-post-type.php:35
 msgid "No locations yet. Add one to start showing hours."
 msgstr ""
 
-#: includes/class-hp-post-type.php:36
-#: includes/class-hp-settings.php:158
+#: includes/class-hourspilot-post-type.php:36
+#: includes/class-hourspilot-settings.php:158
 msgid "Location image"
 msgstr ""
 
-#: includes/class-hp-post-type.php:37
+#: includes/class-hourspilot-post-type.php:37
 msgid "Set location image"
 msgstr ""
 
 #. translators: PHP date() format of the date in the card header, e.g. "Monday November 29th".
-#: includes/class-hp-settings.php:32
+#: includes/class-hourspilot-settings.php:32
 msgctxt "header date format"
 msgid "l F jS"
 msgstr ""
 
-#: includes/class-hp-settings.php:59
+#: includes/class-hourspilot-settings.php:59
 msgid "Opening in [time]"
 msgstr ""
 
-#: includes/class-hp-settings.php:60
+#: includes/class-hourspilot-settings.php:60
 msgid "Closing in [time]"
 msgstr ""
 
-#: includes/class-hp-settings.php:61
+#: includes/class-hourspilot-settings.php:61
 msgid "Open now"
 msgstr ""
 
-#: includes/class-hp-settings.php:62
+#: includes/class-hourspilot-settings.php:62
 msgid "Closed now"
 msgstr ""
 
-#: includes/class-hp-settings.php:67
+#: includes/class-hourspilot-settings.php:67
 msgid "Current local time is"
 msgstr ""
 
-#: includes/class-hp-settings.php:70
+#: includes/class-hourspilot-settings.php:70
 msgid "Holidays and special hours"
 msgstr ""
 
-#: includes/class-hp-settings.php:81
+#: includes/class-hourspilot-settings.php:81
 msgid "Open message"
 msgstr ""
 
-#: includes/class-hp-settings.php:81
+#: includes/class-hourspilot-settings.php:81
 msgid "Card style: line in the header while open, e.g. \"We are open! Come in.\""
 msgstr ""
 
-#: includes/class-hp-settings.php:82
+#: includes/class-hourspilot-settings.php:82
 msgid "Closed message"
 msgstr ""
 
-#: includes/class-hp-settings.php:82
+#: includes/class-hourspilot-settings.php:82
 msgid "Card style: line in the header while closed."
 msgstr ""
 
-#: includes/class-hp-settings.php:83
+#: includes/class-hourspilot-settings.php:83
 msgid "Open badge"
 msgstr ""
 
-#: includes/class-hp-settings.php:83
+#: includes/class-hourspilot-settings.php:83
 msgid "Card style: the short status label."
 msgstr ""
 
-#: includes/class-hp-settings.php:84
+#: includes/class-hourspilot-settings.php:84
 msgid "Closed badge"
 msgstr ""
 
-#: includes/class-hp-settings.php:85
+#: includes/class-hourspilot-settings.php:85
 msgid "Status while open"
 msgstr ""
 
-#: includes/class-hp-settings.php:85
+#: includes/class-hourspilot-settings.php:85
 msgid "Followed by the closing time, e.g. \"Open now, closes 17:00\"."
 msgstr ""
 
-#: includes/class-hp-settings.php:86
+#: includes/class-hourspilot-settings.php:86
 msgid "Status while closed"
 msgstr ""
 
-#: includes/class-hp-settings.php:86
+#: includes/class-hourspilot-settings.php:86
 msgid "Followed by the next opening."
 msgstr ""
 
-#: includes/class-hp-settings.php:88
+#: includes/class-hourspilot-settings.php:88
 msgid "Closed all day"
 msgstr ""
 
-#: includes/class-hp-settings.php:88
+#: includes/class-hourspilot-settings.php:88
 msgid "Shown for closed days, e.g. \"Closed All Day\"."
 msgstr ""
 
-#: includes/class-hp-settings.php:89
+#: includes/class-hourspilot-settings.php:89
 msgid "Local time text"
 msgstr ""
 
-#: includes/class-hp-settings.php:89
+#: includes/class-hourspilot-settings.php:89
 msgid "Card style: text before the local time."
 msgstr ""
 
-#: includes/class-hp-settings.php:90
+#: includes/class-hourspilot-settings.php:90
 msgid "Holidays title"
 msgstr ""
 
-#: includes/class-hp-settings.php:91
-#: includes/class-hp-settings.php:139
+#: includes/class-hourspilot-settings.php:91
+#: includes/class-hourspilot-settings.php:139
 msgid "Opening countdown"
 msgstr ""
 
-#: includes/class-hp-settings.php:91
-#: includes/class-hp-settings.php:92
+#: includes/class-hourspilot-settings.php:91
+#: includes/class-hourspilot-settings.php:92
 msgid "[time] is replaced by the countdown."
 msgstr ""
 
-#: includes/class-hp-settings.php:92
-#: includes/class-hp-settings.php:140
+#: includes/class-hourspilot-settings.php:92
+#: includes/class-hourspilot-settings.php:140
 msgid "Closing countdown"
 msgstr ""
 
-#: includes/class-hp-settings.php:95
-#: includes/class-hp-settings.php:107
+#: includes/class-hourspilot-settings.php:95
+#: includes/class-hourspilot-settings.php:107
 msgid "Layout"
 msgstr ""
 
-#: includes/class-hp-settings.php:98
-#: includes/class-hp-settings.php:119
+#: includes/class-hourspilot-settings.php:98
+#: includes/class-hourspilot-settings.php:119
 msgid "Days"
 msgstr ""
 
-#: includes/class-hp-settings.php:101
+#: includes/class-hourspilot-settings.php:101
 msgid "Whole week"
 msgstr ""
 
-#: includes/class-hp-settings.php:102
+#: includes/class-hourspilot-settings.php:102
 msgid "Only today"
 msgstr ""
 
-#: includes/class-hp-settings.php:110
+#: includes/class-hourspilot-settings.php:110
 msgid "Vertical list"
 msgstr ""
 
-#: includes/class-hp-settings.php:111
+#: includes/class-hourspilot-settings.php:111
 msgid "Horizontal: one card per day"
 msgstr ""
 
-#: includes/class-hp-settings.php:112
+#: includes/class-hourspilot-settings.php:112
 msgid "Calendar month"
 msgstr ""
 
-#: includes/class-hp-settings.php:115
-#: includes/class-hp-settings.php:116
+#: includes/class-hourspilot-settings.php:115
+#: includes/class-hourspilot-settings.php:116
 msgid "Header"
 msgstr ""
 
-#: includes/class-hp-settings.php:116
+#: includes/class-hourspilot-settings.php:116
 msgid "Show the header (title or date, status, local time)"
 msgstr ""
 
-#: includes/class-hp-settings.php:117
+#: includes/class-hourspilot-settings.php:117
 msgid "Status badge"
 msgstr ""
 
-#: includes/class-hp-settings.php:117
+#: includes/class-hourspilot-settings.php:117
 msgid "Show whether the location is open now"
 msgstr ""
 
-#: includes/class-hp-settings.php:118
+#: includes/class-hourspilot-settings.php:118
 msgid "Local time"
 msgstr ""
 
-#: includes/class-hp-settings.php:118
+#: includes/class-hourspilot-settings.php:118
 msgid "Show the current time at the location in the header"
 msgstr ""
 
-#: includes/class-hp-settings.php:120
+#: includes/class-hourspilot-settings.php:120
 msgid "Short day names"
 msgstr ""
 
-#: includes/class-hp-settings.php:120
+#: includes/class-hourspilot-settings.php:120
 msgid "Mon, Tue … instead of Monday, Tuesday …"
 msgstr ""
 
-#: includes/class-hp-settings.php:121
+#: includes/class-hourspilot-settings.php:121
 msgid "Group days"
 msgstr ""
 
-#: includes/class-hp-settings.php:121
+#: includes/class-hourspilot-settings.php:121
 msgid "Merge consecutive days with the same hours (Mon – Fri)"
 msgstr ""
 
-#: includes/class-hp-settings.php:122
+#: includes/class-hourspilot-settings.php:122
 msgid "Hide closed days"
 msgstr ""
 
-#: includes/class-hp-settings.php:123
+#: includes/class-hourspilot-settings.php:123
 msgid "Hide days"
 msgstr ""
 
-#: includes/class-hp-settings.php:123
+#: includes/class-hourspilot-settings.php:123
 msgid "For example tick Saturday and Sunday to hide the weekend."
 msgstr ""
 
-#: includes/class-hp-settings.php:125
+#: includes/class-hourspilot-settings.php:125
 msgid "Upcoming holidays"
 msgstr ""
 
-#: includes/class-hp-settings.php:125
+#: includes/class-hourspilot-settings.php:125
 msgid "List holidays and special hours"
 msgstr ""
 
-#: includes/class-hp-settings.php:126
+#: includes/class-hourspilot-settings.php:126
 msgid "Holidays ahead (days)"
 msgstr ""
 
-#: includes/class-hp-settings.php:126
+#: includes/class-hourspilot-settings.php:126
 msgid "How far ahead to list holidays."
 msgstr ""
 
-#: includes/class-hp-settings.php:129
+#: includes/class-hourspilot-settings.php:129
 msgid "Holidays position"
 msgstr ""
 
-#: includes/class-hp-settings.php:132
+#: includes/class-hourspilot-settings.php:132
 msgid "After the regular hours"
 msgstr ""
 
-#: includes/class-hp-settings.php:133
+#: includes/class-hourspilot-settings.php:133
 msgid "Before the regular hours"
 msgstr ""
 
-#: includes/class-hp-settings.php:136
+#: includes/class-hourspilot-settings.php:136
 msgid "Holiday hours in the week"
 msgstr ""
 
-#: includes/class-hp-settings.php:136
+#: includes/class-hourspilot-settings.php:136
 msgid "Show holiday hours instead of this week's regular hours (turns off grouping)"
 msgstr ""
 
-#: includes/class-hp-settings.php:137
+#: includes/class-hourspilot-settings.php:137
 msgid "Hide regular hours on holidays"
 msgstr ""
 
-#: includes/class-hp-settings.php:137
+#: includes/class-hourspilot-settings.php:137
 msgid "Only the holiday notice while today is a holiday"
 msgstr ""
 
-#: includes/class-hp-settings.php:138
+#: includes/class-hourspilot-settings.php:138
 msgid "Countdowns"
 msgstr ""
 
-#: includes/class-hp-settings.php:139
+#: includes/class-hourspilot-settings.php:139
 msgid "Count down to the next opening while closed"
 msgstr ""
 
-#: includes/class-hp-settings.php:140
+#: includes/class-hourspilot-settings.php:140
 msgid "Count down to closing"
 msgstr ""
 
-#: includes/class-hp-settings.php:141
+#: includes/class-hourspilot-settings.php:141
 msgid "Closing countdown starts"
 msgstr ""
 
-#: includes/class-hp-settings.php:141
+#: includes/class-hourspilot-settings.php:141
 msgid "Minutes before closing."
 msgstr ""
 
-#: includes/class-hp-settings.php:142
+#: includes/class-hourspilot-settings.php:142
 msgid "Countdown format"
 msgstr ""
 
-#: includes/class-hp-settings.php:142
+#: includes/class-hourspilot-settings.php:142
 msgid "Tokens {d} {h} {hh} {m} {mm} {s} {ss}. Without {d} hours keep counting past 24."
 msgstr ""
 
-#: includes/class-hp-settings.php:143
+#: includes/class-hourspilot-settings.php:143
 msgid "Formats"
 msgstr ""
 
-#: includes/class-hp-settings.php:144
+#: includes/class-hourspilot-settings.php:144
 msgid "Time format"
 msgstr ""
 
-#: includes/class-hp-settings.php:144
+#: includes/class-hourspilot-settings.php:144
 msgid "Empty = Settings → General. H:i = 24 hours, g:i A = 12 hours."
 msgstr ""
 
-#: includes/class-hp-settings.php:145
+#: includes/class-hourspilot-settings.php:145
 msgid "Holiday date format"
 msgstr ""
 
-#: includes/class-hp-settings.php:145
+#: includes/class-hourspilot-settings.php:145
 msgid "PHP date format, e.g. j M or d/m."
 msgstr ""
 
-#: includes/class-hp-settings.php:146
+#: includes/class-hourspilot-settings.php:146
 msgid "Header date format"
 msgstr ""
 
-#: includes/class-hp-settings.php:146
+#: includes/class-hourspilot-settings.php:146
 msgid "Card style. PHP date format, e.g. l F jS = Monday November 29th."
 msgstr ""
 
-#: includes/class-hp-settings.php:149
+#: includes/class-hourspilot-settings.php:149
 msgid "Digits"
 msgstr ""
 
-#: includes/class-hp-settings.php:152
+#: includes/class-hourspilot-settings.php:152
 msgid "Western (0–9)"
 msgstr ""
 
-#: includes/class-hp-settings.php:153
+#: includes/class-hourspilot-settings.php:153
 msgid "Arabic-Indic (٠–٩)"
 msgstr ""
 
-#: includes/class-hp-settings.php:156
+#: includes/class-hourspilot-settings.php:156
 msgid "Location and search engines"
 msgstr ""
 
-#: includes/class-hp-settings.php:157
+#: includes/class-hourspilot-settings.php:157
 msgid "Location details"
 msgstr ""
 
-#: includes/class-hp-settings.php:157
+#: includes/class-hourspilot-settings.php:157
 msgid "Show address, phone, email, website"
 msgstr ""
 
-#: includes/class-hp-settings.php:158
+#: includes/class-hourspilot-settings.php:158
 msgid "Show the location image"
 msgstr ""
 
-#: includes/class-hp-settings.php:159
+#: includes/class-hourspilot-settings.php:159
 msgid "Structured data"
 msgstr ""
 
-#: includes/class-hp-settings.php:159
+#: includes/class-hourspilot-settings.php:159
 msgid "Add schema.org opening hours for search engines"
 msgstr ""
 
-#: includes/class-hp-settings.php:164
+#: includes/class-hourspilot-settings.php:164
 msgid "Style"
 msgstr ""
 
-#: includes/class-hp-settings.php:167
+#: includes/class-hourspilot-settings.php:167
 msgid "Clean (default)"
 msgstr ""
 
-#: includes/class-hp-settings.php:168
+#: includes/class-hourspilot-settings.php:168
 msgid "Card with header band"
 msgstr ""
 
-#: includes/class-hp-settings.php:173
+#: includes/class-hourspilot-settings.php:173
 msgid "Font"
 msgstr ""
 
-#: includes/class-hp-settings.php:176
+#: includes/class-hourspilot-settings.php:176
 msgid "Theme font"
 msgstr ""
 
-#: includes/class-hp-settings.php:177
+#: includes/class-hourspilot-settings.php:177
 msgid "Monospace"
 msgstr ""
 
-#: includes/class-hp-settings.php:180
-#: includes/class-hp-settings.php:186
+#: includes/class-hourspilot-settings.php:180
+#: includes/class-hourspilot-settings.php:186
 msgid "Accent colour"
 msgstr ""
 
-#: includes/class-hp-settings.php:180
+#: includes/class-hourspilot-settings.php:180
 msgid "Links, today marker, header band. Empty = teal."
 msgstr ""
 
-#: includes/class-hp-settings.php:183
+#: includes/class-hourspilot-settings.php:183
 msgid "Header band"
 msgstr ""
 
-#: includes/class-hp-settings.php:184
+#: includes/class-hourspilot-settings.php:184
 msgid "Card style only."
 msgstr ""
 
-#: includes/class-hp-settings.php:187
+#: includes/class-hourspilot-settings.php:187
 msgid "Green when open, red when closed"
 msgstr ""
 
-#: includes/class-hp-settings.php:188
+#: includes/class-hourspilot-settings.php:188
 msgid "Own colour (below)"
 msgstr ""
 
-#: includes/class-hp-settings.php:191
+#: includes/class-hourspilot-settings.php:191
 msgid "Header band colour"
 msgstr ""
 
-#: includes/class-hp-settings.php:192
+#: includes/class-hourspilot-settings.php:192
 msgid "Header image"
 msgstr ""
 
-#: includes/class-hp-settings.php:192
+#: includes/class-hourspilot-settings.php:192
 msgid "Card style: image behind the header band, darkened so the text stays readable."
 msgstr ""
 
-#: includes/class-hp-settings.php:195
+#: includes/class-hourspilot-settings.php:195
 msgid "Map"
 msgstr ""
 
-#: includes/class-hp-settings.php:196
+#: includes/class-hourspilot-settings.php:196
 msgid "Shown below the location details. OpenStreetMap needs the map position (Location tab)."
 msgstr ""
 
-#: includes/class-hp-settings.php:198
+#: includes/class-hourspilot-settings.php:198
 msgid "None"
 msgstr ""
 
-#: includes/class-hp-settings.php:199
+#: includes/class-hourspilot-settings.php:199
 msgid "OpenStreetMap"
 msgstr ""
 
-#: includes/class-hp-settings.php:200
+#: includes/class-hourspilot-settings.php:200
 msgid "Google Maps"
 msgstr ""
 
-#: includes/class-hp-settings.php:203
+#: includes/class-hourspilot-settings.php:203
 msgid "Map privacy"
 msgstr ""
 
-#: includes/class-hp-settings.php:203
+#: includes/class-hourspilot-settings.php:203
 msgid "Load the map only after a click (nothing is sent to the map service before)"
 msgstr ""
 
-#: includes/class-hp-settings.php:320
+#: includes/class-hourspilot-settings.php:320
 msgid "Choose image"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:39
+#: includes/class-hourspilot-shortcode.php:39
 msgid "HoursPilot: location not found or not published. Check the id in the shortcode."
 msgstr ""
 
 #. translators: %s: closing time
-#: includes/class-hp-shortcode.php:144
+#: includes/class-hourspilot-shortcode.php:144
 #, php-format
 msgid "closes %s"
 msgstr ""
 
 #. translators: %s: day and/or time, e.g. "Mon 09:00"
-#: includes/class-hp-shortcode.php:146
+#: includes/class-hourspilot-shortcode.php:146
 #, php-format
 msgid "opens %s"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:147
+#: includes/class-hourspilot-shortcode.php:147
 msgid "Today"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:148
+#: includes/class-hourspilot-shortcode.php:148
 msgid "tomorrow"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:153
+#: includes/class-hourspilot-shortcode.php:153
 msgid "Previous month"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:154
+#: includes/class-hourspilot-shortcode.php:154
 msgid "Next month"
 msgstr ""
 
 #. translators: list separator, e.g. between "Open now" and "closes 17:00" or between opening hours. Arabic: "، "
-#: includes/class-hp-shortcode.php:156
+#: includes/class-hourspilot-shortcode.php:156
 msgctxt "list separator"
 msgid ", "
 msgstr ""
 
-#: includes/class-hp-shortcode.php:294
+#: includes/class-hourspilot-shortcode.php:294
 msgid "Get directions"
 msgstr ""
 
 #. translators: %s: map service, e.g. "OpenStreetMap"
-#: includes/class-hp-shortcode.php:368
+#: includes/class-hourspilot-shortcode.php:368
 #, php-format
 msgid "Map (%s)"
 msgstr ""
 
-#: includes/class-hp-shortcode.php:376
+#: includes/class-hourspilot-shortcode.php:376
 msgid "Show map"
 msgstr ""
 
 #. translators: %s: map service, e.g. "Google Maps"
-#: includes/class-hp-shortcode.php:378
+#: includes/class-hourspilot-shortcode.php:378
 #, php-format
 msgid "Loads the map from %s."
 msgstr ""

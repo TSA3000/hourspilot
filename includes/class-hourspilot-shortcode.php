@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Shortcode {
+final class HoursPilot_Shortcode {
 
 	public static function init() {
 		add_shortcode( 'hourspilot', array( __CLASS__, 'render' ) );
@@ -41,7 +41,7 @@ final class HP_Shortcode {
 		}
 		$id = $post->ID;
 		// Built-in defaults < the location's settings (admin tabs) < shortcode attributes.
-		$a = shortcode_atts( array_merge( HP_Settings::defaults(), HP_Settings::get( $id ) ), $atts, 'hourspilot' );
+		$a = shortcode_atts( array_merge( HoursPilot_Settings::defaults(), HoursPilot_Settings::get( $id ) ), $atts, 'hourspilot' );
 
 		$b     = fn( $k ) => filter_var( $a[ $k ], FILTER_VALIDATE_BOOLEAN );
 		$short = $b( 'short_days' );
@@ -51,18 +51,18 @@ final class HP_Shortcode {
 		$lay   = in_array( $a['layout'], array( 'horizontal', 'calendar' ), true ) ? $a['layout'] : 'vertical';
 		$card  = 'card' === $a['style'];
 		$tf    = (string) $a['time_format'];
-		$hours = HP_Hours::get_hours( $id );
-		$tz    = HP_Hours::timezone_string( $id );
+		$hours = HoursPilot_Hours::get_hours( $id );
+		$tz    = HoursPilot_Hours::timezone_string( $id );
 		$today = (int) ( new DateTimeImmutable( 'now', new DateTimeZone( $tz ) ) )->format( 'N' );
 
 		// Which days to list.
 		if ( 'today' === $view ) {
-			$days = HP_Hours::ordered_days(); // All rendered; CSS/JS shows only today.
+			$days = HoursPilot_Hours::ordered_days(); // All rendered; CSS/JS shows only today.
 		} else {
 			$hidden = array_map( 'intval', array_filter( array_map( 'trim', explode( ',', $a['hide_days'] ) ) ) );
 			$days   = array_values(
 				array_filter(
-					HP_Hours::ordered_days(),
+					HoursPilot_Hours::ordered_days(),
 					fn( $d ) => ! in_array( $d, $hidden, true ) && ! ( $b( 'hide_closed' ) && 'closed' === $hours[ $d ]['mode'] )
 				)
 			);
@@ -74,8 +74,8 @@ final class HP_Shortcode {
 			fn( $s ) => array(
 				'o'  => $s['open'],
 				'c'  => $s['close'],
-				'of' => HP_Hours::digits( HP_Hours::fmt_time( $s['open'], $tf ), $dg ),
-				'cf' => HP_Hours::digits( HP_Hours::fmt_time( $s['close'], $tf ), $dg ),
+				'of' => HoursPilot_Hours::digits( HoursPilot_Hours::fmt_time( $s['open'], $tf ), $dg ),
+				'cf' => HoursPilot_Hours::digits( HoursPilot_Hours::fmt_time( $s['close'], $tf ), $dg ),
 				'l'  => $s['label'] ?? '',
 				'x'  => ! empty( $s['closed'] ),
 			),
@@ -84,13 +84,13 @@ final class HP_Shortcode {
 		$week      = array();
 		$day_names = array();
 		$day_long  = array();
-		foreach ( HP_Hours::DAYS as $d ) {
+		foreach ( HoursPilot_Hours::DAYS as $d ) {
 			$week[ $d ]      = array(
 				'm' => $hours[ $d ]['mode'],
 				's' => $fmt_slots( $hours[ $d ]['slots'] ),
 			);
-			$day_names[ $d ] = HP_Hours::day_name( $d, true );
-			$day_long[ $d ]  = HP_Hours::day_name( $d );
+			$day_names[ $d ] = HoursPilot_Hours::day_name( $d, true );
+			$day_long[ $d ]  = HoursPilot_Hours::day_name( $d );
 		}
 		$months       = array();
 		$months_short = array();
@@ -101,15 +101,15 @@ final class HP_Shortcode {
 		}
 		// Upcoming one-off holidays (a year ahead, so a cached page still knows them) + every recurring one.
 		$hol  = array_merge(
-			array_filter( HP_Hours::upcoming_holidays( $id, 400 ), fn( $h ) => ! $h['recurring'] ),
-			array_filter( HP_Hours::get_holidays( $id ), fn( $h ) => $h['recurring'] )
+			array_filter( HoursPilot_Hours::upcoming_holidays( $id, 400 ), fn( $h ) => ! $h['recurring'] ),
+			array_filter( HoursPilot_Hours::get_holidays( $id ), fn( $h ) => $h['recurring'] )
 		);
 		$data = array(
 			'tz'     => $tz,
 			'view'   => $view,
 			'layout' => $lay,
 			'card'   => $card,
-			'ws'     => HP_Hours::ordered_days()[0],
+			'ws'     => HoursPilot_Hours::ordered_days()[0],
 			'hh'     => $hh,
 			'hoh'    => $b( 'hide_hours_on_holiday' ),
 			'dg'     => $dg,
@@ -168,14 +168,14 @@ final class HP_Shortcode {
 		wp_enqueue_script( 'hourspilot' );
 
 		if ( $b( 'schema' ) ) {
-			HP_Schema::queue( $id );
+			HoursPilot_Schema::queue( $id );
 		}
 
 		$name     = get_post_field( 'post_title', $id );
 		$title    = '' === $a['title'] ? $name : ( '0' === $a['title'] ? '' : $a['title'] );
-		$info     = HP_Hours::get_info( $id );
+		$info     = HoursPilot_Hours::get_info( $id );
 		$image    = $b( 'show_image' ) ? get_the_post_thumbnail( $id, 'medium_large', array( 'class' => 'hp-image', 'loading' => 'lazy' ) ) : '';
-		$upcoming = $b( 'show_holidays' ) ? HP_Hours::upcoming_holidays( $id, absint( $a['holiday_days'] ) ) : array();
+		$upcoming = $b( 'show_holidays' ) ? HoursPilot_Hours::upcoming_holidays( $id, absint( $a['holiday_days'] ) ) : array();
 		$band     = in_array( $a['band'], array( 'status', 'color' ), true ) ? $a['band'] : 'accent';
 
 		// Colours and header image as CSS variables (unlimited colours without a style generator).
@@ -253,9 +253,9 @@ final class HP_Shortcode {
 						<?php
 						$first = $row['days'][0];
 						$last  = $row['days'][ count( $row['days'] ) - 1 ];
-						$label = HP_Hours::day_name( $first, $short );
+						$label = HoursPilot_Hours::day_name( $first, $short );
 						if ( $first !== $last ) {
-							$label .= ' – ' . HP_Hours::day_name( $last, $short );
+							$label .= ' – ' . HoursPilot_Hours::day_name( $last, $short );
 						}
 						?>
 						<tr class="hp-row<?php echo in_array( $today, $row['days'], true ) ? ' hp-is-today' : ''; ?>" data-days="<?php echo esc_attr( implode( ',', $row['days'] ) ); ?>">
@@ -313,9 +313,9 @@ final class HP_Shortcode {
 			<ul>
 				<?php foreach ( $upcoming as $h ) : ?>
 					<?php
-					$range = HP_Hours::fmt_date( $h['from'], $a['date_format'] );
+					$range = HoursPilot_Hours::fmt_date( $h['from'], $a['date_format'] );
 					if ( $h['to'] !== $h['from'] ) {
-						$range .= ' – ' . HP_Hours::fmt_date( $h['to'], $a['date_format'] );
+						$range .= ' – ' . HoursPilot_Hours::fmt_date( $h['to'], $a['date_format'] );
 					}
 					$hday = array(
 						'mode'  => $h['slots'] ? 'open' : 'closed',
@@ -323,7 +323,7 @@ final class HP_Shortcode {
 					);
 					?>
 					<li data-to="<?php echo esc_attr( $h['to'] ); ?>">
-						<span class="hp-h-date"><?php echo esc_html( HP_Hours::digits( $range, $dg ) ); ?></span>
+						<span class="hp-h-date"><?php echo esc_html( HoursPilot_Hours::digits( $range, $dg ) ); ?></span>
 						<span class="hp-h-label"><?php echo esc_html( $h['label'] ); ?></span>
 						<span class="hp-h-hours"><?php echo self::hours_html( $hday, $a ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside. ?></span>
 					</li>
@@ -339,7 +339,7 @@ final class HP_Shortcode {
 	 * rendered; the iframe (and the request to the map service) loads after a click.
 	 */
 	private static function map_html( $info, $kind, $consent ) {
-		$coords = HP_Hours::valid_coords( $info['coords'] );
+		$coords = HoursPilot_Hours::valid_coords( $info['coords'] );
 		if ( 'osm' === $kind && $coords ) {
 			list( $lat, $lng ) = array_map( 'floatval', explode( ',', $coords ) );
 			$url               = add_query_arg(
@@ -384,7 +384,7 @@ final class HP_Shortcode {
 		if ( ! $id ) {
 			$ids = get_posts(
 				array(
-					'post_type'   => HP_Post_Type::TYPE,
+					'post_type'   => HoursPilot_Post_Type::TYPE,
 					'numberposts' => 1,
 					'orderby'     => array(
 						'menu_order' => 'ASC',
@@ -396,12 +396,12 @@ final class HP_Shortcode {
 			$id  = $ids ? (int) $ids[0] : 0;
 		}
 		$post = $id ? get_post( $id ) : null;
-		return ( $post && HP_Post_Type::TYPE === $post->post_type && 'publish' === $post->post_status ) ? $post : null;
+		return ( $post && HoursPilot_Post_Type::TYPE === $post->post_type && 'publish' === $post->post_status ) ? $post : null;
 	}
 
 	/** Group consecutive days (in display order) with identical hours. */
 	private static function build_rows( $days, $hours, $group ) {
-		$pos  = array_flip( HP_Hours::ordered_days() );
+		$pos  = array_flip( HoursPilot_Hours::ordered_days() );
 		$rows = array();
 		foreach ( $days as $d ) {
 			$sig  = wp_json_encode( $hours[ $d ] );
@@ -428,13 +428,13 @@ final class HP_Shortcode {
 		if ( '24h' === $day['mode'] ) {
 			return '<span class="hp-24h">' . esc_html( $a['open24_label'] ) . '</span>';
 		}
-		if ( 'closed' === $day['mode'] || ! HP_Hours::open_slots( $day['slots'] ) ) {
+		if ( 'closed' === $day['mode'] || ! HoursPilot_Hours::open_slots( $day['slots'] ) ) {
 			return '<span class="hp-closed">' . esc_html( $a['closed_label'] ) . '</span>';
 		}
 		$dg  = 'arab' === $a['digits'] ? 'arab' : 'latn';
 		$out = '';
 		foreach ( $day['slots'] as $s ) {
-			$time  = HP_Hours::digits( HP_Hours::fmt_time( $s['open'], $a['time_format'] ) . ' – ' . HP_Hours::fmt_time( $s['close'], $a['time_format'] ), $dg );
+			$time  = HoursPilot_Hours::digits( HoursPilot_Hours::fmt_time( $s['open'], $a['time_format'] ) . ' – ' . HoursPilot_Hours::fmt_time( $s['close'], $a['time_format'] ), $dg );
 			$chip  = ! empty( $s['label'] ) ? '<span class="hp-chip">' . esc_html( $s['label'] ) . '</span>' : '';
 			$out  .= '<span class="hp-slot' . ( empty( $s['closed'] ) ? '' : ' hp-break' ) . '">' . $chip . '<span class="hp-time">' . esc_html( $time ) . '</span></span>';
 		}

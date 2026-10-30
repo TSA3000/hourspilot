@@ -10,7 +10,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-final class HP_Schema {
+final class HoursPilot_Schema {
 
 	private static $queue = array();
 
@@ -44,7 +44,7 @@ final class HP_Schema {
 
 	public static function build( $id ) {
 		$spec = array();
-		foreach ( HP_Hours::get_hours( $id ) as $d => $day ) {
+		foreach ( HoursPilot_Hours::get_hours( $id ) as $d => $day ) {
 			$base = array(
 				'@type'     => 'OpeningHoursSpecification',
 				'dayOfWeek' => 'https://schema.org/' . self::$day_names[ $d ],
@@ -56,7 +56,7 @@ final class HP_Schema {
 				);
 				continue;
 			}
-			foreach ( HP_Hours::open_slots( $day['slots'] ) as $s ) {
+			foreach ( HoursPilot_Hours::open_slots( $day['slots'] ) as $s ) {
 				$spec[] = $base + array(
 					'opens'  => $s['open'],
 					'closes' => $s['close'],
@@ -65,7 +65,7 @@ final class HP_Schema {
 		}
 
 		$special = array();
-		foreach ( HP_Hours::upcoming_holidays( $id, 365 ) as $h ) {
+		foreach ( HoursPilot_Hours::upcoming_holidays( $id, 365 ) as $h ) {
 			$base = array(
 				'@type'        => 'OpeningHoursSpecification',
 				'validFrom'    => $h['from'],
@@ -87,13 +87,13 @@ final class HP_Schema {
 			}
 		}
 
-		$info  = HP_Hours::get_info( $id );
+		$info  = HoursPilot_Hours::get_info( $id );
 		$image = get_the_post_thumbnail_url( $id, 'full' );
 
 		$data = array_filter(
 			array(
 				'@context'                         => 'https://schema.org',
-				'@type'                            => HP_Hours::schema_type( $id ),
+				'@type'                            => HoursPilot_Hours::schema_type( $id ),
 				'name'                             => wp_strip_all_tags( get_post_field( 'post_title', $id ) ),
 				'url'                              => $info['website'] ? $info['website'] : home_url( '/' ),
 				'telephone'                        => $info['phone'],

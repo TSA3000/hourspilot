@@ -6,11 +6,13 @@ Business hours, holidays and a live open/closed badge for one or more locations.
 |---|---|
 | **Version** | 0.6.0 |
 | **Requires** | WordPress 6.0+, PHP 7.4+ |
-| **Tested up to** | WordPress 6.8 |
+| **Tested up to** | WordPress 7.1 |
 | **Author** | Arthur Sam Mahdi ([tsa3000](https://github.com/TSA3000)) |
 | **Contributors** | tsa3000 |
 | **Tags** | business hours, opening hours, holidays, schema, open now |
 | **License** | GPL-2.0-or-later |
+
+<img src=".wordpress-org/banner-1544x500.png" alt="HoursPilot" width="772">
 
 ## Features
 
@@ -148,7 +150,7 @@ Every attribute can also be set on the location (tabs Messages, Display, Appeara
 ```mermaid
 flowchart LR
     subgraph wp["WordPress (PHP)"]
-        admin["Admin: Locations<br/>weekly hours, holidays, info"] -->|post meta| db[("hp_location")]
+        admin["Admin: Locations<br/>weekly hours, holidays, info"] -->|post meta| db[("hourspilot_location")]
         db --> sc["Shortcode [hourspilot]"]
         lang["languages/<br/>sv_SE, ar"] -.->|labels, day + month names| sc
         sc --> ld["schema.org JSON-LD"]
@@ -202,9 +204,9 @@ Most things are set in the Appearance box. For more, override CSS variables on `
 
 Filters: `hourspilot_schema( array $data, int $location_id )`, `hourspilot_digits( string $system )` (`latn` | `arab`)
 
-Data is stored as post meta on the `hp_location` post type:
-`_hp_hours`, `_hp_holidays` (from, to, label, slots, recurring), `_hp_info`, `_hp_timezone`, `_hp_schema_type`,
-`_hp_settings`, `_hp_use_shared`, `_hp_public_holidays` (source, country). Fetched public holidays are cached in transients `hp_ph_*`.
+Data is stored as post meta on the `hourspilot_location` post type:
+`_hourspilot_hours`, `_hourspilot_holidays` (from, to, label, slots, recurring), `_hourspilot_info`, `_hourspilot_timezone`, `_hourspilot_schema_type`,
+`_hourspilot_settings`, `_hourspilot_use_shared`, `_hourspilot_public_holidays` (source, country). Fetched public holidays are cached in transients `hourspilot_ph_*`.
 
 Uninstalling the plugin does not delete your locations.
 
@@ -231,6 +233,12 @@ The zip gets a wordpress.org `readme.txt` generated from this file (`.github/scr
 and **Tags** rows above exist for it.
 
 ## Changelog
+
+### 0.7.0
+
+- Unique `hourspilot_` prefix for the post type, post meta, transients, admin pages and actions (wordpress.org guidelines); data of earlier versions is moved automatically on update
+- Plugin icon and banner
+- Tested up to WordPress 7.1
 
 ### 0.6.0
 

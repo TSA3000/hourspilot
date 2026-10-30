@@ -4,6 +4,7 @@ Usage: python3 .github/scripts/readme-txt.py README.md hourspilot.php > readme.t
 README.md layout: "# Name", one-line summary, a | **Key** | value | table, then ## sections.
 ## Features -> == Description ==, ### X -> = X =, attribute tables -> bullet lists, ### Releases (maintainer-only)
 and ```mermaid diagrams dropped."""
+import os
 import re
 import sys
 
@@ -117,6 +118,12 @@ def main(md_path, php_path):
         summary,
         "",
     ]
+    # Screenshot captions (wordpress.org shows .wordpress-org/screenshot-N.png from its SVN assets/).
+    caps = os.path.join(os.path.dirname(os.path.abspath(md_path)), ".wordpress-org", "screenshots.txt")
+    if os.path.exists(caps):
+        shots = ["== Screenshots ==", ""] + [f"{n}. {c.strip()}" for n, c in enumerate(open(caps, encoding="utf-8").read().splitlines(), 1) if c.strip()] + [""]
+        at = out.index("== Changelog ==") if "== Changelog ==" in out else len(out)
+        out[at:at] = shots
     text = "\n".join(head + out)
     text = re.sub(r"\n{3,}", "\n\n", text).strip() + "\n"
     sys.stdout.write(text)
