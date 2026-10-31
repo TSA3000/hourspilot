@@ -7,6 +7,7 @@
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/rust/*</exclude-pattern>
 	<exclude-pattern>*.min.js</exclude-pattern>
+	<exclude-pattern>/languages/*.l10n.php</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>
@@ -21,13 +22,17 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="hourspilot"/>
+			<property name="text_domain" type="array">
+				<element value="hourspilot"/>
+			</property>
 		</properties>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="hourspilot,hp_"/>
+			<property name="prefixes" type="array">
+				<element value="hourspilot"/>
+			</property>
 		</properties>
 	</rule>
-	<!-- Classes are named class-hp-*.php by convention already -->
+	<!-- Classes are named class-hourspilot-*.php by convention already -->
 </ruleset>
